@@ -117,6 +117,11 @@ namespace SRTS
         sos2Flag = true;
         Log.Message("[SRTSExpanded] Overriding SOS2 Destructive Patches.");
       }
+      if(ModLister.HasActiveModWithName("Combat Extended"))
+            {
+                SRTSHelper.CEModLoaded = true;
+                Log.Message("[SRTSExpanded] Combat Extended active.");
+            }
       harmony.Patch(original: AccessTools.Method(type: typeof(Dialog_LoadTransporters), name: "AddPawnsToTransferables"),
           prefix: sos2Flag ? new HarmonyMethod(typeof(StartUp),
           nameof(CustomOptionsPawnsToTransportOverride)) : null,

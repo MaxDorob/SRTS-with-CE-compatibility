@@ -24,7 +24,7 @@ namespace SRTS
         private static void ModCompatibilityInitialized()
         {
             List<ModMetaData> mods = ModLister.AllInstalledMods.ToList();
-            Log.Warning("[SRTS Expanded] Compatibility with Save our Ship 2 and Combat Extended are temporarily disabled at the moment. SoS2 compatibility will happen soon(ish), CE compatibility will not.");
+            Log.Warning("[SRTS Expanded] Compatibility with Save our Ship 2. SoS2 compatibility will happen soon(ish) (or not :)).");
             /*foreach(ModMetaData mod in mods)
             {
                 if(ModLister.HasActiveModWithName(mod.Name) && mod.PackageId == "1631756268" && !SRTSHelper.CEModLoaded)
