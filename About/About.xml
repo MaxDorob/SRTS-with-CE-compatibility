@@ -27,4 +27,7 @@ Conflicts
     <li>neceros.srtserealismpatch</li>
     <li>neceros.srtsesimplematerials</li>
   </loadBefore>
+  <loadAfter>
+    <li>CETeam.CombatExtended</li>
+  </loadAfter>
 </ModMetaData>
