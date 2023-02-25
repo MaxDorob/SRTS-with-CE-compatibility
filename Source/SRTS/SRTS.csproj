@@ -45,6 +45,9 @@
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="FallingBombCE.cs" />
+  </ItemGroup>
 
  <ItemGroup>
     <Reference Include="Assembly-CSharp">
