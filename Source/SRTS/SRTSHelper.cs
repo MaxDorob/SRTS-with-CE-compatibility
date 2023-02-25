@@ -120,7 +120,7 @@ namespace SRTS
         {
             if (CEModLoaded)
             {
-                List<ThingDef> CEthings = DefDatabase<ThingDef>.AllDefsListForReading.FindAll(x => x.HasComp(Type.GetType("CombatExtended.CompExplosiveCE,CombatExtended")));
+                List<ThingDef> CEthings = DefDatabase<ThingDef>.AllDefsListForReading.FindAll(x => x.HasComp(typeof(CompExplosive)));
                 if (SRTSMod.mod.settings.allowedBombs is null)
                     SRTSMod.mod.settings.allowedBombs = new List<string>();
                 if (SRTSMod.mod.settings.disallowedBombs is null)
