@@ -6,6 +6,7 @@ using System.Text;
 using UnityEngine;
 using Verse;
 using RimWorld;
+using CombatExtended;
 
 namespace SRTS
 {
@@ -314,8 +315,8 @@ namespace SRTS
                 explosivesChanged = false;
                 if(SRTSHelper.CEModLoaded)
                 {
-                    explosivesSearched = DefDatabase<ThingDef>.AllDefs.Where(x => x.HasComp(Type.GetType("CombatExtended.CompExplosiveCE,CombatExtended")) && !SRTSMod.mod.settings.allowedBombs.Contains(x.defName)
-                    && CultureInfo.CurrentCulture.CompareInfo.IndexOf(x.defName, explosivesString, CompareOptions.IgnoreCase) >= 0).ToList();
+                    explosivesSearched = DefDatabase<AmmoDef>.AllDefs.Where(x => x.isMortarAmmo && !SRTSMod.mod.settings.allowedBombs.Contains(x.defName)
+                    && CultureInfo.CurrentCulture.CompareInfo.IndexOf(x.defName, explosivesString, CompareOptions.IgnoreCase) >= 0).Cast<ThingDef>().ToList();
                 }
                 else
                 {

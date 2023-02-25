@@ -5,6 +5,7 @@ using Verse;
 using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
+using CombatExtended;
 
 namespace SRTS
 {
@@ -120,7 +121,7 @@ namespace SRTS
         {
             if (CEModLoaded)
             {
-                List<ThingDef> CEthings = DefDatabase<ThingDef>.AllDefsListForReading.FindAll(x => x.HasComp(typeof(CompExplosive)));
+                List<ThingDef> CEthings = DefDatabase<AmmoDef>.AllDefsListForReading.Where(x => x.isMortarAmmo).Cast<ThingDef>().ToList();
                 if (SRTSMod.mod.settings.allowedBombs is null)
                     SRTSMod.mod.settings.allowedBombs = new List<string>();
                 if (SRTSMod.mod.settings.disallowedBombs is null)
