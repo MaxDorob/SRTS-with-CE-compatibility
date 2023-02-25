@@ -27,7 +27,7 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType>none</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>D:\Steam\steamapps\common\RimWorld\Mods\SRTSExpanded_1.4\v1.4\Assemblies\</OutputPath>
+    <OutputPath>..\..\v1.4\Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -300,6 +300,10 @@
     <Reference Include="UnityEngine.XRModule">
       <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.XRModule.dll</HintPath>
       <Private>false</Private>
+    </Reference>
+    <Reference Include="CombatExtended">
+      <HintPath>..\..\..\..\..\SteamLibrary\steamapps\workshop\content\294100\2890901044\Assemblies\CombatExtended.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>

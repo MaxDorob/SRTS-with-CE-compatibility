@@ -8,6 +8,7 @@ using Verse;
 using UnityEngine;
 using SPExtended;
 using Verse.Sound;
+using CombatExtended;
 
 namespace SRTS
 {
@@ -119,30 +120,35 @@ namespace SRTS
 
         public override void Tick()
         {
-			try
-			{
+			//try
+			//{
+                Log.Message($"Ticking bomber. innerContainer {innerContainer}" +
+                    $"\nBomb cells is null {bombCells==null}");
                 this.innerContainer.ThingOwnerTick(true);
                 this.ticksToExit--;
                 if (bombCells.Any() && Math.Abs(this.DrawPosCell.x - bombCells.First().x) < 3 && Math.Abs(this.DrawPosCell.z - bombCells.First().z) < 3)
                 {
+                    Log.Message("Drop bomb executing");
                     this.DropBomb();
                 }
                 if (this.ticksToExit == 0)
                 {
                     this.ExitMap();
                 }
-            }
-            catch (Exception ex)
-			{
-                Log.Error($"Exception thrown while ticking {this}. Immediately sending to world to avoid loss of contents. Ex=\"{ex.Message}\"");
-                ExitMap();
-			}
+            //}
+   //         catch (Exception ex)
+			//{
+   //             Log.Error($"Exception thrown while ticking {this}. Immediately sending to world to avoid loss of contents. Ex=\"{ex.Message}\"");
+   //             ExitMap();
+			//}
         }
 
         private void DropBomb()
         {
-            for(int i = 0; i < (bombType == BombingType.precise ? this.precisionBombingNumBombs : 1); ++i)
-            {
+                Log.Message($"{bombType}, {precisionBombingNumBombs}, {(bombType == BombingType.carpet ? this.precisionBombingNumBombs : 1)}");
+            //for(int i = 0; i < (bombType == BombingType.carpet ? this.precisionBombingNumBombs : 1); ++i)
+            //{
+            
                 if (innerContainer.Any(x => ((ActiveDropPod)x)?.Contents.innerContainer.Any(y => SRTSMod.mod.settings.allowedBombs.Contains(y.def.defName)) ?? false))
                 {
                     ActiveDropPod srts = (ActiveDropPod)innerContainer.First();
@@ -157,6 +163,7 @@ namespace SRTS
                     if(bombType == BombingType.carpet)
                         bombCells.RemoveAt(0);
                     int timerTickExplode = 20 + Rand.Range(0, 5); //Change later to allow release timer
+                    Log.Message($"CE patched " + SRTSHelper.CEModLoaded);
                     if (SRTSHelper.CEModLoaded)
                         goto Block_CEPatched;
                     FallingBomb bombThing = new FallingBomb(thing2, thing2.TryGetComp<CompExplosive>(), this.Map, this.def.skyfaller.shadow);
@@ -170,26 +177,72 @@ namespace SRTS
                     bombThing.speed = (float)SPExtra.Distance(this.DrawPosCell, c) / bombThing.ticksRemaining;
                     Thing t = GenSpawn.Spawn(bombThing, c, this.Map);
                     GenExplosion.NotifyNearbyPawnsOfDangerousExplosive(t, thing2.TryGetComp<CompExplosive>().Props.explosiveDamageType, null);
-                    continue;
+                    //continue;
 
-                Block_CEPatched:;
-                    ThingComp CEComp = (thing2 as ThingWithComps)?.AllComps.Find(x => x.GetType().Name == "CompExplosiveCE");
-                    FallingBombCE CEbombThing = new FallingBombCE(thing2, CEComp.props, CEComp, this.Map, this.def.skyfaller.shadow);
-                    CEbombThing.HitPoints = int.MaxValue;
-                    CEbombThing.ticksRemaining = timerTickExplode;
+                    Block_CEPatched:;
+                    //Log.Message($"CE patched part. Comps {string.Join(", ", (thing2 as ThingWithComps)?.AllComps.Select(x=>x.GetType().Name))}");
+                    //var projectileDef = Type.GetType("CombatExtended.Compatibility.Artillery.Utility").GetMethod("GetProjectile").Invoke(null,new object[] { thing2.def }) as ThingDef;
+                    //ThingComp CEComp = (thing2 as ThingWithComps)?.AllComps.Find(x => x.GetType().Name == "CompExplosive");
+                    //Log.Message($"Selected {CEComp}(is null: {CEComp==null})");
+                    //FallingBombCE CEbombThing = new FallingBombCE(thing2, CEComp.props, CEComp, this.Map, this.def.skyfaller.shadow);
+
+                    //CEbombThing.HitPoints = int.MaxValue;
+                    //CEbombThing.ticksRemaining = timerTickExplode;
                     IntVec3 c2 = (from x in GenRadial.RadialCellsAround(bombPos, GetCurrentTargetingRadius(), true)
                                   where x.InBounds(this.Map)
                                   select x).RandomElementByWeight((IntVec3 x) => 1f - Mathf.Min(x.DistanceTo(this.Position) / GetCurrentTargetingRadius(), 1f) + 0.05f);
-                    CEbombThing.angle = this.angle + (SPTrig.LeftRightOfLine(this.DrawPosCell, this.Position, c2) * -10);
-                    CEbombThing.speed = (float)SPExtra.Distance(this.DrawPosCell, c2) / CEbombThing.ticksRemaining;
-                    Thing CEt = GenSpawn.Spawn(CEbombThing, c2, this.Map);
+                    //CEbombThing.angle
+                    var rotation = this.angle + (SPTrig.LeftRightOfLine(this.DrawPosCell, this.Position, c2) * -10);
+                    //CEbombThing.speed = (float)SPExtra.Distance(this.DrawPosCell, c2) / CEbombThing.ticksRemaining;
+                    var sourceLoc = new Vector2();
+                    sourceLoc.Set(bombPos.x, bombPos.z);
+                //Type type = Type.GetType("CombatExtended.CE_Utility");
+                //var method = type.GetMethod("LaunchProjectileCE", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+                //Log.Message($"type is null: {type == null}, method is null: {method == null}");
+
+                //Log.Message($"Is null: {typeof(CE_Utility) == null}. {string.Join(", ",typeof(CE_Utility)?.GetMethods()?.Select(x=>x.Name))}");
+                    CE_Utility.LaunchProjectileCE(MyGetProjectile(thing2.def), sourceLoc, new LocalTargetInfo(bombPos), this, 0,0, 20,Rand.Range(0f,1.5f));
+                    //Type.GetType("CombatExtended.CE_Utility").GetMethod("LaunchProjectileCE",System.Reflection.BindingFlags.Static|System.Reflection.BindingFlags.Public).Invoke(null, new object[] { thing2, sourceLoc, new LocalTargetInfo(c2), this, 270, rotation, 20, 80 });
+                    //Log.Message("Prespawn");
+                    //Thing CEt = GenSpawn.Spawn(CEbombThing, c2, this.Map);
                     //GenExplosion.NotifyNearbyPawnsOfDangerousExplosive(CEt, DamageDefOf., null); /*Is GenExplosion CE compatible?*/
                 }
-            }
+            //}
             if(bombType == BombingType.precise && bombCells.Any())
                 bombCells.Clear();
         }
-
+        /// <summary>
+        /// Copy of CE_Utility.GetProjectile. For some reason default ones returns HE explosives for any type of shells. Just added a predicate in asd.ammoTypes.FirstOrFallback
+        /// </summary>
+        /// <param name="thingDef"></param>
+        /// <returns></returns>
+        static ThingDef MyGetProjectile(ThingDef thingDef)
+        {
+            if (thingDef.projectile != null)
+            {
+                return thingDef;
+            }
+            if (thingDef is AmmoDef ammoDef)
+            {
+                ThingDef user;
+                if ((user = ammoDef.Users.FirstOrFallback(null)) != null)
+                {
+                    CompProperties_AmmoUser props = user.GetCompProperties<CompProperties_AmmoUser>();
+                    AmmoSetDef asd = props.ammoSet;
+                    AmmoLink ammoLink;
+                    if ((ammoLink = asd.ammoTypes.FirstOrFallback(x=>x.ammo==thingDef,null)) != null)
+                    {
+                        Log.Message($"Selected ammo link. {asd.defName}, {ammoLink.projectile.defName}. AmmoDef.detonateProjectile is {ammoDef.detonateProjectile?.defName}");
+                        return ammoLink.projectile;
+                    }
+                }
+                else
+                {
+                    return ammoDef.detonateProjectile;
+                }
+            }
+            return thingDef;
+        }
         private void ExitMap()
         {
             ActiveDropPod activeDropPod = (ActiveDropPod)ThingMaker.MakeThing(ThingDef.Named(this.def.defName.Split('_')[0] + "_Active"), null);
