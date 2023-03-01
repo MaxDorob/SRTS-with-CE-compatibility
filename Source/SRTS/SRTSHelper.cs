@@ -116,23 +116,12 @@ namespace SRTS
                 srtsDefProjects.Add(def, def.researchPrerequisites[0]);
             }
         }
-
+        
         public static void PopulateAllowedBombs()
         {
             if (CEModLoaded)
-            {
-                List<ThingDef> CEthings = DefDatabase<AmmoDef>.AllDefsListForReading.Where(x => x.isMortarAmmo).Cast<ThingDef>().ToList();
-                if (SRTSMod.mod.settings.allowedBombs is null)
-                    SRTSMod.mod.settings.allowedBombs = new List<string>();
-                if (SRTSMod.mod.settings.disallowedBombs is null)
-                    SRTSMod.mod.settings.disallowedBombs = new List<string>();
-                foreach (ThingDef td in CEthings)
-                {
-                    if (!SRTSMod.mod.settings.allowedBombs.Contains(td.defName) && !SRTSMod.mod.settings.disallowedBombs.Contains(td.defName))
-                    {
-                        SRTSMod.mod.settings.allowedBombs.Add(td.defName);
-                    }
-                }
+            {                
+                CEHelper.PopulateAllowedBombsCE();
                 return;
             }
 
@@ -149,7 +138,7 @@ namespace SRTS
                 }
             }
         }
-        
+
         public static Dictionary<ThingDef, ResearchProjectDef> srtsDefProjects = new Dictionary<ThingDef, ResearchProjectDef>();
         public static bool CEModLoaded =false;
         public static BombingTargeter targeter = new BombingTargeter();

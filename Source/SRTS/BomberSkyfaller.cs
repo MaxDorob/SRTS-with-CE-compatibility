@@ -159,7 +159,6 @@ namespace SRTS
                     if (bombType == BombingType.carpet)
                         bombCells.RemoveAt(0);
                     int timerTickExplode = 20 + Rand.Range(0, 5); //Change later to allow release timer
-                    Log.Message($"CE patched " + SRTSHelper.CEModLoaded);
                     if (SRTSHelper.CEModLoaded)
                         goto Block_CEPatched;
                     FallingBomb bombThing = new FallingBomb(thing2, thing2.TryGetComp<CompExplosive>(), this.Map, this.def.skyfaller.shadow);
@@ -177,16 +176,17 @@ namespace SRTS
 
                     Block_CEPatched:;
 
-                    IntVec3 c2 = (from x in GenRadial.RadialCellsAround(bombPos, GetCurrentTargetingRadius(), true)
-                                  where x.InBounds(this.Map)
-                                  select x).RandomElementByWeight((IntVec3 x) => 1f - Mathf.Min(x.DistanceTo(this.Position) / GetCurrentTargetingRadius(), 1f) + 0.05f);
+                    //IntVec3 c2 = (from x in GenRadial.RadialCellsAround(bombPos, GetCurrentTargetingRadius(), true)
+                    //              where x.InBounds(this.Map)
+                    //              select x).RandomElementByWeight((IntVec3 x) => 1f - Mathf.Min(x.DistanceTo(this.Position) / GetCurrentTargetingRadius(), 1f) + 0.05f);
                     //CEbombThing.angle
-                    var rotation = this.angle + (SPTrig.LeftRightOfLine(this.DrawPosCell, this.Position, c2) * -10);
-                    var sourceLoc = new Vector2();
-                    sourceLoc.Set(bombPos.x, bombPos.z);
-                    float angleError = (3 * Mathf.PI / 2) / 20;//20% accuracy error
-                    float rotationError = Rand.Range(-25f, 25f);
-                    CE_Utility.LaunchProjectileCE(MyGetProjectile(thing2.def), sourceLoc, new LocalTargetInfo(bombPos), this, 3 * Mathf.PI / 2 + Rand.Range(-angleError, angleError), 0 + rotationError > 0 ? 0 + rotationError : 360 - rotationError, 40, Rand.Range(3f, 4.5f));
+                    //var rotation = this.angle + (SPTrig.LeftRightOfLine(this.DrawPosCell, this.Position, c2) * -10);
+                    //var sourceLoc = new Vector2();
+                    //sourceLoc.Set(bombPos.x, bombPos.z);
+                    //float angleError = (3 * Mathf.PI / 2) / 20;//20% accuracy error
+                    //float rotationError = Rand.Range(-25f, 25f);
+                    //CE_Utility.LaunchProjectileCE(MyGetProjectile(thing2.def), sourceLoc, new LocalTargetInfo(bombPos), this, 3 * Mathf.PI / 2 + Rand.Range(-angleError, angleError), 0 + rotationError > 0 ? 0 + rotationError : 360 - rotationError, 40, Rand.Range(3f, 4.5f));
+                    CEHelper.CEDropBomb(bombPos, thing2, this);
 
                 }
             }
@@ -198,32 +198,7 @@ namespace SRTS
         /// </summary>
         /// <param name="thingDef"></param>
         /// <returns></returns>
-        static ThingDef MyGetProjectile(ThingDef thingDef)
-        {
-            if (thingDef.projectile != null)
-            {
-                return thingDef;
-            }
-            if (thingDef is AmmoDef ammoDef)
-            {
-                ThingDef user;
-                if ((user = ammoDef.Users.FirstOrFallback(null)) != null)
-                {
-                    CompProperties_AmmoUser props = user.GetCompProperties<CompProperties_AmmoUser>();
-                    AmmoSetDef asd = props.ammoSet;
-                    AmmoLink ammoLink;
-                    if ((ammoLink = asd.ammoTypes.FirstOrFallback(x => x.ammo == thingDef, null)) != null)
-                    {
-                        return ammoLink.projectile;
-                    }
-                }
-                else
-                {
-                    return ammoDef.detonateProjectile;
-                }
-            }
-            return thingDef;
-        }
+        
         private void ExitMap()
         {
             ActiveDropPod activeDropPod = (ActiveDropPod)ThingMaker.MakeThing(ThingDef.Named(this.def.defName.Split('_')[0] + "_Active"), null);
