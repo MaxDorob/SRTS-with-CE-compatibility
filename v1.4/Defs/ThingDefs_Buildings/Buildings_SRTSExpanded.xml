@@ -178,7 +178,7 @@ Internal power plant: 650w</description> <!-- description of course... -->
       <li Class="SRTS.CompProperties_BombsAway"> <!-- include this comp if you want it to be able to carpet bomb, remove this comp if you dont. Be aware you must also add a bomber skydropper def set -->
         <numberBombs>4</numberBombs> <!-- num dropped per run -->
 		    <precisionBombingNumBombs>4</precisionBombingNumBombs> <!-- number of bombs dropped in precise drop -->
-        <radiusOfDrop>3</radiusOfDrop> <!-- how many cells out from the center the bombs may drop -->
+        <radiusOfDrop>6</radiusOfDrop> <!-- how many cells out from the center the bombs may drop -->
         <speed>1</speed> <!-- How quickly the ship flies over. Default 1 -->
 		    <distanceBetweenDrops>3</distanceBetweenDrops> <!-- Distance in cells from when each bomb is dropped -->
 	  </li>
@@ -543,7 +543,7 @@ Internal power plant: 3,600w</description>
       <li Class="SRTS.CompProperties_BombsAway">
         <numberBombs>20</numberBombs>
         <precisionBombingNumBombs>10</precisionBombingNumBombs>
-        <radiusOfDrop>5</radiusOfDrop>
+        <radiusOfDrop>3</radiusOfDrop>
         <speed>1</speed>
         <distanceBetweenDrops>2</distanceBetweenDrops>
       </li>
@@ -733,7 +733,7 @@ Internal power plant: 12,000w</description>
       <li Class="SRTS.CompProperties_BombsAway">
         <numberBombs>32</numberBombs>
         <precisionBombingNumBombs>32</precisionBombingNumBombs>
-        <radiusOfDrop>9</radiusOfDrop>
+        <radiusOfDrop>1</radiusOfDrop>
         <speed>0.7</speed>
         <distanceBetweenDrops>1</distanceBetweenDrops>
       </li>
