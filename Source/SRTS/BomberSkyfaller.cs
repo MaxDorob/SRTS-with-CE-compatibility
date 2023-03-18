@@ -186,7 +186,7 @@ namespace SRTS
                     //float angleError = (3 * Mathf.PI / 2) / 20;//20% accuracy error
                     //float rotationError = Rand.Range(-25f, 25f);
                     //CE_Utility.LaunchProjectileCE(MyGetProjectile(thing2.def), sourceLoc, new LocalTargetInfo(bombPos), this, 3 * Mathf.PI / 2 + Rand.Range(-angleError, angleError), 0 + rotationError > 0 ? 0 + rotationError : 360 - rotationError, 40, Rand.Range(3f, 4.5f));
-                    CEHelper.CEDropBomb(bombPos, thing2, this);
+                    CEHelper.CEDropBomb(bombPos, thing2, this, GetCurrentTargetingRadius());
 
                 }
             }
