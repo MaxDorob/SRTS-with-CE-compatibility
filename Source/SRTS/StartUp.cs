@@ -71,9 +71,9 @@ namespace SRTS
       harmony.Patch(original: AccessTools.Method(type: typeof(CollectionsMassCalculator), name: nameof(CollectionsMassCalculator.CapacityLeftAfterTradeableTransfer)),
           prefix: new HarmonyMethod(typeof(StartUp),
           nameof(SRTSMassCapacityCaravan)));
-      harmony.Patch(original: AccessTools.Method(type: typeof(Dialog_LoadTransporters), name: "AddItemsToTransferables"), prefix: null, postfix: null,
-          transpiler: new HarmonyMethod(typeof(StartUp),
-          nameof(AddItemsEntireMapNonHomeTranspiler)));
+      //harmony.Patch(original: AccessTools.Method(type: typeof(Dialog_LoadTransporters), name: "AddItemsToTransferables"), prefix: null, postfix: null,
+      //    transpiler: new HarmonyMethod(typeof(StartUp),
+      //    nameof(AddItemsEntireMapNonHomeTranspiler)));
 
       /*harmony.Patch(original: AccessTools.Method(type: typeof(Dialog_LoadTransporters), name: "CheckForErrors"), prefix: null, postfix: null,
           transpiler: new HarmonyMethod(type: typeof(StartUp),
@@ -215,46 +215,46 @@ namespace SRTS
     /// <param name="instructions"></param>
     /// <param name="ilg"></param>
     /// <returns></returns>
-    public static IEnumerable<CodeInstruction> AddItemsEntireMapNonHomeTranspiler(IEnumerable<CodeInstruction> instructions, ILGenerator ilg)
-    {
-      List<CodeInstruction> instructionList = instructions.ToList();
+    //public static IEnumerable<CodeInstruction> AddItemsEntireMapNonHomeTranspiler(IEnumerable<CodeInstruction> instructions, ILGenerator ilg)
+    //{
+    //  List<CodeInstruction> instructionList = instructions.ToList();
 
-      for (int i = 0; i < instructionList.Count; i++)
-      {
-        CodeInstruction instruction = instructionList[i];
+    //  for (int i = 0; i < instructionList.Count; i++)
+    //  {
+    //    CodeInstruction instruction = instructionList[i];
 
-        if (SRTSMod.mod.settings.displayHomeItems && instruction.opcode == OpCodes.Call && (MethodInfo)instruction.operand == AccessTools.Method(type: typeof(CaravanFormingUtility), name: nameof(CaravanFormingUtility.AllReachableColonyItems)))
-        {
-          Label label = ilg.DefineLabel();
+    //    if (SRTSMod.mod.settings.displayHomeItems && instruction.opcode == OpCodes.Call && (MethodInfo)instruction.operand == AccessTools.Method(type: typeof(CaravanFormingUtility), name: nameof(CaravanFormingUtility.AllReachableColonyItems)))
+    //    {
+    //      Label label = ilg.DefineLabel();
 
-          ///Check if SRTS is present inside dialog menu transferables
-          yield return new CodeInstruction(opcode: OpCodes.Ldarg_0);
-          yield return new CodeInstruction(opcode: OpCodes.Ldfld, operand: AccessTools.Field(type: typeof(Dialog_LoadTransporters), name: "transporters"));
-          yield return new CodeInstruction(opcode: OpCodes.Call, operand: AccessTools.Method(type: typeof(SRTSHelper), name: nameof(SRTSHelper.SRTSLauncherSelected)));
-          yield return new CodeInstruction(opcode: OpCodes.Brfalse, label);
+    //      ///Check if SRTS is present inside dialog menu transferables
+    //      yield return new CodeInstruction(opcode: OpCodes.Ldarg_0);
+    //      yield return new CodeInstruction(opcode: OpCodes.Ldfld, operand: AccessTools.Field(type: typeof(Dialog_LoadTransporters), name: "transporters"));
+    //      yield return new CodeInstruction(opcode: OpCodes.Call, operand: AccessTools.Method(type: typeof(SRTSHelper), name: nameof(SRTSHelper.SRTSLauncherSelected)));
+    //      yield return new CodeInstruction(opcode: OpCodes.Brfalse, label);
 
-          ///Check if player / SRTS selected is inside non playerhome map
-          yield return new CodeInstruction(opcode: OpCodes.Ldarg_0);
-          yield return new CodeInstruction(opcode: OpCodes.Ldfld, operand: AccessTools.Field(type: typeof(Dialog_LoadTransporters), name: "map"));
-          yield return new CodeInstruction(opcode: OpCodes.Call, operand: AccessTools.Method(type: typeof(SRTSHelper), name: nameof(SRTSHelper.SRTSNonPlayerHomeMap)));
-          yield return new CodeInstruction(opcode: OpCodes.Brfalse, label);
+    //      ///Check if player / SRTS selected is inside non playerhome map
+    //      yield return new CodeInstruction(opcode: OpCodes.Ldarg_0);
+    //      yield return new CodeInstruction(opcode: OpCodes.Ldfld, operand: AccessTools.Field(type: typeof(Dialog_LoadTransporters), name: "map"));
+    //      yield return new CodeInstruction(opcode: OpCodes.Call, operand: AccessTools.Method(type: typeof(SRTSHelper), name: nameof(SRTSHelper.SRTSNonPlayerHomeMap)));
+    //      yield return new CodeInstruction(opcode: OpCodes.Brfalse, label);
 
-          ///Pop top 3 values from stack, which are all false
-          yield return new CodeInstruction(opcode: OpCodes.Pop);
-          yield return new CodeInstruction(opcode: OpCodes.Pop);
-          yield return new CodeInstruction(opcode: OpCodes.Pop);
+    //      ///Pop top 3 values from stack, which are all false
+    //      yield return new CodeInstruction(opcode: OpCodes.Pop);
+    //      yield return new CodeInstruction(opcode: OpCodes.Pop);
+    //      yield return new CodeInstruction(opcode: OpCodes.Pop);
 
-          ///Push true, true, false onto stack, to change resulting method call parameters
-          yield return new CodeInstruction(opcode: OpCodes.Ldc_I4_1);
-          yield return new CodeInstruction(opcode: OpCodes.Ldc_I4_1);
-          yield return new CodeInstruction(opcode: OpCodes.Ldc_I4_0);
+    //      ///Push true, true, false onto stack, to change resulting method call parameters
+    //      yield return new CodeInstruction(opcode: OpCodes.Ldc_I4_1);
+    //      yield return new CodeInstruction(opcode: OpCodes.Ldc_I4_1);
+    //      yield return new CodeInstruction(opcode: OpCodes.Ldc_I4_0);
 
-          instruction.labels.Add(label);
-        }
+    //      instruction.labels.Add(label);
+    //    }
 
-        yield return instruction;
-      }
-    }
+    //    yield return instruction;
+    //  }
+    //}
 
     /// <summary>
     /// Add purchased items to list of things contained within SRTS, to drop contents on landing rather than placing inside pawn's inventory.

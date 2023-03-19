@@ -22,7 +22,7 @@ namespace SRTS
                     break;
                 }
             }
-            Log.Message("Ship info: " + (ship == null) + ", " + ship.ToString());
+
             if(ship!=null&&(!__instance.Map.IsPlayerHome))
                 for (int i = activeDropPodInfo.innerContainer.Count - 1; i >= 0; i--)
                 {
