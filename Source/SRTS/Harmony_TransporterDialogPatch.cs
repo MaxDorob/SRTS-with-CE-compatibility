@@ -10,20 +10,31 @@ using Verse;
 
 namespace SRTS
 {
-    [HarmonyPatch(typeof(TransporterUtility), nameof(TransporterUtility.AllSendableItems))]
+    [HarmonyPatch]
     public static class Harmony_TransporterDialogPatch
     {
-        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(Dialog_LoadTransporters), nameof(Dialog_LoadTransporters.PostOpen))]
+        public static void PostOpenPostfix(Dialog_LoadTransporters __instance, List<CompTransporter> ___transporters)
         {
-            foreach (var ins in instructions)
+            if (!__instance.LoadingInProgressOrReadyToLaunch&& ___transporters.Any(x => x.parent.TryGetComp<CompLaunchableSRTS>() != null))
             {
-                yield return ins;
+                Traverse.Create(__instance).Method("SetLoadedItemsToLoad").GetValue();
             }
         }
-        public static void Prefix(List<CompTransporter> transporters, Map map, ref bool autoLoot)
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(TransporterUtility), nameof(TransporterUtility.AllSendableItems), new Type[] { typeof(List<CompTransporter>), typeof(Map), typeof(bool) })]
+        public static void AllSendableItemsPostfix(List<CompTransporter> transporters, Map map, bool autoLoot, ref IEnumerable<Thing> __result)
         {
-            Log.Message(nameof(Harmony_TransporterDialogPatch) + " called. auto loot = " + autoLoot);
-            //if(transporters.Any())
+            
+            var comp = transporters[0].parent.TryGetComp<CompLaunchableSRTS>();
+            if ( comp != null)
+            {
+                __result = __result.Union(comp.parent.TryGetComp<CompTransporter>().GetDirectlyHeldThings());
+                
+            }
         }
     }
 }

@@ -73,6 +73,7 @@ Internal power plant: 400w</description>
     </costList>
     <comps>
       <li Class="CompProperties_Transporter">
+        <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>0.5</restEffectiveness>  <!-- How well (1.0 = 100%) passengers can rest, eat, heal while aboard -->
         <massCapacity>120</massCapacity> <!-- weight in kg -->
       </li>
@@ -164,6 +165,7 @@ Internal power plant: 650w</description> <!-- description of course... -->
     </costList>
     <comps> <!-- required for sending as drop pod -->
       <li Class="CompProperties_Transporter">
+        <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>0.75</restEffectiveness>
         <massCapacity>170</massCapacity>
       </li>
@@ -255,6 +257,7 @@ Internal power plant: 1000w</description>
     </costList>
     <comps>
       <li Class="CompProperties_Transporter">
+        <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>0.5</restEffectiveness>
         <massCapacity>5000</massCapacity>
       </li>
@@ -339,6 +342,7 @@ Internal power plant: 1,700w</description>
     </costList>
     <comps>
       <li Class="CompProperties_Transporter">
+        <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>1.5</restEffectiveness>
         <massCapacity>10000</massCapacity>
       </li>
@@ -430,6 +434,7 @@ Internal power plant: 1,700w</description>
     </costList>
     <comps>
       <li Class="CompProperties_Transporter">
+        <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>1</restEffectiveness>
         <massCapacity>2200</massCapacity>
       </li>
@@ -529,6 +534,7 @@ Internal power plant: 3,600w</description>
     </costList>
     <comps>
       <li Class="CompProperties_Transporter">
+        <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>2</restEffectiveness>
         <massCapacity>3600</massCapacity>
       </li>
@@ -622,6 +628,7 @@ Internal power plant: 2,800w</description>
     </costList>
     <comps>
       <li Class="CompProperties_Transporter">
+        <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>3</restEffectiveness>
         <massCapacity>20000</massCapacity>
       </li>
@@ -719,6 +726,7 @@ Internal power plant: 12,000w</description>
     </costList>
     <comps>
       <li Class="CompProperties_Transporter">
+        <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>17</restEffectiveness>
         <massCapacity>999999999</massCapacity>
       </li>
