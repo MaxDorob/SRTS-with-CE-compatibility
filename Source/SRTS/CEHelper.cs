@@ -78,7 +78,6 @@ namespace SRTS
             sourceLoc.Set(bombPos.x, bombPos.z);
             float angleError = ((3 * Mathf.PI / 2) / 20) * accuracyMultiplier;//20% accuracy error
             float rotationError = Rand.Range(-25f, 25f)*accuracyMultiplier*4;
-            Log.Message($"Shooter position: {shooter.Position}");
             CE_Utility.LaunchProjectileCE(MyGetProjectile(bomb.def), sourceLoc, new LocalTargetInfo(bombPos), shooter, (3 * Mathf.PI / 2) + Rand.Range(-angleError, angleError), 0 + rotationError > 0 ? 0 + rotationError : 360 - rotationError, 40, Rand.Range(3f, 4.5f));
         }
     }

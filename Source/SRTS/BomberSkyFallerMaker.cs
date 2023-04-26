@@ -12,7 +12,9 @@ namespace SRTS
     {
         public static BomberSkyfaller MakeSkyfaller(ThingDef skyfaller)
         {
-            return (BomberSkyfaller)ThingMaker.MakeThing(skyfaller);
+            var thing = (BomberSkyfaller)ThingMaker.MakeThing(skyfaller);
+            thing.SetFaction(Find.FactionManager.OfPlayer);//Who can use if not a player?
+            return thing;
         }
 
         public static BomberSkyfaller MakeSkyfaller(ThingDef skyfaller, ThingDef innerThing)

@@ -31,7 +31,10 @@ namespace SRTS
                 return thingForGraphic.Graphic.ExtractInnerGraphicFor(thingForGraphic).GetShadowlessGraphic();
             }
         }
-
+        public override void SetFaction(Faction newFaction, Pawn recruiter = null)
+        {
+            factionInt = newFaction;
+        }
         public override Vector3 DrawPos
         {
             get
