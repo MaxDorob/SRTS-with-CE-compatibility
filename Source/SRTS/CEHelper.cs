@@ -1,4 +1,6 @@
 ﻿using CombatExtended;
+using CombatExtended.WorldObjects;
+using RimWorld.Planet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,6 +73,12 @@ namespace SRTS
                 }
             }
         }
+
+        internal static bool CanBombSpecificCell(IEnumerable<IThingHolder> pods, MapParent mapParent)
+        {
+            return mapParent.GetComponent<HealthComp>() != null;
+        }
+
         internal static void CEDropBomb(IntVec3 bombPos, Thing bomb,Thing shooter,float radius)
         {
             float accuracyMultiplier = radius / 2;

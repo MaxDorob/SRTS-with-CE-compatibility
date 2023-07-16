@@ -18,14 +18,14 @@ namespace SRTS
         public CompProperties_BombsAway Props => (CompProperties_BombsAway)this.props;
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            if(SRTS_Launcher.GetComp<CompLaunchableSRTS>().LoadingInProgressOrReadyToLaunch)
+            if (SRTS_Launcher.GetComp<CompLaunchableSRTS>().LoadingInProgressOrReadyToLaunch)
             {
                 yield return new Command_Action()
                 {
                     defaultLabel = "BombTarget".Translate(),
                     defaultDesc = "BombTargetDesc".Translate(),
                     icon = TexCommand.Attack,
-                    action = delegate()
+                    action = delegate ()
                     {
                         int num = 0;
                         foreach (Thing t in CompLauncher.Transporter.innerContainer)
@@ -35,7 +35,7 @@ namespace SRTS
                                 num++;
                             }
                         }
-                        if(SRTSMod.mod.settings.passengerLimits)
+                        if (SRTSMod.mod.settings.passengerLimits)
                         {
                             if (num < SRTSMod.GetStatFor<int>(this.parent.def.defName, StatName.minPassengers))
                             {
@@ -48,7 +48,7 @@ namespace SRTS
                                 return;
                             }
                         }
-                        
+
                         FloatMenuOption carpetBombing = new FloatMenuOption("CarpetBombing".Translate(), delegate ()
                         {
                             bombType = BombingType.carpet;
@@ -125,22 +125,22 @@ namespace SRTS
 
         private bool ChoseWorldTargetToBomb(GlobalTargetInfo target)
         {
-            if(!target.IsValid)
+            if (!target.IsValid)
             {
                 Messages.Message("MessageTransportPodsDestinationIsInvalid".Translate(), MessageTypeDefOf.RejectInput, false);
                 return false;
             }
-            
+
             int num = Find.WorldGrid.TraversalDistanceBetween(this.parent.Map.Tile, target.Tile);
-            if(num > CompLauncher.MaxLaunchDistance)
+            if (num > CompLauncher.MaxLaunchDistance)
             {
                 Messages.Message("MessageTransportPodsDestinationIsTooFar".Translate(CompLaunchableSRTS.FuelNeededToLaunchAtDist((float)num, this.parent.GetComp<CompLaunchableSRTS>().BaseFuelPerTile).ToString("0.#")), MessageTypeDefOf.RejectInput, false);
                 return false;
             }
-            if(Find.WorldObjects.AnyMapParentAt(target.Tile))
+            if (Find.WorldObjects.AnyMapParentAt(target.Tile))
             {
                 MapParent targetMapParent = Find.WorldObjects.MapParentAt(target.Tile);
-                if(SRTSArrivalActionBombRun.CanBombSpecificCell(null, targetMapParent))
+                if (SRTSArrivalActionBombRun.CanBombSpecificCell(null, targetMapParent))
                 {
                     Map targetMap = targetMapParent.Map;
                     Current.Game.CurrentMap = targetMap;
@@ -167,6 +167,11 @@ namespace SRTS
                     }, Tex2D.LauncherTargeting);
                     return true;
                 }
+                else if (SRTSHelper.CEModLoaded && CEHelper.CanBombSpecificCell(null, targetMapParent))
+                {
+                    TryLaunchBombRun(target.Tile, new Pair<IntVec3, IntVec3>(IntVec3.Invalid, IntVec3.Invalid), null, targetMapParent);
+                    return true;
+                }
             }
             Messages.Message("CannotBombMap".Translate(), MessageTypeDefOf.RejectInput, false);
             return false;
@@ -187,7 +192,7 @@ namespace SRTS
 
             Map map = this.parent.Map;
             int num = Find.WorldGrid.TraversalDistanceBetween(map.Tile, destTile);
-            if(num > CompLauncher.MaxLaunchDistance)
+            if (num > CompLauncher.MaxLaunchDistance)
             {
                 return;
             }
@@ -217,8 +222,14 @@ namespace SRTS
             srtsLeaving.rotation = CompLauncher.FuelingPortSource.Rotation;
             srtsLeaving.groupID = groupID;
             srtsLeaving.destinationTile = destTile;
-            srtsLeaving.arrivalAction = new SRTSArrivalActionBombRun(mapParent, targetPoints, bombCells, this.bombType, map, CompLauncher.FuelingPortSource.Position);
-
+            if (map != null && bombCells != null)
+            {
+                srtsLeaving.arrivalAction = new SRTSArrivalActionBombRun(mapParent, targetPoints, bombCells, this.bombType, map, CompLauncher.FuelingPortSource.Position);
+            }
+            else
+            {
+                srtsLeaving.arrivalAction = new SRTSCEArrivalActionShelling(map, CompLauncher.FuelingPortSource.Position, bombType);
+            }
             comp1.CleanUpLoadingVars(map);
             IntVec3 position = fuelPortSource.Position;
             SRTSStatic.SRTSDestroy((Thing)fuelPortSource, DestroyMode.Vanish);
