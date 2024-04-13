@@ -12,7 +12,7 @@
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<OutputPath>..\..\v1.4\Assemblies\</OutputPath>
+		<OutputPath>..\..\v1.5\Assemblies\</OutputPath>
 		<DebugType>portable</DebugType>
 		<DebugSymbols>true</DebugSymbols>
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -35,14 +35,14 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3704" GeneratePathProperty="true" />
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4063" GeneratePathProperty="true" />
 		<PackageReference Include="Lib.Harmony" Version="2.2.2" ExcludeAssets="runtime" />
 	</ItemGroup>
 	<ItemGroup>
 		<Publicize Include="Assembly-CSharp:RimWorld.Planet.GlobalTargetInfo.tileInt" />
     <Publicize Include="Assembly-CSharp:RimWorld.Planet.GlobalTargetInfo.worldObjectInt" />
     <Publicize Include="Assembly-CSharp:RimWorld.Planet.GlobalTargetInfo.mapInt" />
-    <Publicize Include="CombatExtended"/>
+    <Publicize Include="CombatExtended" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Reference Include="CombatExtended">

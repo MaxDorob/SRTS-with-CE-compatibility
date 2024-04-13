@@ -113,7 +113,7 @@ namespace SRTS
             this.innerContainer.ClearAndDestroyContents(DestroyMode.Vanish);
         }
 
-        public override void DrawAt(Vector3 drawLoc, bool flip = false)
+        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             Thing thingForGraphic = this.GetThingForGraphic();
             float extraRotation = this.angle;
