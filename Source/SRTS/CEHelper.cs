@@ -3,6 +3,7 @@ using CombatExtended.WorldObjects;
 using RimWorld.Planet;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,6 +74,9 @@ namespace SRTS
                 }
             }
         }
+
+        internal static IEnumerable<ThingDef> ExplosivesDefs(string explosivesString) => DefDatabase<AmmoDef>.AllDefs.Where(x => x.isMortarAmmo && !SRTSMod.mod.settings.allowedBombs.Contains(x.defName)
+                    && CultureInfo.CurrentCulture.CompareInfo.IndexOf(x.defName, explosivesString, CompareOptions.IgnoreCase) >= 0).Cast<ThingDef>().ToList();
 
         internal static bool CanBombSpecificCell(IEnumerable<IThingHolder> pods, MapParent mapParent)
         {
