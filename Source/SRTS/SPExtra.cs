@@ -332,39 +332,6 @@ namespace SPExtended
             return Rot4.Invalid;
         }
 
-        /// <summary>
-        /// Get direction of river in Rot4 value. (Can be either start or end of River)
-        /// </summary>
-        /// <param name="map"></param>
-        /// <returns></returns>
-        public static Rot4 RiverDirection(Map map)
-        {
-            List<Tile.RiverLink> rivers = Find.WorldGrid[map.Tile].Rivers;
-
-            float angle = Find.WorldGrid.GetHeadingFromTo(map.Tile, (from r1 in rivers
-                                                                     orderby -r1.river.degradeThreshold
-                                                                     select r1).First<Tile.RiverLink>().neighbor);
-            if (angle < 45)
-            {
-                return Rot4.South;
-            }
-            else if (angle < 135)
-            {
-                return Rot4.East;
-            }
-            else if (angle < 225)
-            {
-                return Rot4.North;
-            }
-            else if (angle < 315)
-            {
-                return Rot4.West;
-            }
-            else
-            {
-                return Rot4.South;
-            }
-        }
 
         /// <summary>
         /// Draw vertical fillable bar
