@@ -5,6 +5,7 @@ global using TransportPodsArrivalAction = RimWorld.Planet.TransportersArrivalAct
 global using TransportPodsArrivalAction_FormCaravan = RimWorld.Planet.TransportersArrivalAction_FormCaravan;
 global using ActiveDropPodInfo = RimWorld.ActiveTransporterInfo;
 global using ActiveDropPod = RimWorld.ActiveTransporter;
+global using TransportPodsArrivalAction_VisitSite = RimWorld.Planet.TransportersArrivalAction_VisitSite;
 global using IActiveDropPod = RimWorld.IActiveTransporter;
 #endif
 using System.Reflection;
