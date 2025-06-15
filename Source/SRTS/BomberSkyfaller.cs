@@ -120,13 +120,14 @@ namespace SRTS
             this.Graphic.Draw(drawLoc, !flip ? thingForGraphic.Rotation.Opposite : thingForGraphic.Rotation, thingForGraphic, extraRotation);
             this.DrawDropSpotShadow();
         }
-
         public override void Tick()
+
         {
             try
             {
-
+#if !RELEASE1_6
                 this.innerContainer.ThingOwnerTick(true);
+#endif
                 this.ticksToExit--;
                 if (bombCells.Any() && Math.Abs(this.DrawPosCell.x - bombCells.First().x) < 3 && Math.Abs(this.DrawPosCell.z - bombCells.First().z) < 3)
                 {

@@ -21,7 +21,19 @@ namespace SRTS
             var harmony = new Harmony("SRTSExpanded.smashphil.neceros");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
             //Harmony.DEBUG = true;
-
+            harmony.Patch(original: AccessTools.Method(type: typeof(Caravan), name: nameof(Caravan.GetGizmos)), prefix: null,
+    postfix: new HarmonyMethod(typeof(StartUp),
+    nameof(LaunchAndBombGizmosPassthrough)));
+            harmony.Patch(original: AccessTools.Method(type: typeof(Targeter), name: nameof(Targeter.TargeterOnGUI)), prefix: null,
+    postfix: new HarmonyMethod(typeof(StartUp),
+    nameof(DrawBombingTargeter)));
+            harmony.Patch(original: AccessTools.Method(type: typeof(Targeter), name: nameof(Targeter.ProcessInputEvents)), prefix: null,
+                postfix: new HarmonyMethod(typeof(StartUp),
+                nameof(ProcessBombingInputEvents)));
+            harmony.Patch(original: AccessTools.Method(type: typeof(Targeter), name: nameof(Targeter.TargeterUpdate)), prefix: null,
+                postfix: new HarmonyMethod(typeof(StartUp),
+                nameof(BombTargeterUpdate)));
+#if !RELEASE1_6
             /* Mechanics and Rendering */
             harmony.Patch(original: AccessTools.Method(type: typeof(CompTransporter), name: nameof(CompTransporter.CompGetGizmosExtra)), prefix: null,
                 postfix: new HarmonyMethod(typeof(StartUp),
@@ -48,15 +60,7 @@ namespace SRTS
             harmony.Patch(original: AccessTools.Method(type: typeof(TransportPodsArrivalActionUtility), name: nameof(TransportPodsArrivalActionUtility.DropTravelingTransportPods)),
                 prefix: new HarmonyMethod(typeof(StartUp),
                 nameof(DropSRTSExactSpot)));
-            harmony.Patch(original: AccessTools.Method(type: typeof(Targeter), name: nameof(Targeter.TargeterOnGUI)), prefix: null,
-                postfix: new HarmonyMethod(typeof(StartUp),
-                nameof(DrawBombingTargeter)));
-            harmony.Patch(original: AccessTools.Method(type: typeof(Targeter), name: nameof(Targeter.ProcessInputEvents)), prefix: null,
-                postfix: new HarmonyMethod(typeof(StartUp),
-                nameof(ProcessBombingInputEvents)));
-            harmony.Patch(original: AccessTools.Method(type: typeof(Targeter), name: nameof(Targeter.TargeterUpdate)), prefix: null,
-                postfix: new HarmonyMethod(typeof(StartUp),
-                nameof(BombTargeterUpdate)));
+
 
             /* Custom Settings */
             harmony.Patch(original: AccessTools.Property(type: typeof(TravelingTransportPods), name: "TraveledPctStepPerTick").GetGetMethod(nonPublic: true),
@@ -105,9 +109,7 @@ namespace SRTS
             //harmony.Patch(original: AccessTools.Method(type: typeof(MainTabWindow_Research), name: "DrawResearchPrereqs"), prefix: null,
             //   postfix: new HarmonyMethod(typeof(StartUp),
             //   nameof(DrawCustomResearchPrereqs)));
-            harmony.Patch(original: AccessTools.Method(type: typeof(Caravan), name: nameof(Caravan.GetGizmos)), prefix: null,
-                postfix: new HarmonyMethod(typeof(StartUp),
-                nameof(LaunchAndBombGizmosPassthrough)));
+
 
 
             /* Destructive Patch Fixes */
@@ -135,6 +137,7 @@ namespace SRTS
             //harmony.Unpatch(AccessTools.Method(type: typeof(Dialog_LoadTransporters), name: "AddPawnsToTransferables"), HarmonyPatchType.Prefix, "HugsLib.ShipInteriorMod2");
             /*bool flag = harmony.HasAnyPatches("HugsLib.ShipInteriorMod2");
             Log.Message("SoS2: " + flag);*/
+#endif
         }
 
         /*public static IEnumerable<CodeInstruction> ErrorOnNoPawnsTranspiler(IEnumerable<CodeInstruction> instructions, ILGenerator ilg)

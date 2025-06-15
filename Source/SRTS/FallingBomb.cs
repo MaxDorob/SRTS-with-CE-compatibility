@@ -92,8 +92,11 @@ namespace SRTS
             matrix.SetTRS(pos, rot.AsQuat, s);
             Graphics.DrawMesh(MeshPool.plane10Back, matrix, material, 0, null, 0, FallingBomb.shadowPropertyBlock);
         }
-
+#if RELEASE1_6
+        protected override void Tick()
+#else
         public override void Tick()
+#endif
         {
             if(ticksRemaining < 0)
             {
@@ -118,7 +121,7 @@ namespace SRTS
             }
             if(def.projectileWhenLoaded?.projectile != null)
             {
-                GenExplosion.DoExplosion(PositionHeld, map, explosionRadius, projectile.damageDef, this, damAmount: projectile.GetDamageAmount(1), armorPenetration: projectile.GetArmorPenetration(1), 
+                GenExplosion.DoExplosion(PositionHeld, map, explosionRadius, projectile.damageDef, this, damAmount: (int)projectile.GetDamageAmount(1), armorPenetration: projectile.GetArmorPenetration(1), 
                     explosionSound: projectile.soundExplode, projectile: def.projectileWhenLoaded, 
                     postExplosionSpawnThingDef: projectile.postExplosionSpawnThingDef, postExplosionSpawnChance: projectile.postExplosionSpawnChance,
                     postExplosionSpawnThingCount: projectile.postExplosionSpawnThingCount, applyDamageToExplosionCellsNeighbors: projectile.applyDamageToExplosionCellsNeighbors,

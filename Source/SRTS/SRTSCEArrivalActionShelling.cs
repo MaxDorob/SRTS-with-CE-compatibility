@@ -17,6 +17,10 @@ namespace SRTS
             get;
             private set;
         }
+#if RELEASE1_6
+        public override bool GeneratesMap => true;
+#endif
+
         public SRTSCEArrivalActionShelling(Map sourceMap, IntVec3 originalLandingSpot, BombingType bombType)
         {
             Map = sourceMap;
@@ -29,7 +33,13 @@ namespace SRTS
         public Thing Ship(ActiveDropPodInfo pod) => pod.innerContainer.Single(x => x.TryGetComp<CompLaunchableSRTS>() != null);
         public IEnumerable<Thing> Shells(ActiveDropPodInfo pod) => pod.innerContainer.Where(y => SRTSMod.mod.settings.allowedBombs.Contains(y.def.defName));
         public IEnumerable<Thing> Shells(IEnumerable<ActiveDropPodInfo> pods) => Shells(pods.Single());
-        public override void Arrived(List<ActiveDropPodInfo> pods, int tile)
+        public override void Arrived(List<ActiveDropPodInfo> pods,
+#if RELEASE1_6
+            PlanetTile tile
+#else
+            int tile
+#endif
+            )
         {
             Arrived(pods.Single(), tile);
             GoBack(pods.Single(), tile);

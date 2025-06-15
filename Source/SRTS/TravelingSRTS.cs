@@ -26,7 +26,11 @@ namespace SRTS
                         texPath += "_north";
                     material = MaterialPool.MatFrom(texPath, ShaderDatabase.WorldOverlayTransparentLit, WorldMaterials.WorldObjectRenderQueue);
                 }
-                return ExpandableWorldObjectsUtility.TransitionPct > 0 ? flyingThing.Graphic.MatNorth : material;
+                return ExpandableWorldObjectsUtility.TransitionPct
+#if RELEASE1_6
+                    (this)
+#endif      
+                    > 0 ? flyingThing.Graphic.MatNorth : material;
             }
         }
 
@@ -46,10 +50,20 @@ namespace SRTS
             if (!this.HiddenBehindTerrainNow())
             {
 
-                float averageTileSize = Find.WorldGrid.averageTileSize;
-                float transitionPct = ExpandableWorldObjectsUtility.TransitionPct;
-            
-                if(transitionSize < 1)
+                float averageTileSize = Find.WorldGrid.
+#if RELEASE1_6
+                    AverageTileSize;
+#else
+                    averageTileSize;
+#endif
+
+                float transitionPct = ExpandableWorldObjectsUtility.TransitionPct
+#if RELEASE1_6
+                    (this)
+#endif
+                    ;
+
+                if (transitionSize < 1)
                     transitionSize += TransitionTakeoff * (int)Find.TickManager.CurTimeSpeed;
                 float drawPct = (1 + (transitionPct * Find.WorldCameraDriver.AltitudePercent * ExpandingResize)) * transitionSize;
                 if(directionFacing == default)
