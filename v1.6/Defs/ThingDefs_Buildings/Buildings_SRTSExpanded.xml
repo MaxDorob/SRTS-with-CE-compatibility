@@ -77,7 +77,18 @@ Internal power plant: 400w</description>
         <restEffectiveness>0.5</restEffectiveness>  <!-- How well (1.0 = 100%) passengers can rest, eat, heal while aboard -->
         <massCapacity>120</massCapacity> <!-- weight in kg -->
       </li>
+			<li Class="CompProperties_Launchable">
+				<fuelPerTile>4</fuelPerTile>
+				<minFuelCost>50</minFuelCost>
+				<skyfallerLeaving>SRTSSuperpod_Leaving</skyfallerLeaving>
+				<worldObjectDef>TravelingSRTS</worldObjectDef>
+				<cooldownTicks>3750</cooldownTicks>
+				<!-- 1.5 hours -->
+				<fixedLaunchDistanceMax>42</fixedLaunchDistanceMax>
+				<cooldownEndedMessage>{0} is ready to launch again.</cooldownEndedMessage>
+			</li>
       <li Class="SRTS.CompProperties_LaunchableSRTS">
+				<shipDef>SRTSSuperpod</shipDef>
         <travelSpeed>1</travelSpeed> <!-- Vanilla drop pod is 25 speed, min 1, max 100 -->
         <fuelPerTile>3.5</fuelPerTile> <!-- Drop pod cost is 2.25 per tile. min 1, max 6. Why'd we cap it at 6? I can't remember. -->
         <minPassengers>1</minPassengers>
