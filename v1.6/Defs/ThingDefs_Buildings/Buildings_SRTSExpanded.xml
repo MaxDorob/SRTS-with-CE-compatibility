@@ -180,7 +180,18 @@ Internal power plant: 650w</description> <!-- description of course... -->
         <restEffectiveness>0.75</restEffectiveness>
         <massCapacity>170</massCapacity>
       </li>
+			<li Class="CompProperties_Launchable">
+				<fuelPerTile>4</fuelPerTile>
+				<minFuelCost>50</minFuelCost>
+				<skyfallerLeaving>SRTSSkip_Leaving</skyfallerLeaving>
+				<worldObjectDef>TravelingSRTS</worldObjectDef>
+				<cooldownTicks>3750</cooldownTicks>
+				<!-- 1.5 hours -->
+				<fixedLaunchDistanceMax>42</fixedLaunchDistanceMax>
+				<cooldownEndedMessage>{0} is ready to launch again.</cooldownEndedMessage>
+			</li>
       <li Class="SRTS.CompProperties_LaunchableSRTS"> <!-- required for SRTS like functionality (ie. space ship reusable drop pod -->
+				<shipDef>SRTSSkip</shipDef>
         <travelSpeed>3</travelSpeed>
         <fuelPerTile>2.25</fuelPerTile>
         <minPassengers>1</minPassengers>
