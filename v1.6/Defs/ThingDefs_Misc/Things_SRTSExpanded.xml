@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <ThingDef Name="BomberSkyfallerBase" ParentName="EtherealThingBase" Abstract="True">
+  <ThingDef Name="BomberShuttleSkyfallerBase" ParentName="EtherealThingBase" Abstract="True">
     <thingClass>BomberSkyfaller</thingClass>
     <useHitPoints>false</useHitPoints>
     <drawOffscreen>true</drawOffscreen>
@@ -13,7 +13,17 @@
 
   <!-- Superpod -->
 
-  <ThingDef ParentName="SkyfallerBase">
+	<TransportShipDef>
+		<defName>SRTSSuperpod</defName>
+		<shipThing>SRTSSuperpod</shipThing>
+		<arrivingSkyfaller>SRTSSuperpod_Incoming</arrivingSkyfaller>
+		<leavingSkyfaller>SRTSSuperpod_Leaving</leavingSkyfaller>
+		<worldObject>TravelingSRTS</worldObject>
+		<maxLaunchDistance>86</maxLaunchDistance>
+		<playerShuttle>true</playerShuttle>
+	</TransportShipDef>
+	
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRTSSuperpod_Incoming</defName>
     <label>Superpod incoming</label>
     <thingClass>SRTS.SRTSIncoming</thingClass>
@@ -33,7 +43,7 @@
     </skyfaller>
   </ThingDef>
 
-  <ThingDef ParentName="SkyfallerBase">
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRTSSuperpod_Leaving</defName>
     <label>Superpod leaving</label>
     <thingClass>SRTS.SRTSLeaving</thingClass>
@@ -79,7 +89,7 @@
 
   <!-- Skip -->
 
-  <ThingDef ParentName="SkyfallerBase">
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRTSSkip_Incoming</defName>
     <label>SRTS Skip incoming</label>
     <thingClass>SRTS.SRTSIncoming</thingClass>
@@ -99,7 +109,7 @@
     </skyfaller>
   </ThingDef>
 
-  <ThingDef ParentName="BomberSkyfallerBase">
+  <ThingDef ParentName="BomberShuttleSkyfallerBase">
     <defName>SRTSSkip_BomberRun</defName>
     <label>SRTS Skip Bombing</label>
     <thingClass>SRTS.SRTSBombing</thingClass>
@@ -120,7 +130,7 @@
     </skyfaller>
   </ThingDef>
 
-  <ThingDef ParentName="SkyfallerBase">
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRTSSkip_Leaving</defName>
     <label>SRTS Skip leaving</label>
     <thingClass>SRTS.SRTSLeaving</thingClass>
@@ -166,7 +176,7 @@
 
   <!-- SRAF -->
 
-  <ThingDef ParentName="SkyfallerBase">
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRAF_Incoming</defName>
     <label>SRTF incoming</label>
     <thingClass>SRTS.SRTSIncoming</thingClass>
@@ -186,7 +196,7 @@
     </skyfaller>
   </ThingDef>
 
-  <ThingDef ParentName="SkyfallerBase">
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRAF_Leaving</defName>
     <label>SRTF leaving</label>
     <thingClass>SRTS.SRTSLeaving</thingClass>
@@ -235,7 +245,7 @@
 
   <!-- TEK7 -->
 
-  <ThingDef ParentName="SkyfallerBase">
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRAFTek_Incoming</defName>
     <label>SRAFTek7 incoming</label>
     <thingClass>SRTS.SRTSIncoming</thingClass>
@@ -255,7 +265,7 @@
     </skyfaller>
   </ThingDef>
 
-  <ThingDef ParentName="SkyfallerBase">
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRAFTek_Leaving</defName>
     <label>SRAFTek7 leaving</label>
     <thingClass>SRTS.SRTSLeaving</thingClass>
@@ -304,10 +314,20 @@
   
   <!-- SRTS MkII -->
 
-  <ThingDef ParentName="SkyfallerBase">
+	<TransportShipDef>
+		<defName>SRTSMkII</defName>
+		<shipThing>SRTSMkII</shipThing>
+		<arrivingSkyfaller>SRTSMkII_Incoming</arrivingSkyfaller>
+		<leavingSkyfaller>SRTSMkII_Leaving</leavingSkyfaller>
+		<worldObject>TravelingSRTS</worldObject>
+		<maxLaunchDistance>180</maxLaunchDistance>
+		<playerShuttle>true</playerShuttle>
+	</TransportShipDef>
+
+	<ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRTSMkII_Incoming</defName>
     <label>SRTS Mk.II incoming</label>
-    <thingClass>SRTS.SRTSIncoming</thingClass>
+    <thingClass>PassengerShuttleIncoming</thingClass>
     <graphicData>
       <texPath>Albatross</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
@@ -321,10 +341,30 @@
       <anticipationSound>DropPod_Fall</anticipationSound>
       <anticipationSoundTicks>100</anticipationSoundTicks>
       <motesPerCell>0</motesPerCell>
+			<rotationCurve>
+				<points>
+					<li>(0,30)</li>
+					<li>(0.5,5)</li>
+					<li>(0.9,-5)</li>
+					<li>(0.95,0)</li>
+				</points>
+			</rotationCurve>
+			<zPositionCurve>
+				<points>
+					<li>(0.95,2.5)</li>
+					<li>(1,0)</li>
+				</points>
+			</zPositionCurve>
+			<speedCurve>
+				<points>
+					<li>(0.6,0.6)</li>
+					<li>(0.95,0.1)</li>
+				</points>
+			</speedCurve>
     </skyfaller>
   </ThingDef>
   
-  <ThingDef ParentName="BomberSkyfallerBase">
+  <ThingDef ParentName="BomberShuttleSkyfallerBase">
     <defName>SRTSMkII_BomberRun</defName>
     <label>SRTS Mk.II Bombing</label>
     <thingClass>SRTS.SRTSBombing</thingClass>
@@ -345,10 +385,10 @@
     </skyfaller>
   </ThingDef>
 
-  <ThingDef ParentName="SkyfallerBase">
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRTSMkII_Leaving</defName>
     <label>SRTS Mk.II leaving</label>
-    <thingClass>SRTS.SRTSLeaving</thingClass>
+    <thingClass>PassengerShuttleLeaving</thingClass>
     <graphicData>
       <texPath>Albatross</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
@@ -363,6 +403,25 @@
       <anticipationSound>Sound_Launch</anticipationSound>
       <anticipationSoundTicks>-10</anticipationSoundTicks>
       <ticksToImpactRange><min>-40</min><max>-15</max></ticksToImpactRange>
+			<rotationCurve>
+				<points>
+					<li>(0,0)</li>
+					<li>(0.15,10)</li>
+					<li>(0.5,-5)</li>
+				</points>
+			</rotationCurve>
+			<zPositionCurve>
+				<points>
+					<li>(0,0)</li>
+					<li>(0.08,2)</li>
+				</points>
+			</zPositionCurve>
+			<speedCurve>
+				<points>
+					<li>(0,0.2)</li>
+					<li>(0.4,0.7)</li>
+				</points>
+			</speedCurve>
     </skyfaller>
   </ThingDef>
 
@@ -394,7 +453,7 @@
 
   <!-- SRTS MkIII -->
 
-  <ThingDef ParentName="SkyfallerBase">
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRTSMkIII_Incoming</defName>
     <label>SRTS Mk.III incoming</label>
     <thingClass>SRTS.SRTSIncoming</thingClass>
@@ -414,7 +473,7 @@
     </skyfaller>
   </ThingDef>
 
-  <ThingDef ParentName="BomberSkyfallerBase">
+  <ThingDef ParentName="BomberShuttleSkyfallerBase">
     <defName>SRTSMkIII_BomberRun</defName>
     <label>SRTS Mk.III Bombing</label>
     <thingClass>SRTS.SRTSBombing</thingClass>
@@ -435,7 +494,7 @@
     </skyfaller>
   </ThingDef>
 
-  <ThingDef ParentName="SkyfallerBase">
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRTSMkIII_Leaving</defName>
     <label>SRTS Mk.III leaving</label>
     <thingClass>SRTS.SRTSLeaving</thingClass>
@@ -484,7 +543,7 @@
 
     <!-- SRTS MkIIIp -->
 
-  <ThingDef ParentName="SkyfallerBase">
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRTSMkIIIp_Incoming</defName>
     <label>SRTS Mk.IIIp incoming</label>
     <thingClass>SRTS.SRTSIncoming</thingClass>
@@ -504,7 +563,7 @@
     </skyfaller>
   </ThingDef>
 
-  <ThingDef ParentName="SkyfallerBase">
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRTSMkIIIp_Leaving</defName>
     <label>SRTS Mk.IIIp leaving</label>
     <thingClass>SRTS.SRTSLeaving</thingClass>
@@ -553,7 +612,7 @@
 
   <!-- SRTS MkIV -->
 
-  <ThingDef ParentName="SkyfallerBase">
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRTSMkIV_Incoming</defName>
     <label>SRTS Mk.IV incoming</label>
     <thingClass>SRTS.SRTSIncoming</thingClass>
@@ -573,7 +632,7 @@
     </skyfaller>
   </ThingDef>
 
-  <ThingDef ParentName="BomberSkyfallerBase">
+  <ThingDef ParentName="BomberShuttleSkyfallerBase">
     <defName>SRTSMkIV_BomberRun</defName>
     <label>SRTS Mk.IV Bombing</label>
     <thingClass>SRTS.SRTSBombing</thingClass>
@@ -594,7 +653,7 @@
     </skyfaller>
   </ThingDef>
 
-  <ThingDef ParentName="SkyfallerBase">
+  <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRTSMkIV_Leaving</defName>
     <label>SRTS Mk.IV leaving</label>
     <thingClass>SRTS.SRTSLeaving</thingClass>
