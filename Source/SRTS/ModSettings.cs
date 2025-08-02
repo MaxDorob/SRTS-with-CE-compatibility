@@ -377,6 +377,7 @@ namespace SRTS
                 Rect pictureRect = new Rect(inRect.width / 2, inRect.height / 3, 300f, 300f);
                 GUI.DrawTexture(pictureRect, ContentFinder<Texture2D>.Get(texPath, true));
                 DialogSettings.Draw_Label(new Rect(pictureRect.x, inRect.height / 3 - 60f, 300f, 100f), props.referencedDef.label.Replace("SRTS ", ""), Color.clear, Color.white, GameFont.Medium, TextAnchor.MiddleCenter);
+                DialogSettings.Draw_Label(new Rect(pictureRect.x, inRect.height / 3 - 20f, 300f, 100f), props.referencedDef.defName, Color.clear, Color.white, GameFont.Medium, TextAnchor.MiddleCenter);
 
                 var valueFont = Text.Font;
                 var alignment = Text.Anchor;
@@ -467,7 +468,7 @@ namespace SRTS
                 mod.settings.defProperties.Add(defName, new SRTS_DefProperties(DefDatabase<ThingDef>.GetNamed(defName))); //Initialize
             }
 
-            switch(stat)
+            switch (stat)
             {
                 case StatName.massCapacity:
                     return (T)Convert.ChangeType(mod.settings.defProperties[defName].massCapacity, typeof(T));
@@ -486,6 +487,7 @@ namespace SRTS
                 /* ------------------ */
 
                 case StatName.bombingSpeed:
+                    Log.Message($"Bombing speed of {defName} is {mod.settings.defProperties[defName].bombingSpeed}");
                     return (T)Convert.ChangeType(mod.settings.defProperties[defName].bombingSpeed, typeof(T));
                 case StatName.numberBombs:
                     return (T)Convert.ChangeType(mod.settings.defProperties[defName].numberBombs, typeof(T));

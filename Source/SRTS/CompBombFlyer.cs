@@ -16,6 +16,9 @@ namespace SRTS
         public Building SRTS_Launcher => this.parent as Building;
         public CompLaunchableSRTS CompLauncher => SRTS_Launcher.GetComp<CompLaunchableSRTS>();
         public CompProperties_BombsAway Props => (CompProperties_BombsAway)this.props;
+
+
+
         //public override IEnumerable<Gizmo> CompGetGizmosExtra()
         //{
         //    if (SRTS_Launcher.GetComp<CompLaunchableSRTS>().LoadingInProgressOrReadyToLaunch)
@@ -238,5 +241,23 @@ namespace SRTS
         //}
 
         public BombingType bombType;
+
+        internal IEnumerable<FloatMenuOption> FloatMenuOptionsAt(PlanetTile tile, Action<PlanetTile, TransportPodsArrivalAction> launchAction)
+        {
+            List<WorldObject> worldObjects = Find.WorldObjects.AllWorldObjects;
+            for (int i = 0; i < worldObjects.Count; i++)
+            {
+                var wObj = worldObjects[i];
+                if (wObj.Tile == tile && wObj is MapParent mapParent)
+                {
+                    foreach (var option in TransporterArrivalOption_PrepareBombRun.GetFloatMenuOptions(launchAction, this.parent.GetComp<CompTransporter>().TransportersInGroup(this.parent.Map), mapParent))
+                    {
+                        yield return option;
+                    }
+
+
+                }
+            }
+        }
     }
 }

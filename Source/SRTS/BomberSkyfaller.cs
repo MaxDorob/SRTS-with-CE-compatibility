@@ -9,28 +9,19 @@ using UnityEngine;
 using SPExtended;
 using Verse.Sound;
 using CombatExtended;
+using static UnityEngine.UI.Image;
 
 namespace SRTS
 {
     [StaticConstructorOnStartup]
-    public class BomberSkyfaller : Thing, IThingHolder
+    public class BomberSkyfaller : PassengerShuttleLeaving
     {
-        public BomberSkyfaller()
+        public BomberSkyfaller() : base()
         {
             this.innerContainer = new ThingOwner<Thing>(this);
             this.bombCells = new List<IntVec3>();
         }
 
-        public override Graphic Graphic
-        {
-            get
-            {
-                Thing thingForGraphic = this.GetThingForGraphic();
-                if (thingForGraphic == this)
-                    return base.Graphic;
-                return thingForGraphic.Graphic.ExtractInnerGraphicFor(thingForGraphic).GetShadowlessGraphic();
-            }
-        }
         public override void SetFaction(Faction newFaction, Pawn recruiter = null)
         {
             factionInt = newFaction;
@@ -39,185 +30,102 @@ namespace SRTS
         {
             get
             {
-                switch (this.def.skyfaller.movementType)
-                {
-                    case SkyfallerMovementType.Accelerate:
-                        return SkyfallerDrawPosUtility.DrawPos_Accelerate(base.DrawPos, this.ticksToExit, this.angle, this.speed);
-                    case SkyfallerMovementType.ConstantSpeed:
-                        return SkyfallerDrawPosUtility.DrawPos_ConstantSpeed(base.DrawPos, this.ticksToExit, this.angle, this.speed);
-                    case SkyfallerMovementType.Decelerate:
-                        return SkyfallerDrawPosUtility.DrawPos_Decelerate(base.DrawPos, this.ticksToExit, this.angle, this.speed);
-                    default:
-                        Log.ErrorOnce("SkyfallerMovementType not handled: " + this.def.skyfaller.movementType, this.thingIDNumber ^ 1948576711);
-                        return SkyfallerDrawPosUtility.DrawPos_Accelerate(base.DrawPos, this.ticksToExit, this.angle, this.speed);
-                }
+                return Vector3.Lerp(enterPos.ToVector3Shifted(), Position.ToVector3Shifted(), ((float)ticksToImpact) / ticksToDiscard).WithY(this.def.Altitude);
             }
         }
-
-        public IntVec3 DrawPosCell
-        {
-            get
-            {
-                return new IntVec3((int)this.DrawPos.x, (int)this.DrawPos.y, (int)this.DrawPos.z);
-            }
-        }
-
-        private Material ShadowMaterial
-        {
-            get
-            {
-                if (this.cachedShadowMaterial is null && !this.def.skyfaller.shadow.NullOrEmpty())
-                    this.cachedShadowMaterial = MaterialPool.MatFrom(this.def.skyfaller.shadow, ShaderDatabase.Transparent);
-                return this.cachedShadowMaterial;
-            }
-        }
+        public IntVec3 enterPos;
+        public float Speed => SRTSMod.GetStatFor<float>(ThingOwnerUtility.GetAllThingsRecursively(this).Single(x => x.HasComp<CompLaunchableSRTS>()).def.defName, StatName.bombingSpeed) * 10;
 
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Deep.Look<ThingOwner>(ref this.innerContainer, "innerContainer", new object[]
-            {
-                this
-            });
-            Scribe_References.Look(ref originalMap, "originalMap");
-            Scribe_Values.Look<int>(ref ticksToExit, "ticksToExit", 0, false);
             Scribe_Values.Look<float>(ref angle, "angle", 0f, false);
             Scribe_Values.Look(ref sourceLandingSpot, "sourceLandingSpot");
             Scribe_Collections.Look<IntVec3>(ref bombCells, "bombCells", LookMode.Value);
 
             Scribe_Values.Look(ref numberOfBombs, "numberOfBombs");
-            Scribe_Values.Look(ref speed, "speed");
             Scribe_Values.Look(ref radius, "radius");
             Scribe_Defs.Look(ref sound, "sound");
         }
 
-        public override void PostMake()
-        {
-            base.PostMake();
-        }
+
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-            if (!respawningAfterLoad)
-            {
-                this.ticksToExit = Mathf.CeilToInt((float)SPExtra.Distance(new IntVec3(map.Size.x / 2, map.Size.y, map.Size.z / 2), this.Position) * 2 / this.speed);
-            }
             if (sound != null)
                 sound.PlayOneShotOnCamera(this.Map);
+            if (!respawningAfterLoad)
+            {
+                ticksToDiscard = Mathf.CeilToInt((Position - enterPos).LengthHorizontal / Speed) * GenTicks.TicksPerRealSecond;
+            }
         }
 
-        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
+
+        protected override void GetDrawPositionAndRotation(ref Vector3 drawLoc, out float extraRotation)
         {
-            base.Destroy(mode);
-            this.innerContainer.ClearAndDestroyContents(DestroyMode.Vanish);
+            base.GetDrawPositionAndRotation(ref drawLoc, out extraRotation);
+            extraRotation += Vector3.Angle((Position - enterPos).ToVector3Shifted(), Vector3.forward);
         }
 
-        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
+        protected override void Tick()
         {
-            Thing thingForGraphic = this.GetThingForGraphic();
-            float extraRotation = this.angle;
-            this.Graphic.Draw(drawLoc, !flip ? thingForGraphic.Rotation.Opposite : thingForGraphic.Rotation, thingForGraphic, extraRotation);
-            this.DrawDropSpotShadow();
-        }
-        public override void Tick()
-
-        {
+            base.Tick();
             try
             {
-#if !RELEASE1_6
-                this.innerContainer.ThingOwnerTick(true);
-#endif
-                this.ticksToExit--;
-                if (bombCells.Any() && Math.Abs(this.DrawPosCell.x - bombCells.First().x) < 3 && Math.Abs(this.DrawPosCell.z - bombCells.First().z) < 3)
+                var bombCell = bombCells.FirstOrFallback(x => x.InHorDistOf(DrawPos.ToIntVec3(), 3f), IntVec3.Invalid);
+                Log.Message(string.Join("\n", bombCells.Select(x => $"{x} in distance {x.DistanceTo(DrawPos.ToIntVec3())} to {DrawPos}")));
+                if (bombCell != IntVec3.Invalid)
                 {
-                    this.DropBomb();
-                }
-                if (this.ticksToExit == 0)
-                {
-                    this.ExitMap();
+                    this.DropBombs(bombCell);
+                    bombCells.Remove(bombCell);
                 }
             }
             catch (Exception ex)
             {
-                Log.Error($"Exception thrown while ticking {this}. Immediately sending to world to avoid loss of contents. Ex=\"{ex.Message}\"");
-                ExitMap();
+
+                Log.Error($"Failed to drop bombs: {ex.Message}" +
+                    $"\nStackTrace:\n{ex.StackTrace}" +
+                    $"\n------------------------------\n");
             }
+
         }
-
-        private void DropBomb()
+        private int BombsPerCell => bombs.Count / bombCells.Count;
+        private void DropBombs(IntVec3 bombCell)
         {
-            for (int i = 0; i < (bombType == BombingType.precise ? this.precisionBombingNumBombs : 1); ++i)
+            var bombsPerCell = BombsPerCell;
+            for (int i = 0; i < bombsPerCell; i++)
             {
-                if (innerContainer.Any(x => ((ActiveDropPod)x)?.Contents.innerContainer.Any(y => SRTSMod.mod.settings.allowedBombs.Contains(y.def.defName)) ?? false))
+                DropSingleBomb(bombs[0], bombCell);
+                if (bombs[0].stackCount <= 0)
                 {
-                    ActiveDropPod srts = (ActiveDropPod)innerContainer.First();
-
-                    Thing thing = srts?.Contents.innerContainer.FirstOrDefault(y => SRTSMod.mod.settings.allowedBombs.Contains(y.def.defName));
-                    if (thing is null)
-                        return;
-
-                    Thing thing2 = srts?.Contents.innerContainer.Take(thing, 1);
-
-                    IntVec3 bombPos = bombCells[0];
-                    if (bombType == BombingType.carpet)
-                        bombCells.RemoveAt(0);
-                    int timerTickExplode = 20 + Rand.Range(0, 5); //Change later to allow release timer
-                    if (SRTSHelper.CEModLoaded)
-                        goto Block_CEPatched;
-                    FallingBomb bombThing = new FallingBomb(thing2, thing2.TryGetComp<CompExplosive>(), this.Map, this.def.skyfaller.shadow);
-                    bombThing.HitPoints = int.MaxValue;
-                    bombThing.ticksRemaining = timerTickExplode;
-
-                    IntVec3 c = (from x in GenRadial.RadialCellsAround(bombPos, GetCurrentTargetingRadius(), true)
-                                 where x.InBounds(this.Map)
-                                 select x).RandomElementByWeight((IntVec3 x) => 1f - Mathf.Min(x.DistanceTo(this.Position) / GetCurrentTargetingRadius(), 1f) + 0.05f);
-                    bombThing.angle = this.angle + (SPTrig.LeftRightOfLine(this.DrawPosCell, this.Position, c) * -10);
-                    bombThing.speed = (float)SPExtra.Distance(this.DrawPosCell, c) / bombThing.ticksRemaining;
-                    Thing t = GenSpawn.Spawn(bombThing, c, this.Map);
-                    GenExplosion.NotifyNearbyPawnsOfDangerousExplosive(t, thing2.TryGetComp<CompExplosive>().Props.explosiveDamageType, null);
-                    continue;
-
-                    Block_CEPatched:;
-
-                    //IntVec3 c2 = (from x in GenRadial.RadialCellsAround(bombPos, GetCurrentTargetingRadius(), true)
-                    //              where x.InBounds(this.Map)
-                    //              select x).RandomElementByWeight((IntVec3 x) => 1f - Mathf.Min(x.DistanceTo(this.Position) / GetCurrentTargetingRadius(), 1f) + 0.05f);
-                    //CEbombThing.angle
-                    //var rotation = this.angle + (SPTrig.LeftRightOfLine(this.DrawPosCell, this.Position, c2) * -10);
-                    //var sourceLoc = new Vector2();
-                    //sourceLoc.Set(bombPos.x, bombPos.z);
-                    //float angleError = (3 * Mathf.PI / 2) / 20;//20% accuracy error
-                    //float rotationError = Rand.Range(-25f, 25f);
-                    //CE_Utility.LaunchProjectileCE(MyGetProjectile(thing2.def), sourceLoc, new LocalTargetInfo(bombPos), this, 3 * Mathf.PI / 2 + Rand.Range(-angleError, angleError), 0 + rotationError > 0 ? 0 + rotationError : 360 - rotationError, 40, Rand.Range(3f, 4.5f));
-                    CEHelper.CEDropBomb(bombPos, thing2, this, GetCurrentTargetingRadius());
-
+                    bombs.RemoveAt(0);
                 }
             }
-            if (bombType == BombingType.precise && bombCells.Any())
-                bombCells.Clear();
         }
-        /// <summary>
-        /// Copy of CE_Utility.GetProjectile. For some reason default ones returns HE explosives for any type of shells. Just added a predicate in asd.ammoTypes.FirstOrFallback
-        /// </summary>
-        /// <param name="thingDef"></param>
-        /// <returns></returns>
-        
-        private void ExitMap()
-        {
-            ActiveDropPod activeDropPod = (ActiveDropPod)ThingMaker.MakeThing(ThingDef.Named(this.def.defName.Split('_')[0] + "_Active"), null);
-            activeDropPod.Contents = new ActiveDropPodInfo();
-            activeDropPod.Contents.innerContainer.TryAddRangeOrTransfer((IEnumerable<Thing>)((ActiveDropPod)innerContainer.First()).Contents.innerContainer, true, true);
 
-            TravelingSRTS travelingTransportPods = (TravelingSRTS)WorldObjectMaker.MakeWorldObject(DefDatabase<WorldObjectDef>.GetNamed("TravelingSRTS", true));
-            travelingTransportPods.Tile = this.Map.Tile;
-            travelingTransportPods.SetFaction(Faction.OfPlayer);
-            travelingTransportPods.destinationTile = this.originalMap.Tile;
-            travelingTransportPods.arrivalAction = new TransportPodsArrivalAction_LandInSpecificCell(this.originalMap.Parent, this.sourceLandingSpot);
-            travelingTransportPods.flyingThing = this;
-            Find.WorldObjects.Add((WorldObject)travelingTransportPods);
-            travelingTransportPods.AddPod(activeDropPod.Contents, true);
-            this.Destroy();
+        private void DropSingleBomb(Thing bombStack, IntVec3 bombPos)
+        {
+            int timerTickExplode = 20 + Rand.Range(0, 5); //Change later to allow release timer
+            var singleBomb = bombStack.stackCount <= 1 ? bombStack : bombStack.SplitOff(1);
+            if (SRTSHelper.CEModLoaded)
+            {
+                CEHelper.CEDropBomb(bombPos, singleBomb, this, GetCurrentTargetingRadius());
+            }
+            else
+            {
+                FallingBomb bombThing = new FallingBomb(singleBomb, singleBomb.TryGetComp<CompExplosive>(), this.Map, this.def.skyfaller.shadow);
+                bombThing.HitPoints = int.MaxValue;
+                bombThing.ticksRemaining = timerTickExplode;
+
+                IntVec3 c = (from x in GenRadial.RadialCellsAround(bombPos, GetCurrentTargetingRadius(), true)
+                             where x.InBounds(this.Map)
+                             select x).RandomElementByWeight((IntVec3 x) => 1f - Mathf.Min(x.DistanceTo(this.Position) / GetCurrentTargetingRadius(), 1f) + 0.05f);
+                bombThing.angle = this.angle + (SPTrig.LeftRightOfLine(this.DrawPos.ToIntVec3(), this.Position, c) * -10);
+                bombThing.speed = (float)SPExtra.Distance(this.DrawPos.ToIntVec3(), c) / bombThing.ticksRemaining;
+                Thing t = GenSpawn.Spawn(bombThing, c, this.Map);
+                GenExplosion.NotifyNearbyPawnsOfDangerousExplosive(t, singleBomb.TryGetComp<CompExplosive>().Props.explosiveDamageType, null);
+            }
         }
 
         private int GetCurrentTargetingRadius()
@@ -235,66 +143,13 @@ namespace SRTS
             }
         }
 
-        public ThingOwner GetDirectlyHeldThings()
-        {
-            return this.innerContainer;
-        }
-
-        public void GetChildHolders(List<IThingHolder> outChildren)
-        {
-            ThingOwnerUtility.AppendThingHoldersFromThings(outChildren, this.GetDirectlyHeldThings());
-        }
-
-        private Thing GetThingForGraphic()
-        {
-            if (this.def.graphicData != null || !this.innerContainer.Any)
-            {
-                return this;
-            }
-            return this.innerContainer[0];
-        }
-
-        private void DrawDropSpotShadow()
-        {
-            Material shadowMaterial = this.ShadowMaterial;
-            if (shadowMaterial == null)
-            {
-                return;
-            }
-            Skyfaller.DrawDropSpotShadow(base.DrawPos, base.Rotation, shadowMaterial, this.def.skyfaller.shadowSize, this.ticksToExit);
-        }
-
-        public static void DrawBombSpotShadow(Vector3 loc, Rot4 rot, Material material, Vector2 shadowSize, int ticksToExit)
-        {
-            if (rot.IsHorizontal)
-                Gen.Swap<float>(ref shadowSize.x, ref shadowSize.y);
-            ticksToExit = Mathf.Max(ticksToExit, 0);
-            Vector3 pos = loc;
-            pos.y = AltitudeLayer.Shadows.AltitudeFor();
-            float num = 1f + (float)ticksToExit / 100f;
-            Vector3 s = new Vector3(num * shadowSize.x, 1f, num * shadowSize.y);
-            Color white = Color.white;
-            if (ticksToExit > 150)
-                white.a = Mathf.InverseLerp(200f, 150f, (float)ticksToExit);
-            shadowPropertyBlock.SetColor(ShaderPropertyIDs.Color, white);
-            Matrix4x4 matrix = default(Matrix4x4);
-            matrix.SetTRS(pos, rot.AsQuat, s);
-            Graphics.DrawMesh(MeshPool.plane10Back, matrix, material, 0, null, 0, shadowPropertyBlock);
-        }
-
-        public ThingOwner innerContainer;
-
-        private int ticksToExit;
-
-        public float angle;
-
-        private Material cachedShadowMaterial;
 
         public SoundDef sound;
 
-        private static MaterialPropertyBlock shadowPropertyBlock = new MaterialPropertyBlock();
 
         public List<IntVec3> bombCells = new List<IntVec3>();
+
+        public List<Thing> bombs = new List<Thing>();
 
         public Map originalMap;
 
@@ -306,7 +161,6 @@ namespace SRTS
 
         public int precisionBombingNumBombs;
 
-        public float speed;
 
         public BombingType bombType;
     }

@@ -128,15 +128,16 @@
 
   <!-- Skip -->
 
-	<TransportShipDef>
+	<SRTS.BomberShipDef>
 		<defName>SRTSSkip</defName>
 		<shipThing>SRTSSkip</shipThing>
 		<arrivingSkyfaller>SRTSSkip_Incoming</arrivingSkyfaller>
 		<leavingSkyfaller>SRTSSkip_Leaving</leavingSkyfaller>
+		<bomberSkyfaller>SRTSSkip_BomberRun</bomberSkyfaller>
 		<worldObject>TravelingSRTS</worldObject>
 		<maxLaunchDistance>86</maxLaunchDistance>
 		<playerShuttle>true</playerShuttle>
-	</TransportShipDef>
+	</SRTS.BomberShipDef>
 
   <ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRTSSkip_Incoming</defName>
@@ -189,6 +190,7 @@
       <drawSize>4</drawSize>
     </graphicData>
     <skyfaller>
+			<reversed>true</reversed>
       <speed>0.85</speed>
       <movementType>ConstantSpeed</movementType>
       <shadow>Things/Skyfaller/SkyfallerShadowDropPod</shadow>
@@ -196,6 +198,21 @@
       <anticipationSound>DropPod_Fall</anticipationSound>
       <anticipationSoundTicks>100</anticipationSoundTicks>
       <motesPerCell>0</motesPerCell>
+			<rotationCurve>
+				<points>
+					<li>(0,0)</li>
+				</points>
+			</rotationCurve>
+			<zPositionCurve>
+				<points>
+					<li>(0,0)</li>
+				</points>
+			</zPositionCurve>
+			<speedCurve>
+				<points>
+					<li>(0,0)</li>
+				</points>
+			</speedCurve>
     </skyfaller>
   </ThingDef>
 
@@ -402,15 +419,16 @@
   
   <!-- SRTS MkII -->
 
-	<TransportShipDef>
+	<SRTS.BomberShipDef>
 		<defName>SRTSMkII</defName>
 		<shipThing>SRTSMkII</shipThing>
 		<arrivingSkyfaller>SRTSMkII_Incoming</arrivingSkyfaller>
 		<leavingSkyfaller>SRTSMkII_Leaving</leavingSkyfaller>
+		<bomberSkyfaller>SRTSMkII_BomberRun</bomberSkyfaller>
 		<worldObject>TravelingSRTS</worldObject>
 		<maxLaunchDistance>180</maxLaunchDistance>
 		<playerShuttle>true</playerShuttle>
-	</TransportShipDef>
+	</SRTS.BomberShipDef>
 
 	<ThingDef ParentName="ShuttleSkyfallerBase">
     <defName>SRTSMkII_Incoming</defName>
@@ -786,6 +804,7 @@
     </statBases>
     <selectable>true</selectable>
   </ThingDef>
+
 
 
 </Defs>

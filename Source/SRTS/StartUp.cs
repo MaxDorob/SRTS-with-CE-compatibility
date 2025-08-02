@@ -16,8 +16,11 @@ namespace SRTS
     [StaticConstructorOnStartup]
     public static class StartUp
     {
+        static Harmony harmony;
         static StartUp()
         {
+            harmony = new Harmony("SRTS");
+            harmony.PatchAll();
         }
     }
 }

@@ -61,7 +61,7 @@ namespace SRTS
             thing.sourceLandingSpot = landingSpot;
             thing.numberOfBombs = SRTSMod.GetStatFor<int>(original.def.defName, StatName.numberBombs);
             thing.precisionBombingNumBombs = SRTSMod.GetStatFor<int>(original.def.defName, StatName.precisionBombingNumBombs);
-            thing.speed = SRTSMod.GetStatFor<float>(original.def.defName, StatName.bombingSpeed);
+            //thing.speed = SRTSMod.GetStatFor<float>(original.def.defName, StatName.bombingSpeed);
             thing.radius = SRTSMod.GetStatFor<int>(original.def.defName, StatName.radiusDrop);
             thing.sound = original.TryGetComp<CompBombFlyer>().Props.soundFlyBy;
             thing.bombType = bombType;
