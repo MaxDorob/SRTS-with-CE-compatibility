@@ -71,7 +71,6 @@ namespace SRTS
             try
             {
                 var bombCell = bombCells.FirstOrFallback(x => x.InHorDistOf(DrawPos.ToIntVec3(), 3f), IntVec3.Invalid);
-                Log.Message(string.Join("\n", bombCells.Select(x => $"{x} in distance {x.DistanceTo(DrawPos.ToIntVec3())} to {DrawPos}")));
                 if (bombCell != IntVec3.Invalid)
                 {
                     this.DropBombs(bombCell);
