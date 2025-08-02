@@ -34,7 +34,9 @@ namespace SRTS
             }
         }
         public IntVec3 enterPos;
-        public float Speed => SRTSMod.GetStatFor<float>(ThingOwnerUtility.GetAllThingsRecursively(this).Single(x => x.HasComp<CompLaunchableSRTS>()).def.defName, StatName.bombingSpeed) * 10;
+        public Thing SRTS => ThingOwnerUtility.GetAllThingsRecursively(this).Single(x => x.HasComp<CompLaunchableSRTS>());
+        public float Speed => SRTSMod.GetStatFor<float>(SRTS.def.defName, StatName.bombingSpeed) * 10;
+        public int Radius => SRTSMod.GetStatFor<int>(this.SRTS.def.defName, StatName.radiusDrop);
 
         public override void ExposeData()
         {
@@ -44,7 +46,6 @@ namespace SRTS
             Scribe_Collections.Look<IntVec3>(ref bombCells, "bombCells", LookMode.Value);
 
             Scribe_Values.Look(ref numberOfBombs, "numberOfBombs");
-            Scribe_Values.Look(ref radius, "radius");
             Scribe_Defs.Look(ref sound, "sound");
         }
 
@@ -133,9 +134,9 @@ namespace SRTS
             switch (bombType)
             {
                 case BombingType.carpet:
-                    return radius;
+                    return Radius;
                 case BombingType.precise:
-                    return (int)(radius * 0.6f);
+                    return (int)(Radius * 0.6f);
                 case BombingType.missile:
                     throw new NotImplementedException("BombingType");
                 default:
@@ -157,11 +158,12 @@ namespace SRTS
 
         public int numberOfBombs;
 
-        public int radius;
-
         public int precisionBombingNumBombs;
 
 
         public BombingType bombType;
+    }
+    public class SRTSBombing : BomberSkyfaller //Backward compatibility
+    {
     }
 }
