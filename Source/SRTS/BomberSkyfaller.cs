@@ -41,11 +41,7 @@ namespace SRTS
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look<float>(ref angle, "angle", 0f, false);
-            Scribe_Values.Look(ref sourceLandingSpot, "sourceLandingSpot");
             Scribe_Collections.Look<IntVec3>(ref bombCells, "bombCells", LookMode.Value);
-
-            Scribe_Values.Look(ref numberOfBombs, "numberOfBombs");
             Scribe_Defs.Look(ref sound, "sound");
         }
 
@@ -151,12 +147,6 @@ namespace SRTS
         public List<IntVec3> bombCells = new List<IntVec3>();
 
         public List<Thing> bombs = new List<Thing>();
-
-        public Map originalMap;
-
-        public IntVec3 sourceLandingSpot;
-
-        public int numberOfBombs;
 
         public int precisionBombingNumBombs;
 
