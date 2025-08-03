@@ -36,6 +36,11 @@ namespace SRTS
                     for (int i = 0; i < count; i++)
                     {
                         yield return bombStack;
+                        totalNeeded--;
+                        if (totalNeeded <= 0)
+                        {
+                            yield break;
+                        }
                     }
                 }
             }
