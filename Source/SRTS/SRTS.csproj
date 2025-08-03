@@ -60,6 +60,8 @@
 		<Publicize Include="Assembly-CSharp:RimWorld.Planet.Tile.biome" />
 		<Publicize Include="Assembly-CSharp:Verse.DesignationDragger.lastStart" />
 		<Publicize Include="Assembly-CSharp:Verse.DesignationDragger.lastEnd" />
+		<Publicize Include="Assembly-CSharp:Verse.Projectile.ticksToImpact" />
+		<Publicize Include="Assembly-CSharp:RimWorld.CompExplosive.Detonate" />
     <Publicize Include="CombatExtended" />
 	</ItemGroup>
 	<Choose>

@@ -70,7 +70,7 @@ namespace SRTS
             base.Tick();
             try
             {
-                var bombCell = bombCells.FirstOrFallback(x => x.InHorDistOf(DrawPos.ToIntVec3(), 3f), IntVec3.Invalid);
+                var bombCell = bombCells.FirstOrFallback(x => x.InHorDistOf(DrawPos.ToIntVec3(), 22f), IntVec3.Invalid);
                 if (bombCell != IntVec3.Invalid)
                 {
                     this.DropBombs(bombCell);
@@ -93,16 +93,12 @@ namespace SRTS
             for (int i = 0; i < bombsPerCell; i++)
             {
                 DropSingleBomb(bombs[0], bombCell);
-                if (bombs[0].stackCount <= 0)
-                {
-                    bombs.RemoveAt(0);
-                }
+                bombs.RemoveAt(0);
             }
         }
 
         private void DropSingleBomb(Thing bombStack, IntVec3 bombPos)
         {
-            int timerTickExplode = 20 + Rand.Range(0, 5); //Change later to allow release timer
             var singleBomb = bombStack.stackCount <= 1 ? bombStack : bombStack.SplitOff(1);
             if (SRTSHelper.CEModLoaded)
             {
@@ -110,20 +106,35 @@ namespace SRTS
             }
             else
             {
-                FallingBomb bombThing = new FallingBomb(singleBomb, singleBomb.TryGetComp<CompExplosive>(), this.Map, this.def.skyfaller.shadow);
-                bombThing.HitPoints = int.MaxValue;
-                bombThing.ticksRemaining = timerTickExplode;
+                Projectile bombThing = GenerateProjectileFor(singleBomb);
+                if (bombThing == null)
+                {
+                    Log.Warning($"Failed to spawn {singleBomb}");
+                    return;
+                }
 
-                IntVec3 c = (from x in GenRadial.RadialCellsAround(bombPos, GetCurrentTargetingRadius(), true)
-                             where x.InBounds(this.Map)
-                             select x).RandomElementByWeight((IntVec3 x) => 1f - Mathf.Min(x.DistanceTo(this.Position) / GetCurrentTargetingRadius(), 1f) + 0.05f);
-                bombThing.angle = this.angle + (SPTrig.LeftRightOfLine(this.DrawPos.ToIntVec3(), this.Position, c) * -10);
-                bombThing.speed = (float)SPExtra.Distance(this.DrawPos.ToIntVec3(), c) / bombThing.ticksRemaining;
-                Thing t = GenSpawn.Spawn(bombThing, c, this.Map);
-                GenExplosion.NotifyNearbyPawnsOfDangerousExplosive(t, singleBomb.TryGetComp<CompExplosive>().Props.explosiveDamageType, null);
+                IntVec3 destination = (from x in GenRadial.RadialCellsAround(bombPos, GetCurrentTargetingRadius(), true)
+                                       where x.InBounds(this.Map)
+                                       select x).RandomElementByWeight((IntVec3 x) => 1f / Mathf.Sqrt(Mathf.Max((x - bombPos).LengthHorizontal, 0.5f)));
+
+                GenSpawn.Spawn(bombThing, DrawPos.ToIntVec3(), this.Map);
+                bombThing.Launch(this, DrawPos, destination, destination, ProjectileHitFlags.All);
+                GenExplosion.NotifyNearbyPawnsOfDangerousExplosive(bombThing, singleBomb.TryGetComp<CompExplosive>().Props.explosiveDamageType, null);
             }
         }
+        private Projectile GenerateProjectileFor(Thing shell)
+        {
+            var projectileDef = shell.def.projectileWhenLoaded;
+            if (projectileDef != null)
+            {
+                shell.Destroy();
+                return ThingMaker.MakeThing(projectileDef) as Projectile;
+            }
 
+            var thing = ThingMaker.MakeThing(DefsOf.SRTSFallingBomb) as FallingBomb;
+            thing.innerThing = shell;
+            return thing;
+        }
         private int GetCurrentTargetingRadius()
         {
             switch (bombType)

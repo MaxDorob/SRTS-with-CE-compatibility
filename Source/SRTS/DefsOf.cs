@@ -12,5 +12,6 @@ namespace SRTS
     public static class DefsOf
     {
         public static DrawStyleCategoryDef SRTSBombing;
+        public static ThingDef SRTSFallingBomb;
     }
 }

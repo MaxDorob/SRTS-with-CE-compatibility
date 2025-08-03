@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<ThingDef ParentName="BaseBullet">
+		<defName>SRTSFallingBomb</defName>
+		<label>falling item</label>
+		<thingClass>SRTS.FallingBomb</thingClass>
+		<projectile>
+			<speed>20</speed>
+			<flyOverhead>true</flyOverhead>
+		</projectile>
+	</ThingDef>
+
+</Defs>
