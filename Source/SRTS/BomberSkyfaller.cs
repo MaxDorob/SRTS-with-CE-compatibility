@@ -6,7 +6,6 @@ using RimWorld;
 using RimWorld.Planet;
 using Verse;
 using UnityEngine;
-using SPExtended;
 using Verse.Sound;
 using CombatExtended;
 using static UnityEngine.UI.Image;

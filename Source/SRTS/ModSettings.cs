@@ -6,7 +6,6 @@ using Verse;
 using Verse.Sound;
 using RimWorld;
 using UnityEngine;
-using SPExtended;
 
 namespace SRTS
 {
