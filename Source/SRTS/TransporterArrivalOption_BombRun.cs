@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using RimWorld.Planet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using Verse.Noise;
 
 namespace SRTS
 {
-    public class TransporterArrivalOption_BombRun : TransportPodsArrivalAction
+    public class TransporterArrivalOption_BombRun<PostBombArrivalAction> : TransportPodsArrivalAction where PostBombArrivalAction : TransportersArrivalAction, new()
     {
         private Map map;
         private IntVec3 start;
@@ -18,8 +19,9 @@ namespace SRTS
         private List<IntVec3> bombCells;
         private List<Thing> bombs;
         private BombingType bombingType;
+        private PlanetTile destination;
 
-        public TransporterArrivalOption_BombRun(Map map, IntVec3 start, IntVec3 end, List<IntVec3> bombCells, List<Thing> bombs, BombingType bombingType)
+        public TransporterArrivalOption_BombRun(Map map, IntVec3 start, IntVec3 end, List<IntVec3> bombCells, List<Thing> bombs, BombingType bombingType, PlanetTile destination)
         {
             this.map = map;
             this.start = start;
@@ -27,6 +29,7 @@ namespace SRTS
             this.bombCells = bombCells;
             this.bombs = bombs;
             this.bombingType = bombingType;
+            this.destination = destination;
         }
 
         public override bool GeneratesMap => false;
@@ -37,15 +40,13 @@ namespace SRTS
             var compLaunchable = srts.TryGetComp<CompLaunchable>();
             ActiveTransporter activeTransporter = (ActiveTransporter)ThingMaker.MakeThing(compLaunchable.Props.activeTransporterDef ?? ThingDefOf.ActiveDropPod, null);
             activeTransporter.Contents = new ActiveTransporterInfo();
-            Log.Message($"Stage 2\n{string.Join("\n", transporters.Single().innerContainer.Select(x => x.def.defName))}\nRecursive:\n{string.Join("\n", ThingOwnerUtility.GetAllThingsRecursively(transporters.Single()).Select(x => x.def.defName))}");
             activeTransporter.Contents.innerContainer.TryAddRangeOrTransfer(transporters.Single().innerContainer, true, true);
             activeTransporter.Contents.sentTransporterDef = srts.def;
             activeTransporter.Rotation = srts.Rotation;
             activeTransporter.Contents.SetShuttle(srts);
-            Log.Message($"{(srts.TryGetComp<CompLaunchableSRTS>().Props.shipDef as BomberShipDef) == null}, {(srts.TryGetComp<CompLaunchableSRTS>().Props.shipDef as BomberShipDef)?.bomberSkyfaller == null}");
             BomberSkyfaller bomberLeaving = (BomberSkyfaller)SkyfallerMaker.MakeSkyfaller((srts.TryGetComp<CompLaunchableSRTS>().Props.shipDef as BomberShipDef).bomberSkyfaller, activeTransporter);
-            bomberLeaving.destinationTile = tile;
-            bomberLeaving.arrivalAction = new TransportPodsArrivalAction_FormCaravan();
+            bomberLeaving.destinationTile = destination;
+            bomberLeaving.arrivalAction = new PostBombArrivalAction();
             bomberLeaving.worldObjectDef = (compLaunchable.Props.worldObjectDef ?? WorldObjectDefOf.TravellingTransporters);
             bomberLeaving.groupID = 9999;
             bomberLeaving.bombCells = bombCells;

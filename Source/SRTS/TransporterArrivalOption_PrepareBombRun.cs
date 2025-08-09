@@ -34,7 +34,6 @@ namespace SRTS
             travellingTransporters.Tile = tile;
 
             var info = new ActiveTransporterInfo();
-            Log.Message($"Stage 1\n{string.Join("\n", transporters.Single().innerContainer.Select(x => x.def.defName))}\n\n\nRecursive:\n{string.Join("\n", ThingOwnerUtility.GetAllThingsRecursively(transporters.Single()).Select(x => x.def.defName))}");
             info.innerContainer.TryAddRangeOrTransfer(transporters.Single().innerContainer, destroyLeftover: true);
             info.SetShuttle(srts);
             travellingTransporters.AddTransporter(info, false);
@@ -60,7 +59,7 @@ namespace SRTS
 
         public static IEnumerable<FloatMenuOption> GetFloatMenuOptions(Action<PlanetTile, TransportersArrivalAction> launchAction, IEnumerable<IThingHolder> pods, MapParent site)
         {
-            foreach (var item in TransportersArrivalActionUtility.GetFloatMenuOptions(() => CanVisit(pods, site), () => new TransporterArrivalOption_PrepareBombRun(site), "BombAndGoBack".Translate(), launchAction, site.Tile))
+            foreach (var item in TransportersArrivalActionUtility.GetFloatMenuOptions(() => CanVisit(pods, site), () => new TransporterArrivalOption_PrepareBombRun(site), "Bomb".Translate(), launchAction, site.Tile))
             {
                 yield return item;
             }

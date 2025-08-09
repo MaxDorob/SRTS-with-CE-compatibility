@@ -27,7 +27,20 @@ namespace SRTS
 
         public bool LoadingInProgressOrReadyToLaunch => Transporter.LoadingInProgressOrReadyToLaunch;
 
-
+        public bool TryFindHomePoint(out Map map, out IntVec3 cell, out Rot4 rotation)
+        {
+            if (this.homeMap != null && this.homePoint.IsValid)
+            {
+                cell = this.homePoint;
+                rotation = homeRotation;
+                map = this.homeMap;
+                return true;
+            }
+            cell = IntVec3.Invalid;
+            rotation = Rot4.Invalid;
+            map = null;
+            return false;
+        }
 
 
         public void AddThingsToSRTS(Thing thing)
@@ -35,6 +48,19 @@ namespace SRTS
             thingsInsideShip.Add(thing);
         }
 
+        public override void PostSpawnSetup(bool respawningAfterLoad)
+        {
+            base.PostSpawnSetup(respawningAfterLoad);
+            if (!respawningAfterLoad)
+            {
+                if (parent.Map?.IsPlayerHome ?? false)
+                {
+                    homeMap = parent.Map;
+                    homePoint = parent.Position;
+                    homeRotation = parent.Rotation;
+                }
+            }
+        }
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
             foreach (Gizmo gizmo in base.CompGetGizmosExtra())
@@ -114,16 +140,25 @@ namespace SRTS
             return "ReadyForLaunch".Translate();
         }
 
-        
-
-        
 
 
-      
 
 
-        
+
+
+
+
+        public override void PostExposeData()
+        {
+            base.PostExposeData();
+            Scribe_References.Look(ref homeMap, nameof(homeMap));
+            Scribe_Values.Look(ref homePoint, nameof(homePoint), IntVec3.Invalid);
+            Scribe_Values.Look(ref homeRotation, nameof(homeRotation));
+        }
 
         List<Thing> thingsInsideShip = new List<Thing>();
+        private Map homeMap;
+        private IntVec3 homePoint;
+        private Rot4 homeRotation;
     }
 }

@@ -30,12 +30,12 @@ namespace SRTS
         protected Map map;
 
         protected TravellingTransporters waitingTransporter;
-        protected SRTSDesignator designator;
+        protected Designator designator;
 
 
 
         public bool Active => waitingTransporter != null;
-        protected SRTSDesignator Designator => designator ??= InitDesignator();
+        protected Designator Designator => designator ??= InitDesignator();
         public Thing SRTS => ThingOwnerUtility.GetAllThingsRecursively(waitingTransporter).Single(x => x.HasComp<CompLaunchableSRTS>());
 
         public void StartSelectingFor(Map map, TravellingTransporters transporter)
@@ -48,13 +48,8 @@ namespace SRTS
             this.map = map;
             waitingTransporter = transporter;
             var designator = Designator;
-            designator.map = map;
             Find.DesignatorManager.Select(designator);
         }
-        public abstract string MoveDesignatorString { get; }
-        public abstract string DesignatorIsNotValidString { get; }
-        public virtual string AbortString => "Abort";
-        public virtual string ConfirmString => "Confirm";
         public override void WorldComponentOnGUI()
         {
             if (!this.Active || Find.ScreenshotModeHandler.Active || !WorldRendererUtility.DrawingMap)
@@ -68,46 +63,9 @@ namespace SRTS
             }
             Rect rect = new Rect((float)UI.screenWidth / 2f - num / 2f, (float)UI.screenHeight - 150f - 70f, num, 70f);
             Widgets.DrawWindowBackground(rect);
-            Rect rect2 = new Rect(rect.xMin + 10f, rect.yMin + 10f, 200f, 50f);
-            if (this.map != null)
-            {
-                if (Widgets.ButtonText(rect2, AbortString.Translate(), true, true, true, null))
-                {
-                    OnAbort();
-                    this.map = null;
-                    this.waitingTransporter = null;
-                    Find.DesignatorManager.Deselect();
-                }
-                rect2.x += 210f;
-            }
-            Designator designator = this.Designator;
-            if (Widgets.ButtonText(rect2, MoveDesignatorString.Translate(), true, true, true, null))
-            {
-                this.designator.map = this.map;
-                Find.DesignatorManager.Select(designator);
-            }
-
-            rect2.x += 210f;
-            if (Widgets.ButtonText(rect2, ConfirmString.Translate(), true, true, true, null))
-            {
-                if (Designator.Valid)
-                {
-                    OnConfirm();
-                    this.map = null;
-                    this.waitingTransporter = null;
-                    Find.DesignatorManager.Deselect();
-                }
-                else
-                {
-                    Messages.Message(DesignatorIsNotValidString.Translate(), MessageTypeDefOf.RejectInput, true);
-                }
-            }
-            if (Find.DesignatorManager.SelectedDesignator == designator)
-            {
-                Find.DesignatorManager.SelectedDesignator.DoExtraGuiControls(0f, (float)(UI.screenHeight - 35));
-            }
+            DrawButtons(rect);
         }
-
+        protected abstract void DrawButtons(Rect inRect);
         public override void ExposeData()
         {
             base.ExposeData();
@@ -115,8 +73,6 @@ namespace SRTS
             Scribe_References.Look(ref waitingTransporter, nameof(waitingTransporter));
         }
 
-        protected abstract void OnConfirm();
-        protected abstract void OnAbort();
-        protected abstract SRTSDesignator InitDesignator();
+        protected abstract Designator InitDesignator();
     }
 }
