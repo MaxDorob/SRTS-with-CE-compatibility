@@ -12,22 +12,6 @@ namespace SRTS
 {
     public abstract class SRTSDesignator : Designator
     {
-        public override string Label
-        {
-            get
-            {
-                return "DesignatorMoveGravship".Translate();
-            }
-        }
-
-        public override string Desc
-        {
-            get
-            {
-                return "DesignatorMoveGravshipDesc".Translate();
-            }
-        }
-
         public override float Order
         {
             get
