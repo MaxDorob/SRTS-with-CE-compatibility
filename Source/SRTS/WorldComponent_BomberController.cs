@@ -48,7 +48,7 @@ namespace SRTS
             }
         }
 
-        private void SendMessageNotValid() => Messages.Message("SRTSBombRunTrajectoryIsNotValid".Translate(), MessageTypeDefOf.RejectInput, true);;
+        private void SendMessageNotValid() => Messages.Message("SRTSBombRunTrajectoryIsNotValid".Translate(), MessageTypeDefOf.RejectInput, true);
 
 
         protected override Designator InitDesignator()
