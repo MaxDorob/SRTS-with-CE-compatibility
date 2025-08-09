@@ -61,7 +61,7 @@ namespace SRTS
         protected override void GetDrawPositionAndRotation(ref Vector3 drawLoc, out float extraRotation)
         {
             base.GetDrawPositionAndRotation(ref drawLoc, out extraRotation);
-            extraRotation += Vector3.Angle((Position - enterPos).ToVector3Shifted(), Vector3.forward);
+            extraRotation += Vector2.SignedAngle((Position - enterPos).ToVector3Shifted().ToVector2(), Vector2.up);
         }
 
         protected override void Tick()
