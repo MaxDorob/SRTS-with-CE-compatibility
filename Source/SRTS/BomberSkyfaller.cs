@@ -139,9 +139,10 @@ namespace SRTS
                 IntVec3 destination = (from x in GenRadial.RadialCellsAround(bombPos, GetCurrentTargetingRadius(), true)
                                        where x.InBounds(this.Map)
                                        select x).RandomElementByWeight((IntVec3 x) => 1f / Mathf.Sqrt(Mathf.Max((x - bombPos).LengthHorizontal, 0.5f)));
-
-                GenSpawn.Spawn(bombThing, DrawPos.ToIntVec3(), this.Map);
-                bombThing.Launch(this, DrawPos, destination, destination, ProjectileHitFlags.All);
+                var dropPosV3 = DrawPos;
+                this.GetDrawPositionAndRotation(ref dropPosV3, out _);
+                GenSpawn.Spawn(bombThing, dropPosV3.ToIntVec3(), this.Map);
+                bombThing.Launch(this, dropPosV3, destination, destination, ProjectileHitFlags.All);
                 GenExplosion.NotifyNearbyPawnsOfDangerousExplosive(bombThing, singleBomb.TryGetComp<CompExplosive>().Props.explosiveDamageType, null);
             }
         }
