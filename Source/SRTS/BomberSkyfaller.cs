@@ -57,11 +57,35 @@ namespace SRTS
             }
         }
 
-
+        protected float SignedAttackAngle => Vector2.SignedAngle((Position - enterPos).ToVector3Shifted().ToVector2(), Vector2.up);
         protected override void GetDrawPositionAndRotation(ref Vector3 drawLoc, out float extraRotation)
         {
-            base.GetDrawPositionAndRotation(ref drawLoc, out extraRotation);
-            extraRotation += Vector2.SignedAngle((Position - enterPos).ToVector3Shifted().ToVector2(), Vector2.up);
+            extraRotation = 0f;
+            if (this.def.skyfaller.rotateGraphicTowardsDirection)
+            {
+                extraRotation = this.angle;
+            }
+            if (this.randomizeDirectionComp != null)
+            {
+                extraRotation += this.randomizeDirectionComp.ExtraDrawAngle;
+            }
+            if (this.def.skyfaller.angleCurve != null)
+            {
+                this.angle = this.def.skyfaller.angleCurve.Evaluate(this.TimeInAnimation);
+            }
+            if (this.def.skyfaller.rotationCurve != null)
+            {
+                extraRotation += this.def.skyfaller.rotationCurve.Evaluate(this.TimeInAnimation) * Mathf.Sign(SignedAttackAngle);
+            }
+            if (this.def.skyfaller.xPositionCurve != null)
+            {
+                drawLoc.x += this.def.skyfaller.xPositionCurve.Evaluate(this.TimeInAnimation);
+            }
+            if (this.def.skyfaller.zPositionCurve != null)
+            {
+                drawLoc.z += this.def.skyfaller.zPositionCurve.Evaluate(this.TimeInAnimation);
+            }
+            extraRotation += SignedAttackAngle;
         }
 
         protected override void Tick()
