@@ -9,7 +9,9 @@
     <altitudeLayer>Skyfaller</altitudeLayer>
     <drawerType>RealtimeOnly</drawerType>
 		<size>(1,1)</size>
-    <skyfaller />
+		<skyfaller>
+			<ticksToImpactRange>0</ticksToImpactRange>
+		</skyfaller>
   </ThingDef>
 
   <!-- Superpod -->
