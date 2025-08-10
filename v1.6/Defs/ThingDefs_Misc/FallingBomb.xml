@@ -5,6 +5,11 @@
 		<defName>SRTSFallingBomb</defName>
 		<label>falling item</label>
 		<thingClass>SRTS.FallingBomb</thingClass>
+		<graphicData> <!--Just a filler to suppress the error-->
+			<texPath>UI/Misc/BadTexture</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>(1,1)</drawSize>
+		</graphicData>
 		<projectile>
 			<speed>20</speed>
 			<flyOverhead>true</flyOverhead>
