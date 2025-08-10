@@ -11,6 +11,28 @@
 		<size>(1,1)</size>
 		<skyfaller>
 			<ticksToImpactRange>0</ticksToImpactRange>
+			<rotationCurve>
+				<points>
+					<li>(0,  30)</li>
+					<li>(0.2, 0)</li>
+					<li>(0.87, 0)</li>
+					<li>(1,  -30)</li>
+				</points>
+			</rotationCurve>
+			<zPositionCurve>
+				<points>
+					<li>(0, 12.5)</li>
+					<li>(0.13, 0)</li>
+					<li>(0.18, -1.4)</li>
+					<li>(0.9, 0)</li>
+					<li>(1, 15.5)</li>
+				</points>
+			</zPositionCurve>
+			<speedCurve>
+				<points>
+					<li>(0,0)</li>
+				</points>
+			</speedCurve>
 		</skyfaller>
   </ThingDef>
 
@@ -201,21 +223,7 @@
       <anticipationSound>DropPod_Fall</anticipationSound>
       <anticipationSoundTicks>100</anticipationSoundTicks>
       <motesPerCell>0</motesPerCell>
-			<rotationCurve>
-				<points>
-					<li>(0,0)</li>
-				</points>
-			</rotationCurve>
-			<zPositionCurve>
-				<points>
-					<li>(0,0)</li>
-				</points>
-			</zPositionCurve>
-			<speedCurve>
-				<points>
-					<li>(0,0)</li>
-				</points>
-			</speedCurve>
+			
     </skyfaller>
   </ThingDef>
 
