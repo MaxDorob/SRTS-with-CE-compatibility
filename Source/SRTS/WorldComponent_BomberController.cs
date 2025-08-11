@@ -16,7 +16,7 @@ namespace SRTS
         {
         }
 
-        public IEnumerable<Thing> Bombs => ThingOwnerUtility.GetAllThingsRecursively(waitingTransporter).Where(x => SRTSMod.mod.settings.allowedBombs.Contains(x.def.defName));
+        public IEnumerable<Thing> Bombs => ThingOwnerUtility.GetAllThingsRecursively(WaitingTransporter).Where(x => SRTSMod.mod.settings.allowedBombs.Contains(x.def.defName));
 
         public IEnumerable<Thing> SelectedBombs
         {
@@ -61,9 +61,9 @@ namespace SRTS
         protected void OnConfirm<PostBombArrivalAction>(PlanetTile destination) where PostBombArrivalAction : TransportersArrivalAction, new()
         {
             var designator = (Designator as BombRunDesignator);
-            waitingTransporter.arrivalAction = new TransporterArrivalOption_BombRun<PostBombArrivalAction>(map, designator.start, designator.end, designator.BombCells, SelectedBombs.ToList(), designator.BombingType, destination);
+            WaitingTransporter.arrivalAction = new TransporterArrivalOption_BombRun<PostBombArrivalAction>(map, designator.start, designator.end, designator.BombCells, SelectedBombs.ToList(), designator.BombingType, destination);
             this.map = null;
-            this.waitingTransporter = null;
+            this.WaitingTransporter = null;
             Find.DesignatorManager.Deselect();
         }
         protected override void DrawButtons(Rect rect)
@@ -77,7 +77,7 @@ namespace SRTS
                 if (Widgets.ButtonText(rect2, "Abort".Translate(), true, true, true, null))
                 {
                     this.map = null;
-                    this.waitingTransporter = null;
+                    this.WaitingTransporter = null;
                     Find.DesignatorManager.Deselect();
                 }
                 rect2.x += buttonWidth + margin;

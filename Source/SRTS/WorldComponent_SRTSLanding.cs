@@ -24,7 +24,7 @@ namespace SRTS
                 if (Widgets.ButtonText(rect2, "Abort".Translate(), true, true, true, null))
                 {
                     this.map = null;
-                    this.waitingTransporter = null;
+                    this.WaitingTransporter = null;
                     Find.DesignatorManager.Deselect();
                 }
                 rect2.x += 210f;
@@ -56,10 +56,10 @@ namespace SRTS
 
         private void OnConfirm()
         {
-            waitingTransporter.arrivalAction = new TransportersArrivalAction_LandInSpecificCell(map.Parent, Designator.cell, Designator.savedRotation, true);
-            waitingTransporter.Arrived();
+            WaitingTransporter.arrivalAction = new TransportersArrivalAction_LandInSpecificCell(map.Parent, Designator.cell, Designator.savedRotation, true);
+            WaitingTransporter.Arrived();
             this.map = null;
-            this.waitingTransporter = null;
+            this.WaitingTransporter = null;
             Find.DesignatorManager.Deselect();
         }
 

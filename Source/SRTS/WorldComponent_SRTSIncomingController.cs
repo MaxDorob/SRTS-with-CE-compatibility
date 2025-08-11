@@ -16,12 +16,37 @@ namespace SRTS
         [HarmonyLib.HarmonyPatch(typeof(TickManager), nameof(TickManager.ForcePaused), HarmonyLib.MethodType.Getter)]
         internal static class ForcePaused_Patch
         {
-            public static void Postfix(ref bool __result) => __result = __result || Find.World.components.OfType<WorldComponent_SRTSIncomingController>().Any(x => x.Active);
+            public static void Postfix(ref bool __result) => __result = __result || ForceStopActive;
         }
         [HarmonyLib.HarmonyPatch(typeof(MapParent), nameof(MapParent.CheckRemoveMapNow))]
         internal static class PreventMapRemove
         {
-            public static bool Prefix(MapParent __instance) => !Find.World.components.OfType<WorldComponent_SRTSIncomingController>().Any(x => x.map == __instance.Map);
+            public static bool Prefix(MapParent __instance) => !ForceStopActive || !Find.World.components.OfType<WorldComponent_SRTSIncomingController>().Any(x => x.map == __instance.Map);
+        }
+        private static bool forceStopActive = false;
+        public static bool ForceStopActive
+        {
+            get
+            {
+                if (!forceStopActive)
+                {
+                    return false;
+                }
+                VerifyForceStop();
+                return forceStopActive;
+            }
+        }
+        private static void VerifyForceStop(bool silent = false)
+        {
+            var mustBeStopped = Find.World.components.OfType<WorldComponent_SRTSIncomingController>().Any(x => x.Active);
+            if (forceStopActive != mustBeStopped)
+            {
+                if (!silent)
+                {
+                    Log.Warning($"Wrong state of {nameof(WorldComponent_SRTSIncomingController)}.{nameof(WorldComponent_SRTSIncomingController.ForceStopActive)}. Fixing...");
+                }
+                forceStopActive = mustBeStopped;
+            }
         }
         public WorldComponent_SRTSIncomingController(World world) : base(world)
         {
@@ -29,14 +54,34 @@ namespace SRTS
 
         protected Map map;
 
-        protected TravellingTransporters waitingTransporter;
+        private TravellingTransporters waitingTransporter;
         protected Designator designator;
 
 
+        public TravellingTransporters WaitingTransporter
+        {
+            get
+            {
+                return waitingTransporter;
+            }
+            set
+            {
+                waitingTransporter = value;
+                if (value == null)
+                {
+                    map = null;
+                    forceStopActive = false;
+                }
+                else
+                {
+                    forceStopActive = true;
+                }
+            }
+        }
 
-        public bool Active => waitingTransporter != null;
+        public bool Active => WaitingTransporter != null;
         protected Designator Designator => designator ??= InitDesignator();
-        public Thing SRTS => ThingOwnerUtility.GetAllThingsRecursively(waitingTransporter).Single(x => x.HasComp<CompLaunchableSRTS>());
+        public Thing SRTS => ThingOwnerUtility.GetAllThingsRecursively(WaitingTransporter).Single(x => x.HasComp<CompLaunchableSRTS>());
 
         public void StartSelectingFor(Map map, TravellingTransporters transporter)
         {
@@ -45,8 +90,9 @@ namespace SRTS
                 Log.Error($"{nameof(transporter)} is null");
                 return;
             }
+
             this.map = map;
-            waitingTransporter = transporter;
+            WaitingTransporter = transporter;
             var designator = Designator;
             Find.DesignatorManager.Select(designator);
         }
@@ -70,7 +116,8 @@ namespace SRTS
         {
             base.ExposeData();
             Scribe_References.Look(ref map, nameof(map));
-            Scribe_References.Look(ref waitingTransporter, nameof(waitingTransporter));
+            Scribe_References.Look(ref waitingTransporter, nameof(WaitingTransporter));
+            VerifyForceStop(true);
         }
 
         protected abstract Designator InitDesignator();
