@@ -11,6 +11,10 @@ namespace SRTS
 {
     public class TravelingSRTS : TravelingTransportPods
     {
+        public override Texture2D ExpandingIcon => flyingThing?.def.uiIcon ?? base.ExpandingIcon;
+
+        public override Color ExpandingIconColor => Color.white;
+
         private Material SRTSMaterial
         {
             get
@@ -37,7 +41,6 @@ namespace SRTS
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_References.Look(ref flyingThing, "flyingThing");
         }
         public override void Draw()
         {
@@ -86,7 +89,7 @@ namespace SRTS
             directionFacing = (this.DrawPos - tileLocation).normalized;
         }
 
-        public Thing flyingThing;
+        public Thing flyingThing => ThingOwnerUtility.GetAllThingsRecursively(this).Single(x => x.HasComp<CompLaunchableSRTS>());
 
         private Material material;
 
@@ -94,7 +97,7 @@ namespace SRTS
 
         private const float TransitionTakeoff = 0.015f;
 
-        private float transitionSize = 0f;
+        private float transitionSize = 0.5f;
 
         Vector3 directionFacing;
     }
