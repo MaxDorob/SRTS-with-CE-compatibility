@@ -62,6 +62,7 @@ namespace SRTS
         {
             var designator = (Designator as BombRunDesignator);
             WaitingTransporter.arrivalAction = new TransporterArrivalOption_BombRun<PostBombArrivalAction>(map, designator.start, designator.end, designator.BombCells, SelectedBombs.ToList(), designator.BombingType, destination);
+            WaitingTransporter.Arrived();
             this.map = null;
             this.WaitingTransporter = null;
             Find.DesignatorManager.Deselect();

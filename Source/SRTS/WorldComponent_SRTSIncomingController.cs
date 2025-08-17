@@ -82,8 +82,51 @@ namespace SRTS
         public bool Active => WaitingTransporter != null;
         protected Designator Designator => designator ??= InitDesignator();
         public Thing SRTS => ThingOwnerUtility.GetAllThingsRecursively(WaitingTransporter).Single(x => x.HasComp<CompLaunchableSRTS>());
+        public void StartSelectingFor(PlanetTile tile, List<ActiveTransporterInfo> transporters)
+        {
+            var srts = transporters.SelectMany(x => x.innerContainer).Single(x => x.HasComp<CompLaunchableSRTS>());
+            TravellingTransporters travellingTransporters = (TravellingTransporters)WorldObjectMaker.MakeWorldObject(srts.TryGetComp<CompLaunchable>().Props.worldObjectDef ?? WorldObjectDefOf.TravellingTransporters);
+            travellingTransporters.SetFaction(Faction.OfPlayer);
 
-        public void StartSelectingFor(Map map, TravellingTransporters transporter)
+            travellingTransporters.destinationTile = tile;
+            travellingTransporters.Tile = tile;
+            travellingTransporters.arrivalAction = new TransportersArrivalAction_FormCaravan();
+
+
+            var info = new ActiveTransporterInfo();
+            info.innerContainer.TryAddRangeOrTransfer(transporters.Single().innerContainer, destroyLeftover: true);
+            info.SetShuttle(srts);
+            travellingTransporters.AddTransporter(info, false);
+            StartSelectingFor(tile, travellingTransporters);
+        }
+        public void StartSelectingFor(PlanetTile tile, TravellingTransporters transporter)
+        {
+            bool mapBeingGenerated = Current.Game.FindMap(tile) == null;
+            Map map = GetOrGenerateMapUtility.GetOrGenerateMap(tile, null);
+            if (mapBeingGenerated)
+            {
+                Find.TickManager.Notify_GeneratedPotentiallyHostileMap();
+            }
+            if (map.Parent.Faction != null && map.Parent.Faction != Faction.OfPlayer)
+            {
+                if (map.Parent is Site site && site.MainSitePartDef.considerEnteringAsAttack)
+                {
+                    PawnRelationUtility.Notify_PawnsSeenByPlayer_Letter_Send(map.mapPawns.AllPawns, "LetterRelatedPawnsInMapWherePlayerLanded".Translate(Faction.OfPlayer.def.pawnsPlural), LetterDefOf.NeutralEvent, true, true);
+                    Faction.OfPlayer.TryAffectGoodwillWith(site.Faction, Faction.OfPlayer.GoodwillToMakeHostile(site.Faction), true, true, HistoryEventDefOf.AttackedSettlement, null);
+                }
+                else if (map.Parent is Settlement settlement)
+                {
+                    TaggedString text = "LetterShuttleLandedInEnemyBase".Translate(settlement.Label).CapitalizeFirst();
+                    TaggedString label = "LetterLabelCaravanEnteredEnemyBase".Translate();
+                    SettlementUtility.AffectRelationsOnAttacked(settlement, ref text);
+                    PawnRelationUtility.Notify_PawnsSeenByPlayer_Letter(map.mapPawns.AllPawns, ref label, ref text, "LetterRelatedPawnsInMapWherePlayerLanded".Translate(Faction.OfPlayer.def.pawnsPlural), true, true);
+                    //LookTargets lookTargets = new LookTargets(map);
+                    //Find.LetterStack.ReceiveLetter(label, text, LetterDefOf.NeutralEvent, lookTargets, settlement.Faction, null, null, null, 0, true);
+                }
+            }
+            StartSelectingFor(map, transporter);
+        }
+        private void StartSelectingFor(Map map, TravellingTransporters transporter)
         {
             if (transporter == null)
             {
