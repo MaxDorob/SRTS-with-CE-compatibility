@@ -120,8 +120,8 @@ namespace SRTS
                     TaggedString label = "LetterLabelCaravanEnteredEnemyBase".Translate();
                     SettlementUtility.AffectRelationsOnAttacked(settlement, ref text);
                     PawnRelationUtility.Notify_PawnsSeenByPlayer_Letter(map.mapPawns.AllPawns, ref label, ref text, "LetterRelatedPawnsInMapWherePlayerLanded".Translate(Faction.OfPlayer.def.pawnsPlural), true, true);
-                    //LookTargets lookTargets = new LookTargets(map);
-                    //Find.LetterStack.ReceiveLetter(label, text, LetterDefOf.NeutralEvent, lookTargets, settlement.Faction, null, null, null, 0, true);
+                    LookTargets lookTargets = new LookTargets(map.Center, map);
+                    Find.LetterStack.ReceiveLetter(label, text, LetterDefOf.NeutralEvent, lookTargets, settlement.Faction, null, null, null, 0, true);
                 }
             }
             StartSelectingFor(map, transporter);
