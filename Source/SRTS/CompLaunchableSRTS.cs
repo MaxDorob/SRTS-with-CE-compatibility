@@ -8,12 +8,25 @@ using UnityEngine;
 using Verse;
 using Verse.AI;
 using HarmonyLib;
+using CombatExtended.Compatibility;
 
 namespace SRTS
 {
     [StaticConstructorOnStartup]
     public class CompLaunchableSRTS : CompShuttle
     {
+        [HarmonyPatch(typeof(CompShuttle), nameof(CompShuttle.CanLaunch), methodType: MethodType.Getter)]
+        internal static class CompShuttle_CanLaunch_Patch
+        {
+            public static void Postfix(CompShuttle __instance, ref AcceptanceReport __result)
+            {
+                if (__result && __instance is CompLaunchableSRTS srts)
+                {
+                    __result = srts.CanLaunchExtra;
+                }
+            }
+        }
+
         public static readonly Texture2D TargeterMouseAttachment = ContentFinder<Texture2D>.Get("UI/Overlays/LaunchableMouseAttachment", true);
         private static readonly Texture2D LaunchCommandTex = ContentFinder<Texture2D>.Get("UI/Commands/LaunchShip", true);
         private CompTransporter cachedCompTransporter;
@@ -141,12 +154,45 @@ namespace SRTS
         }
 
 
+        public IEnumerable<Pawn> Pawns => this.Transporter.innerContainer.OfType<Pawn>();
+
+        private bool IsPilot(Pawn pawn)
+        {
+            if (!pawn.IsFreeColonist)
+            {
+                return false;
+            }
+            if (StatDefOf.PilotingAbility == null)
+            {
+                return true;
+            }
+            if (StatDefOf.PilotingAbility.Worker.IsDisabledFor(pawn) || pawn.GetStatValue(StatDefOf.PilotingAbility, true, -1) <= 0.1f)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        public IEnumerable<Pawn> Pilots => Pawns.Where(IsPilot);
 
 
-
-
-
-
+        public AcceptanceReport CanLaunchExtra
+        {
+            get
+            {
+                var requiredPilots = SRTSMod.GetStatFor<int>(parent.def.defName, StatName.minPassengers);
+                if (Pilots.Count() < requiredPilots)
+                {
+                    return "SRTSRequiredPilots".Translate(parent.def.LabelCap, requiredPilots);
+                }
+                var maxPawnCount = SRTSMod.GetStatFor<int>(parent.def.defName, StatName.maxPassengers);
+                if (Pawns.Count() > maxPawnCount)
+                {
+                    return "SRTSPawnsLimitExceeded".Translate(parent.def.LabelCap, maxPawnCount, Pawns.Count());
+                }
+                return true;
+            }
+        }
 
         public override void PostExposeData()
         {
