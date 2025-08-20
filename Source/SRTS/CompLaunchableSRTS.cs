@@ -9,6 +9,7 @@ using Verse;
 using Verse.AI;
 using HarmonyLib;
 using CombatExtended.Compatibility;
+using System.Reflection.Emit;
 
 namespace SRTS
 {
@@ -24,6 +25,48 @@ namespace SRTS
                 {
                     __result = srts.CanLaunchExtra;
                 }
+            }
+        }
+        [HarmonyPatch(typeof(CompShuttle), nameof(IsPlayerShuttle), MethodType.Getter)]
+        internal static class IsPlayerShuttle_Patch
+        {
+            public static bool Prefix(CompShuttle __instance, ref bool __result)
+            {
+                if (__instance is CompLaunchableSRTS)
+                {
+                    __result = true; //Only player buildable, isn't?
+                    return false;
+                }
+                return true;
+            }
+        }
+        [HarmonyPatch(typeof(CompShuttle), nameof(PostSpawnSetup))]
+        internal static class RemoveShuttleDLCLimitation
+        {
+            public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+            {
+                var list = instructions.ToList();
+                var targetMethod = AccessTools.Method(typeof(ModLister), nameof(ModLister.CheckAnyExpansion));
+                while (list.Any(x => x.Calls(targetMethod)))
+                {
+                    var index = list.FirstIndexOf(x=>x.Calls(targetMethod));
+                    list[index] = new CodeInstruction(OpCodes.Ldc_I4_1);
+                    list.RemoveAt(index - 1);
+                }
+                return list;
+            }
+        }
+        [HarmonyPatch(typeof(CompShuttle), nameof(CompShuttle.HasPilot), MethodType.Getter)]
+        internal static class HasPilot_Patch
+        {
+            public static bool Prefix(CompShuttle __instance, ref bool __result)
+            {
+                if (__instance is CompLaunchableSRTS srts)
+                {
+                    __result = srts.Pilots.Any();
+                    return false;
+                }
+                return true;
             }
         }
 
