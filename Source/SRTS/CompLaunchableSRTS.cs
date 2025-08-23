@@ -204,7 +204,7 @@ namespace SRTS
         }
 
 
-        public IEnumerable<Pawn> Pawns => this.Transporter.innerContainer.OfType<Pawn>();
+        public IEnumerable<Pawn> Pawns => this.Transporter.innerContainer.OfType<Pawn>().Union(parent.GetCaravan()?.PawnsListForReading ?? Enumerable.Empty<Pawn>());
 
         private bool IsPilot(Pawn pawn)
         {
