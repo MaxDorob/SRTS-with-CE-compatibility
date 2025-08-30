@@ -379,8 +379,19 @@ Internal power plant: 1,700w</description>
         <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>1.5</restEffectiveness>
         <massCapacity>10000</massCapacity>
+				<max1PerGroup>true</max1PerGroup>
       </li>
+			<li Class="CompProperties_Launchable">
+				<fuelPerTile>2.5</fuelPerTile>
+				<minFuelCost>30</minFuelCost>
+				<skyfallerLeaving>SRAFTek_Leaving</skyfallerLeaving>
+				<worldObjectDef>TravelingSRTS</worldObjectDef>
+				<cooldownTicks>2500</cooldownTicks><!-- 1 hour -->
+				<fixedLaunchDistanceMax>130</fixedLaunchDistanceMax>
+				<cooldownEndedMessage>{0} is ready to launch again.</cooldownEndedMessage>
+			</li>
       <li Class="SRTS.CompProperties_LaunchableSRTS">
+				<shipDef>SRAFTek</shipDef>
         <travelSpeed>8</travelSpeed>
         <fuelPerTile>2.25</fuelPerTile>
         <minPassengers>1</minPassengers>
