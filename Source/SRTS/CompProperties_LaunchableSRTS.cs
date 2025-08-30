@@ -16,6 +16,15 @@ namespace SRTS
             {
                 yield return "There's no CompLaunchable";
             }
+            CompProperties_Transporter transporterProps = parentDef.GetCompProperties<CompProperties_Transporter>();
+            if (transporterProps == null)
+            {
+                yield return "There's no " + nameof(CompProperties_Transporter);
+            }
+            else if (!transporterProps.max1PerGroup)
+            {
+                yield return $"{nameof(CompProperties_Transporter)}.{nameof(CompProperties_Transporter.max1PerGroup)} is false";
+            }
             if (shipDef == null)
             {
                 yield return "shipDef is null";

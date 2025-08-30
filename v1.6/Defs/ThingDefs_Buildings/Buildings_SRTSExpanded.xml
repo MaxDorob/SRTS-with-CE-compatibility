@@ -76,6 +76,7 @@ Internal power plant: 400w</description>
         <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>0.5</restEffectiveness>  <!-- How well (1.0 = 100%) passengers can rest, eat, heal while aboard -->
         <massCapacity>120</massCapacity> <!-- weight in kg -->
+				<max1PerGroup>true</max1PerGroup>
       </li>
 			<li Class="CompProperties_Launchable">
 				<fuelPerTile>4</fuelPerTile>
@@ -179,6 +180,7 @@ Internal power plant: 650w</description> <!-- description of course... -->
         <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>0.75</restEffectiveness>
         <massCapacity>170</massCapacity>
+				<max1PerGroup>true</max1PerGroup>
       </li>
 			<li Class="CompProperties_Launchable">
 				<fuelPerTile>4</fuelPerTile>
