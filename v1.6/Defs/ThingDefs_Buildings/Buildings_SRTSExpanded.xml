@@ -284,10 +284,20 @@ Internal power plant: 1000w</description>
         <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>0.5</restEffectiveness>
         <massCapacity>5000</massCapacity>
+				<max1PerGroup>true</max1PerGroup>
       </li>
+			<li Class="CompProperties_Launchable">
+				<fuelPerTile>4.4</fuelPerTile>
+				<minFuelCost>120</minFuelCost>
+				<skyfallerLeaving>SRAF_Leaving</skyfallerLeaving>
+				<worldObjectDef>TravelingSRTS</worldObjectDef>
+				<cooldownTicks>18750</cooldownTicks> <!-- 7 hours -->
+				<fixedLaunchDistanceMax>95</fixedLaunchDistanceMax>
+				<cooldownEndedMessage>{0} is ready to launch again.</cooldownEndedMessage>
+			</li>
       <li Class="SRTS.CompProperties_LaunchableSRTS">
+				<shipDef>SRAF</shipDef>
         <travelSpeed>3</travelSpeed>
-        <fuelPerTile>4</fuelPerTile>
         <minPassengers>1</minPassengers>
         <maxPassengers>3</maxPassengers>
         <spaceFaring>false</spaceFaring>

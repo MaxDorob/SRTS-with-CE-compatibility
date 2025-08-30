@@ -297,7 +297,16 @@
 
 
 	<!-- SRAF -->
-
+	<TransportShipDef>
+		<defName>SRAF</defName>
+		<shipThing>SRAF</shipThing>
+		<arrivingSkyfaller>SRAF_Incoming</arrivingSkyfaller>
+		<leavingSkyfaller>SRAF_Leaving</leavingSkyfaller>
+		<worldObject>TravelingSRTS</worldObject>
+		<maxLaunchDistance>86</maxLaunchDistance>
+		<playerShuttle>true</playerShuttle>
+	</TransportShipDef>
+	
 	<ThingDef ParentName="ShuttleSkyfallerBase">
 		<defName>SRAF_Incoming</defName>
 		<label>SRTF incoming</label>
@@ -315,6 +324,27 @@
 			<anticipationSound>DropPod_Fall</anticipationSound>
 			<anticipationSoundTicks>100</anticipationSoundTicks>
 			<motesPerCell>0</motesPerCell>
+			<ticksToImpactRange>250~400</ticksToImpactRange>
+			<rotationCurve>
+				<points>
+					<li>(0,30)</li>
+					<li>(0.5,5)</li>
+					<li>(0.9,-5)</li>
+					<li>(0.95,0)</li>
+				</points>
+			</rotationCurve>
+			<zPositionCurve>
+				<points>
+					<li>(0.95,4.5)</li>
+					<li>(1,0)</li>
+				</points>
+			</zPositionCurve>
+			<speedCurve>
+				<points>
+					<li>(0.5,0.6)</li>
+					<li>(0.80,0.1)</li>
+				</points>
+			</speedCurve>
 		</skyfaller>
 	</ThingDef>
 
@@ -339,6 +369,26 @@
 				<min>-40</min>
 				<max>-15</max>
 			</ticksToImpactRange>
+			<rotationCurve>
+				<points>
+					<li>(0,0)</li>
+					<li>(0.15,10)</li>
+					<li>(0.5,-5)</li>
+				</points>
+			</rotationCurve>
+			<zPositionCurve>
+				<points>
+					<li>(0,0)</li>
+					<li>(0.15,2)</li>
+				</points>
+			</zPositionCurve>
+			<speedCurve>
+				<points>
+					<li>(0,0.1)</li>
+					<li>(0.34,0.4)</li>
+					<li>(1, 1)</li>
+				</points>
+			</speedCurve>
 		</skyfaller>
 	</ThingDef>
 
