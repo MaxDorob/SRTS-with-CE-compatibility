@@ -666,7 +666,7 @@ Internal power plant: 3,600w</description>
 Passenger cap: 1 - 42
 ----------------------------
 Speed: Excellent
-Fuel cap: 5,000L
+Fuel cap: 1,900L
 Fuel efficiency: Excellent
 ----------------------------
 Cargo cap: 20,000kg
@@ -698,8 +698,19 @@ Internal power plant: 2,800w</description>
         <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>3</restEffectiveness>
         <massCapacity>20000</massCapacity>
-      </li>
+				<max1PerGroup>true</max1PerGroup>
+			</li>
+			<li Class="CompProperties_Launchable">
+				<fuelPerTile>1</fuelPerTile>
+				<minFuelCost>20</minFuelCost>
+				<skyfallerLeaving>SRTSMkIIIp_Leaving</skyfallerLeaving>
+				<worldObjectDef>TravelingSRTS</worldObjectDef>
+				<cooldownTicks>1250</cooldownTicks> <!-- 0.5 hours -->
+				<fixedLaunchDistanceMax>255</fixedLaunchDistanceMax>
+				<cooldownEndedMessage>{0} is ready to launch again.</cooldownEndedMessage>
+			</li>
       <li Class="SRTS.CompProperties_LaunchableSRTS">
+				<shipDef>SRTSMkIIIp</shipDef>
         <travelSpeed>20</travelSpeed>
         <fuelPerTile>1</fuelPerTile>
         <minPassengers>1</minPassengers>
@@ -708,9 +719,9 @@ Internal power plant: 2,800w</description>
         <shuttleBayLanding>false</shuttleBayLanding>
       </li>
       <li Class="CompProperties_Refuelable">
-        <fuelCapacity>5000</fuelCapacity>
+        <fuelCapacity>1900</fuelCapacity>
         <targetFuelLevelConfigurable>true</targetFuelLevelConfigurable>
-        <initialConfigurableTargetFuelLevel>5000</initialConfigurableTargetFuelLevel>
+        <initialConfigurableTargetFuelLevel>1900</initialConfigurableTargetFuelLevel>
         <fuelFilter>
           <thingDefs>
             <li>Chemfuel</li>

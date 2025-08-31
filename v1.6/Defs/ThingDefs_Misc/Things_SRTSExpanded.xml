@@ -830,6 +830,16 @@
 
 	<!-- SRTS MkIIIp -->
 
+	<TransportShipDef>
+		<defName>SRTSMkIIIp</defName>
+		<shipThing>SRTSMkIIIp</shipThing>
+		<arrivingSkyfaller>SRTSMkIIIp_Incoming</arrivingSkyfaller>
+		<leavingSkyfaller>SRTSMkIIIp_Leaving</leavingSkyfaller>
+		<worldObject>TravelingSRTS</worldObject>
+		<maxLaunchDistance>255</maxLaunchDistance>
+		<playerShuttle>true</playerShuttle>
+	</TransportShipDef>
+
 	<ThingDef ParentName="ShuttleSkyfallerBase">
 		<defName>SRTSMkIIIp_Incoming</defName>
 		<label>SRTS Mk.IIIp incoming</label>
@@ -842,11 +852,32 @@
 		</graphicData>
 		<skyfaller>
 			<movementType>Decelerate</movementType>
+			<speed>0.4</speed>
 			<shadow>Things/Skyfaller/SkyfallerShadowDropPod</shadow>
 			<shadowSize>(12,12)</shadowSize>
 			<anticipationSound>DropPod_Fall</anticipationSound>
 			<anticipationSoundTicks>100</anticipationSoundTicks>
 			<motesPerCell>0</motesPerCell>
+			<rotationCurve>
+				<points>
+					<li>(0,30)</li>
+					<li>(0.5,5)</li>
+					<li>(0.9,-5)</li>
+					<li>(0.95,0)</li>
+				</points>
+			</rotationCurve>
+			<zPositionCurve>
+				<points>
+					<li>(0.95,2.5)</li>
+					<li>(1,0)</li>
+				</points>
+			</zPositionCurve>
+			<speedCurve>
+				<points>
+					<li>(0.6,0.6)</li>
+					<li>(0.95,0.1)</li>
+				</points>
+			</speedCurve>
 		</skyfaller>
 	</ThingDef>
 
@@ -862,6 +893,7 @@
 		</graphicData>
 		<skyfaller>
 			<movementType>Accelerate</movementType>
+			<speed>0.7</speed>
 			<reversed>true</reversed>
 			<shadow>Things/Skyfaller/SkyfallerShadowDropPod</shadow>
 			<shadowSize>(12,12)</shadowSize>
@@ -871,6 +903,25 @@
 				<min>-40</min>
 				<max>-15</max>
 			</ticksToImpactRange>
+			<rotationCurve>
+				<points>
+					<li>(0,0)</li>
+					<li>(0.15,10)</li>
+					<li>(0.5,-5)</li>
+				</points>
+			</rotationCurve>
+			<zPositionCurve>
+				<points>
+					<li>(0,0)</li>
+					<li>(0.08,2)</li>
+				</points>
+			</zPositionCurve>
+			<speedCurve>
+				<points>
+					<li>(0,0.2)</li>
+					<li>(0.4,0.7)</li>
+				</points>
+			</speedCurve>
 		</skyfaller>
 	</ThingDef>
 
