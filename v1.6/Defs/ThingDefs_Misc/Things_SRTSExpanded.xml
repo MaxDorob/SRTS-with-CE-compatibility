@@ -550,7 +550,7 @@
 		<leavingSkyfaller>SRTSMkII_Leaving</leavingSkyfaller>
 		<bomberSkyfaller>SRTSMkII_BomberRun</bomberSkyfaller>
 		<worldObject>TravelingSRTS</worldObject>
-		<maxLaunchDistance>180</maxLaunchDistance>
+		<maxLaunchDistance>78</maxLaunchDistance>
 		<playerShuttle>true</playerShuttle>
 	</SRTS.BomberShipDef>
 

@@ -453,7 +453,7 @@ Speed: Good
 Fuel cap: 1,600L
 Fuel efficiency: Good
 ----------------------------
-Cargo capy: 2,200kg
+Cargo cap: 900kg
 Internal power plant: 1,700w</description>
     <graphicData>
       <texPath>Albatross</texPath>
@@ -481,16 +481,16 @@ Internal power plant: 1,700w</description>
       <li Class="CompProperties_Transporter">
         <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>1</restEffectiveness>
-        <massCapacity>2200</massCapacity>
-      </li>
+        <massCapacity>900</massCapacity>
+				<max1PerGroup>true</max1PerGroup>
+			</li>
 			<li Class="CompProperties_Launchable">
-				<fuelPerTile>3</fuelPerTile>
-				<minFuelCost>50</minFuelCost>
+				<fuelPerTile>2</fuelPerTile>
+				<minFuelCost>75</minFuelCost>
 				<skyfallerLeaving>SRTSMkII_Leaving</skyfallerLeaving>
 				<worldObjectDef>TravelingSRTS</worldObjectDef>
-				<cooldownTicks>3750</cooldownTicks>
-				<!-- 1.5 hours -->
-				<fixedLaunchDistanceMax>62</fixedLaunchDistanceMax>
+				<cooldownTicks>20000</cooldownTicks> <!-- 8 hours -->
+				<fixedLaunchDistanceMax>78</fixedLaunchDistanceMax>
 				<cooldownEndedMessage>{0} is ready to launch again.</cooldownEndedMessage>
 			</li>
       <li Class="SRTS.CompProperties_LaunchableSRTS">
