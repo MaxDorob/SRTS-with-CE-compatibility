@@ -10,6 +10,7 @@
 		<drawerType>RealtimeOnly</drawerType>
 		<size>(1,1)</size>
 		<skyfaller>
+			<reversed>true</reversed>
 			<ticksToImpactRange>0</ticksToImpactRange>
 			<rotationCurve>
 				<points>
