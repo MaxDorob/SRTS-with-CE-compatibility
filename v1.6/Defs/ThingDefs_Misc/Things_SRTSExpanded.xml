@@ -953,6 +953,16 @@
 
 	<!-- SRTS MkIV -->
 
+	<SRTS.BomberShipDef>
+		<defName>SRTSMkIV</defName>
+		<shipThing>SRTSMkIV</shipThing>
+		<arrivingSkyfaller>SRTSMkIV_Incoming</arrivingSkyfaller>
+		<leavingSkyfaller>SRTSMkIV_Leaving</leavingSkyfaller>
+		<bomberSkyfaller>SRTSMkIV_BomberRun</bomberSkyfaller>
+		<worldObject>TravelingSRTS</worldObject>
+		<playerShuttle>true</playerShuttle>
+	</SRTS.BomberShipDef>
+	
 	<ThingDef ParentName="ShuttleSkyfallerBase">
 		<defName>SRTSMkIV_Incoming</defName>
 		<label>SRTS Mk.IV incoming</label>
@@ -970,6 +980,24 @@
 			<anticipationSound>DropPod_Fall</anticipationSound>
 			<anticipationSoundTicks>100</anticipationSoundTicks>
 			<motesPerCell>0</motesPerCell>
+			<rotationCurve>
+				<points>
+					<li>(0,0)</li>
+				</points>
+			</rotationCurve>
+			<zPositionCurve>
+				<points>
+					<li>(0.78,2.5)</li>
+					<li>(1,0)</li>
+				</points>
+			</zPositionCurve>
+			<speedCurve>
+				<points>
+					<li>(0.0, 100)</li>
+					<li>(0.78,0.6)</li>
+					<li>(0.95,0.1)</li>
+				</points>
+			</speedCurve>
 		</skyfaller>
 	</ThingDef>
 
@@ -1015,6 +1043,23 @@
 				<min>-40</min>
 				<max>-15</max>
 			</ticksToImpactRange>
+			<rotationCurve>
+				<points>
+					<li>(0,0)</li>
+				</points>
+			</rotationCurve>
+			<zPositionCurve>
+				<points>
+					<li>(0,0)</li>
+					<li>(0.3,2)</li>
+				</points>
+			</zPositionCurve>
+			<speedCurve>
+				<points>
+					<li>(0,0.2)</li>
+					<li>(0.4,100)</li>
+				</points>
+			</speedCurve>
 		</skyfaller>
 	</ThingDef>
 

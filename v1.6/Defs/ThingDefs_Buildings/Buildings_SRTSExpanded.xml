@@ -807,8 +807,17 @@ Internal power plant: 12,000w</description>
         <canChangeAssignedThingsAfterStarting>true</canChangeAssignedThingsAfterStarting>
         <restEffectiveness>17</restEffectiveness>
         <massCapacity>999999999</massCapacity>
-      </li>
+				<max1PerGroup>true</max1PerGroup>
+			</li>
+			<li Class="CompProperties_Launchable">
+				<fuelPerTile>1</fuelPerTile>
+				<minFuelCost>20</minFuelCost>
+				<skyfallerLeaving>SRTSMkIV_Leaving</skyfallerLeaving>
+				<worldObjectDef>TravelingSRTS</worldObjectDef>
+				<cooldownEndedMessage>{0} is ready to launch again.</cooldownEndedMessage>
+			</li>
       <li Class="SRTS.CompProperties_LaunchableSRTS">
+				<shipDef>SRTSMkIV</shipDef>
         <travelSpeed>80</travelSpeed>
         <fuelPerTile>1</fuelPerTile>
         <minPassengers>1</minPassengers>
@@ -820,7 +829,7 @@ Internal power plant: 12,000w</description>
         <numberBombs>32</numberBombs>
         <precisionBombingNumBombs>32</precisionBombingNumBombs>
         <radiusOfDrop>1</radiusOfDrop>
-        <speed>0.7</speed>
+        <speed>7</speed>
         <distanceBetweenDrops>1</distanceBetweenDrops>
       </li>
       <li Class="CompProperties_Refuelable">
