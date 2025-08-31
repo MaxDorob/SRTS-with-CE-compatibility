@@ -133,7 +133,7 @@ namespace SRTS
                 Log.Error($"{nameof(transporter)} is null");
                 return;
             }
-
+            this.designator = null;
             this.map = map;
             WaitingTransporter = transporter;
             var designator = Designator;
