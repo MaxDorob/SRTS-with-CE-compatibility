@@ -30,7 +30,7 @@ namespace SRTS
         public BombingType BombingType => (Find.DesignatorManager.SelectedStyle.DrawStyleWorker as DrawStyle_SRTS).BombingType;
 
         public override bool DrawHighlight => false; // Don't use default highlight
-        public override bool Valid => CanDesignateCell(start) && CanDesignateCell(end);
+        public override bool Valid => CanDesignateCell(start) && CanDesignateCell(end) && start != end;
 
         public override void RenderHighlight(List<IntVec3> dragCells)
         {
@@ -41,7 +41,7 @@ namespace SRTS
             }
         }
         public override void DesignateSingleCell(IntVec3 c)
-        { 
+        {
         }
         public override void SelectedUpdate()
         {
@@ -51,14 +51,12 @@ namespace SRTS
             var list = new List<IntVec3>();
             Find.DesignatorManager.SelectedStyle.DrawStyleWorker.Update(start, end, list);
             GenDraw.DrawTargetHighlight(start);
-            GenDraw.DrawTargetHighlight(end);
-            GenDraw.DrawLineBetween(Utils.GetEdgeCell(map, (end - start).ToVector3Shifted(), start).ToVector3Shifted(), end.ToVector3Shifted());
+            if (start != end)
+            {
+                GenDraw.DrawTargetHighlight(end);
+                GenDraw.DrawLineBetween(Utils.GetEdgeCell(map, (end - start).ToVector3(), start).ToVector3Shifted(), end.ToVector3Shifted());
+            }
             RenderHighlight(list);
-        }
-        public override void DoExtraGuiControls(float leftX, float bottomY)
-        {
-            Log.Message(nameof(DoExtraGuiControls));
-            base.DoExtraGuiControls(leftX, bottomY);
         }
         public override DrawStyleCategoryDef DrawStyleCategory => DefsOf.SRTSBombing;
     }
