@@ -43,6 +43,13 @@ namespace SRTS
         public override void DesignateSingleCell(IntVec3 c)
         {
         }
+        public override void DrawMouseAttachments()
+        {
+            base.DrawMouseAttachments();
+            var bombs = Find.World.GetComponent<WorldComponent_BomberController>().Bombs.ToList();
+            var index = (int)GenMath.PositiveMod(Time.realtimeSinceStartup / 2f, bombs.Count);
+            GenUI.DrawMouseAttachment(bombs[index].def.uiIcon);
+        }
         public override void SelectedUpdate()
         {
             base.SelectedUpdate();
