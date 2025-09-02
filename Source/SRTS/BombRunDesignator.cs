@@ -34,12 +34,38 @@ namespace SRTS
 
         public override void RenderHighlight(List<IntVec3> dragCells)
         {
-            foreach (var cell in dragCells)
+            if (dragCells.Count > 0)
             {
-                GenDraw.DrawRadiusRing(cell, SRTSMod.GetStatFor<int>(transporter.def.defName, StatName.radiusDrop));
-                GenDraw.DrawTargetHighlight(cell);
+                dragCells = dragCells.Distinct().ToList();
+                IEnumerable<Thing> bombs = Find.World.GetComponent<WorldComponent_BomberController>().SelectedBombs.ToList();
+                for (int i = 0; i < dragCells.Count; i++)
+                {
+                    IntVec3 cell = dragCells[i];
+                    var cellsLeft = dragCells.Count - i;
+                    GenDraw.DrawRadiusRing(cell, SRTSMod.GetStatFor<int>(transporter.def.defName, StatName.radiusDrop));
+                    GenDraw.DrawTargetHighlight(cell);
+                    int bombsPerCell = Mathf.Max(Mathf.CeilToInt((float)bombs.Count() / cellsLeft), 1);
+                    var bombsForCell = bombs.Take(bombsPerCell).ToList();
+                    Vector3 offset = new Vector3(0.7f, AltitudeLayer.MapDataOverlay.AltitudeFor(), -0.2f);
+
+                    foreach (var bomb in bombsForCell)
+                    {
+                        Graphics.DrawMesh(MeshPool.plane10, cell.ToVector3() + offset, Quaternion.identity, bomb.Graphic.MatSingle, 0);
+
+                        offset.x += 0.3f;
+                        offset.y += 0.3f;
+                        if (offset.x > 0.68f + 0.3f * 3)
+                        {
+                            offset.z += -0.5f;
+                            offset.x = 0.42f;
+                        }
+                    }
+
+                    bombs = bombs.Skip(bombsPerCell);
+                }
             }
         }
+
         public override void DesignateSingleCell(IntVec3 c)
         {
         }
