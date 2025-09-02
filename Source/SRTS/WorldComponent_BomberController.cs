@@ -105,19 +105,39 @@ namespace SRTS
                 }
             }
             rect2.x += buttonWidth + margin;
-            if (Widgets.ButtonText(rect2, "SRTSBombAndGoBackToHome".Translate(), true, true, true, null))
+            AcceptanceReport goBackHomeActive = true;
+            float fuelRequired = -1f;
+            if (!(SRTS.TryGetComp<CompLaunchableSRTS>().TryFindHomePoint(out var homeMap, out _, out _)))
             {
-                if (SRTS.TryGetComp<CompLaunchableSRTS>().TryFindHomePoint(out var homeMap, out _, out _))
+                goBackHomeActive = "SRTSCannotFindHomePoint".Translate();
+            }
+            else
+            {
+                var launchable = SRTS.TryGetComp<CompLaunchable>();
+                var dist = Find.WorldGrid.TraversalDistanceBetween(WaitingTransporter.Tile, homeMap.Tile);
+                fuelRequired = launchable.FuelNeededToLaunchAtDist(dist, homeMap.Tile.Layer);
+                if (launchable.FuelLevel < fuelRequired)
                 {
-                    if (Designator.Valid)
-                    {
-                        OnConfirm<TransporterArrivalAction_GoBackToHome>(homeMap.Tile);
-                    }
-                    else
-                    {
-                        SendMessageNotValid();
-                    }
+                    goBackHomeActive = "TransportPodNotEnoughFuel".Translate();
                 }
+            }
+            var goBackHomeText = "SRTSBombAndGoBackToHome".Translate();
+            if (!goBackHomeActive)
+            {
+                goBackHomeText += $"\n({goBackHomeActive.Reason})";
+            }
+            if (Widgets.ButtonText(rect2, goBackHomeText, true, true, goBackHomeActive.Accepted, null))
+            {
+                if (Designator.Valid)
+                {
+                    SRTS.TryGetComp<CompRefuelable>()?.ConsumeFuel(fuelRequired);
+                    OnConfirm<TransporterArrivalAction_GoBackToHome>(homeMap.Tile);
+                }
+                else
+                {
+                    SendMessageNotValid();
+                }
+
             }
             rect2.x += buttonWidth + margin;
             if (Widgets.ButtonText(rect2, "SRTSBombAndLandHere".Translate(), true, true, true, null))
