@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using Verse;
 
@@ -55,10 +56,10 @@ namespace SRTS
         public int minPassengers = 1;
         public int maxPassengers = 2;
 
-        public float fuelPerTile = 2.25f;
 
         /* SOS2 Compatibility */
         public bool spaceFaring;
+        [Obsolete]
         public bool shuttleBayLanding;
         /* ------------------ */
     }

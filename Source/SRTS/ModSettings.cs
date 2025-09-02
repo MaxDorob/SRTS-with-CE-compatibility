@@ -529,7 +529,7 @@ namespace SRTS
             this.minPassengers = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().minPassengers;
             this.maxPassengers = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().maxPassengers;
             this.flightSpeed = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().travelSpeed;
-            this.fuelPerTile = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().fuelPerTile;
+            this.fuelPerTile = referencedDef.GetCompProperties<CompProperties_Launchable>().fuelPerTile;
 
             this.spaceFaring = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().spaceFaring;
             this.shuttleBayLanding = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().shuttleBayLanding;
@@ -565,7 +565,7 @@ namespace SRTS
                 }
                 return flag && this.RequiredResearch[0].baseCost == this.researchPoints && !this.customResearchDefNames.Any() && this.massCapacity == referencedDef.GetCompProperties<CompProperties_Transporter>().massCapacity && this.minPassengers == referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().minPassengers
                     && this.maxPassengers == referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().maxPassengers && this.flightSpeed == referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().travelSpeed &&
-                    this.fuelPerTile == referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().fuelPerTile;
+                    this.fuelPerTile == referencedDef.GetCompProperties<CompProperties_Launchable>().fuelPerTile;
             }
         }
 
@@ -681,7 +681,7 @@ namespace SRTS
             this.minPassengers = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().minPassengers;
             this.maxPassengers = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().maxPassengers;
             this.flightSpeed = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().travelSpeed;
-            this.fuelPerTile = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().fuelPerTile;
+            this.fuelPerTile = this.referencedDef.GetCompProperties<CompProperties_Launchable>().fuelPerTile;
 
             this.spaceFaring = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().spaceFaring;
             this.shuttleBayLanding = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().shuttleBayLanding;
