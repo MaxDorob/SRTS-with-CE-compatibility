@@ -77,6 +77,8 @@ namespace SRTS
             {
                 if (Widgets.ButtonText(rect2, "Abort".Translate(), true, true, true, null))
                 {
+                    WaitingTransporter.arrivalAction = new TransportersArrivalAction_FormCaravan();
+                    WaitingTransporter.destinationTile = WaitingTransporter.Tile;
                     this.map = null;
                     this.WaitingTransporter = null;
                     Find.DesignatorManager.Deselect();
