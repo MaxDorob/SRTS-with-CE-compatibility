@@ -11,6 +11,17 @@ namespace SRTS
 {
     public class TravelingSRTS : TravelingTransportPods
     {
+        [HarmonyLib.HarmonyPatch(typeof(TravellingTransporters), "TraveledPctStepPerTick", HarmonyLib.MethodType.Getter)]
+        internal static class TraveledPctStepPerTick_Patch
+        {
+            public static void Postfix(TravellingTransporters __instance, ref float __result)
+            {
+                if (__instance is TravelingSRTS srts)
+                {
+                    __result *= SRTSMod.GetStatFor<int>(srts.flyingThing.def.defName, StatName.flightSpeed) / 3; // 3 is default speed of shuttle and pods
+                }
+            }
+        }
         public override Texture2D ExpandingIcon => flyingThing?.def.uiIcon ?? base.ExpandingIcon;
 
         public override Color ExpandingIconColor => Color.white;
