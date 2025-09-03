@@ -113,20 +113,21 @@ namespace SRTS
             this.innerContainer.ClearAndDestroyContents(DestroyMode.Vanish);
         }
 
-        public override void DrawAt(Vector3 drawLoc, bool flip = false)
+        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             Thing thingForGraphic = this.GetThingForGraphic();
             float extraRotation = this.angle;
             this.Graphic.Draw(drawLoc, !flip ? thingForGraphic.Rotation.Opposite : thingForGraphic.Rotation, thingForGraphic, extraRotation);
             this.DrawDropSpotShadow();
         }
-
         public override void Tick()
+
         {
             try
             {
-
+#if !RELEASE1_6
                 this.innerContainer.ThingOwnerTick(true);
+#endif
                 this.ticksToExit--;
                 if (bombCells.Any() && Math.Abs(this.DrawPosCell.x - bombCells.First().x) < 3 && Math.Abs(this.DrawPosCell.z - bombCells.First().z) < 3)
                 {

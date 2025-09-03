@@ -315,8 +315,7 @@ namespace SRTS
                 explosivesChanged = false;
                 if(SRTSHelper.CEModLoaded)
                 {
-                    explosivesSearched = DefDatabase<AmmoDef>.AllDefs.Where(x => x.isMortarAmmo && !SRTSMod.mod.settings.allowedBombs.Contains(x.defName)
-                    && CultureInfo.CurrentCulture.CompareInfo.IndexOf(x.defName, explosivesString, CompareOptions.IgnoreCase) >= 0).Cast<ThingDef>().ToList();
+                    explosivesSearched = CEHelper.ExplosivesDefs(explosivesString).ToList();
                 }
                 else
                 {

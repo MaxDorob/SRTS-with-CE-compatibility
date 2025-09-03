@@ -64,7 +64,11 @@ namespace SRTS
 
         public static IEnumerable<FloatMenuOption> GetVisitFloatMenuOptions(CompLaunchableSRTS representative, IEnumerable<IThingHolder> pods, Settlement settlement, Caravan car)
         {
-            return SRTSArrivalActionUtility.GetFloatMenuOptions<TransportPodsArrivalAction_VisitSettlement>((Func<FloatMenuAcceptanceReport>) (() => TransportPodsArrivalAction_VisitSettlement.CanVisit(pods, settlement)), (Func<TransportPodsArrivalAction_VisitSettlement>) (() => new TransportPodsArrivalAction_VisitSettlement(settlement)), "VisitSettlement".Translate(settlement.Label), representative, settlement.Tile, car);
+            return SRTSArrivalActionUtility.GetFloatMenuOptions<TransportPodsArrivalAction_VisitSettlement>((Func<FloatMenuAcceptanceReport>) (() => TransportPodsArrivalAction_VisitSettlement.CanVisit(pods, settlement)), (Func<TransportPodsArrivalAction_VisitSettlement>) (() => new TransportPodsArrivalAction_VisitSettlement(settlement
+#if RELEASE1_6
+                , ""
+#endif  
+                )), "VisitSettlement".Translate(settlement.Label), representative, settlement.Tile, car);
         }
     }
 }

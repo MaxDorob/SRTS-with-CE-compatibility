@@ -10,22 +10,34 @@
 		<Authors />
 		<Copyright>CC BY-NC-SA 4.0 2020</Copyright>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<BaseOutputPath>..\..\v1.5\Assemblies</BaseOutputPath>
+		<Configurations>Debug;Release;Release1.6</Configurations>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<OutputPath>..\..\v1.4\Assemblies\</OutputPath>
+		<OutputPath>..\..\v1.5\Assemblies\</OutputPath>
 		<DebugType>portable</DebugType>
 		<DebugSymbols>true</DebugSymbols>
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-		<LangVersion>9.0</LangVersion>
+		<LangVersion>12</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<OutputPath>..\..\Assemblies\</OutputPath>
+		<OutputPath>..\..\v1.5\Assemblies\</OutputPath>
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 		<DebugType>none</DebugType>
 		<DebugSymbols>false</DebugSymbols>
-		<LangVersion>9.0</LangVersion>
+		<LangVersion>12</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release1.6|AnyCPU'">
+	  <OutputPath>..\..\v1.6\Assemblies\</OutputPath>
+	  <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+	  <DebugType>none</DebugType>
+	  <DebugSymbols>false</DebugSymbols>
+	  <LangVersion>12</LangVersion>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	  <Optimize>True</Optimize>
+		
 	</PropertyGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="Exists('C:\Program Files (x86)\Mono\bin\pdb2mdb.bat')">
 		<Exec Command="if $(ConfigurationName) == Debugger call &quot;C:\Program Files (x86)\Mono\bin\pdb2mdb.bat&quot; $(TargetDir)$(TargetName)$(TargetExt)" />
@@ -35,15 +47,28 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3704" GeneratePathProperty="true" />
 		<PackageReference Include="Lib.Harmony" Version="2.2.2" ExcludeAssets="runtime" />
 	</ItemGroup>
 	<ItemGroup>
 		<Publicize Include="Assembly-CSharp:RimWorld.Planet.GlobalTargetInfo.tileInt" />
     <Publicize Include="Assembly-CSharp:RimWorld.Planet.GlobalTargetInfo.worldObjectInt" />
     <Publicize Include="Assembly-CSharp:RimWorld.Planet.GlobalTargetInfo.mapInt" />
-    <Publicize Include="CombatExtended"/>
+		<Publicize Include="Assembly-CSharp:Verse.Entity.Tick" />
+		<Publicize Include="Assembly-CSharp:RimWorld.Planet.Tile.biome" />
+    <Publicize Include="CombatExtended" />
 	</ItemGroup>
+	<Choose>
+		<When Condition="'$(Configuration)'=='Release1.6'">
+			<ItemGroup>
+				<PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4491-beta" GeneratePathProperty="true" />
+			</ItemGroup>
+		</When>
+		<Otherwise>
+			<ItemGroup>
+				<PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4063" GeneratePathProperty="true" />
+			</ItemGroup>
+		</Otherwise>
+	</Choose>
 	<ItemGroup>
 	  <Reference Include="CombatExtended">
 	    <HintPath>..\..\..\СЕ\Assemblies\CombatExtended.dll</HintPath>

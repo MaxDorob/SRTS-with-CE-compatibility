@@ -96,7 +96,13 @@ namespace SRTS
 
                 Find.WorldObjects.Add((WorldObject) travelingTransportPods);
                 SRTSLeaving.tmpActiveDropPods.Clear();
-                SRTSLeaving.tmpActiveDropPods.AddRange((IEnumerable<Thing>) this.Map.listerThings.ThingsInGroup(ThingRequestGroup.ActiveDropPod));
+                SRTSLeaving.tmpActiveDropPods.AddRange((IEnumerable<Thing>) this.Map.listerThings.ThingsInGroup(
+#if RELEASE1_6
+                    ThingRequestGroup.ActiveTransporter
+#else
+                    ThingRequestGroup.ActiveDropPod
+#endif
+                    ));
                 travelingTransportPods.flyingThing = tmpActiveDropPods.Find(x => (x as SRTSLeaving)?.groupID == this.groupID);
                 for (int index = 0; index < SRTSLeaving.tmpActiveDropPods.Count; ++index)
                 {
@@ -112,9 +118,15 @@ namespace SRTS
             }
         }
 
+#if RELEASE1_6
+        protected override void Tick()
+#else
         public override void Tick()
+#endif
         {
+#if !RELEASE1_6
             innerContainer.ThingOwnerTick(true);
+#endif
             takeoffTicks++;
             if (takeoffTicks >= TakeoffCountTicks && !initiatingTakeoff)
             {

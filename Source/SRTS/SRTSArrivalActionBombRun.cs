@@ -37,7 +37,13 @@ namespace SRTS
             Scribe_Values.Look(ref originalLandingSpot, "originalLandingSpot");
         }
 
-        public override FloatMenuAcceptanceReport StillValid(IEnumerable<IThingHolder> pods, int destinationTile)
+        public override FloatMenuAcceptanceReport StillValid(IEnumerable<IThingHolder> pods,
+#if RELEASE1_6
+            PlanetTile destinationTile
+#else
+            int destinationTile
+#endif
+)
         {
             FloatMenuAcceptanceReport floatMenuAcceptanceReport = base.StillValid(pods, destinationTile);
             if (!floatMenuAcceptanceReport)
@@ -51,13 +57,21 @@ namespace SRTS
             return SRTSArrivalActionBombRun.CanBombSpecificCell(pods, this.mapParent);
         }
 
-        public override void Arrived(List<ActiveDropPodInfo> pods, int tile)
+        public override void Arrived(List<ActiveDropPodInfo> pods,
+#if RELEASE1_6
+            PlanetTile tile
+#else
+            int tile
+#endif
+            )
         {
             Thing lookTarget = TransportPodsArrivalActionUtility.GetLookTarget(pods);
             BombRunArrivalUtility.BombWithSRTS(pods, this.targetCellA, this.targetCellB, this.bombCells, this.bombType, this.mapParent.Map, originalMap, originalLandingSpot);
             Messages.Message("BombRunStarted".Translate(), lookTarget, MessageTypeDefOf.CautionInput, true);
         }
-
+#if RELEASE1_6
+        public override bool GeneratesMap => true;
+#endif
         public static bool CanBombSpecificCell(IEnumerable<IThingHolder> pods, MapParent mapParent)
         {
             return mapParent != null && mapParent.Spawned && mapParent.HasMap;

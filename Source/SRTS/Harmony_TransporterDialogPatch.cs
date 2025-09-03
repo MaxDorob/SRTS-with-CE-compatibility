@@ -23,8 +23,9 @@ namespace SRTS
                 Traverse.Create(__instance).Method("SetLoadedItemsToLoad").GetValue();
             }
         }
+#if !RELEASE1_6
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(TransporterUtility), nameof(TransporterUtility.AllSendableItems), new Type[] { typeof(List<CompTransporter>), typeof(Map), typeof(bool) })]
+        [HarmonyPatch(typeof(TransporterUtility), nameof(TransporterUtility.AllSendableItems))]
         public static void AllSendableItemsPrefix(List<CompTransporter> transporters, Map map, ref bool autoLoot)
         {
             if (!SRTSMod.mod.settings.displayHomeItems) return;
@@ -34,9 +35,14 @@ namespace SRTS
                 autoLoot = true;
             }
         }
+#endif
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(TransporterUtility), nameof(TransporterUtility.AllSendableItems), new Type[] { typeof(List<CompTransporter>), typeof(Map), typeof(bool) })]
-        public static void AllSendableItemsPostfix(List<CompTransporter> transporters, Map map, bool autoLoot, ref IEnumerable<Thing> __result)
+        [HarmonyPatch(typeof(TransporterUtility), nameof(TransporterUtility.AllSendableItems)
+#if !RELEASE1_6
+            , new Type[] { typeof(List<CompTransporter>), typeof(Map), typeof(bool) }
+#endif
+            )]
+        public static void AllSendableItemsPostfix(List<CompTransporter> transporters, Map map, ref IEnumerable<Thing> __result)
         {
             
             var comp = transporters[0].parent.TryGetComp<CompLaunchableSRTS>();
