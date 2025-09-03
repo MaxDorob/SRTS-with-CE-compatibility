@@ -246,20 +246,10 @@ namespace SRTS
                     listing_Standard.Settings_SliderLabeled("PreciseBombing".Translate(), string.Empty, ref props.precisionBombingNumBombs, 1, 10);
                     listing_Standard.Settings_SliderLabeled("CarpetBombing".Translate(), string.Empty, ref props.numberBombs, 1, 40);
                 }
+                listing_Standard.CheckboxLabeled("SpaceFaring".Translate(), ref props.spaceFaring);
                 listing_Standard.End();
 
-                if(SRTSHelper.SOS2ModLoaded)
-                {
-                    Rect sos2Rect = new Rect(inRect.width - (inRect.width / 4), inRect.height - (inRect.height / 8), inRect.width / 4, inRect.height / 4);
 
-                    listing_Standard.Begin(sos2Rect);
-
-                    listing_Standard.Settings_Header("SOS2Compatibility".Translate(), DialogSettings.highlightColor, GameFont.Small, TextAnchor.MiddleLeft);
-                    listing_Standard.CheckboxLabeled("SpaceFaring".Translate(), ref props.spaceFaring);
-                    listing_Standard.CheckboxLabeled("ShuttleBayLanding".Translate(), ref props.shuttleBayLanding);
-
-                    listing_Standard.End();
-                }
             }
             else if (currentPage == SRTS.SettingsCategory.Research)
             {
