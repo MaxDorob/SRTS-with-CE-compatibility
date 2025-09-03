@@ -115,7 +115,7 @@ namespace SRTS
             {
                 var launchable = SRTS.TryGetComp<CompLaunchable>();
                 var dist = Find.WorldGrid.TraversalDistanceBetween(WaitingTransporter.Tile, homeMap.Tile);
-                fuelRequired = launchable.FuelNeededToLaunchAtDist(dist, homeMap.Tile.Layer);
+                fuelRequired = dist * (SRTSMod.GetStatFor<float>(SRTS.def.defName, StatName.fuelPerTile) * homeMap.Tile.Layer.Def.rangeDistanceFactor);
                 if (launchable.FuelLevel < fuelRequired)
                 {
                     goBackHomeActive = "TransportPodNotEnoughFuel".Translate();
