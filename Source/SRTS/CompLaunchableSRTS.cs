@@ -76,7 +76,43 @@ namespace SRTS
                 return true;
             }
         }
-
+        [HarmonyPatch(typeof(CompLaunchable), nameof(CompLaunchable.TryLaunch))]
+        internal static class CacheLastLaunchTile_Patch
+        {
+            public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator ILGenerator)
+            {
+                
+                foreach (var ins in instructions)
+                {
+                    yield return ins;
+                    if (ins.IsStloc() && ins.operand is LocalBuilder local && local.LocalType == typeof(CompTransporter))
+                    {
+                        yield return new CodeInstruction(OpCodes.Ldloc_S, ins.operand);
+                        yield return CodeInstruction.Call(typeof(CacheLastLaunchTile_Patch), nameof(CacheLastLaunchTile_Patch.SetLastLaunchTile));
+                    }
+                }
+            }
+            public static void SetLastLaunchTile(CompTransporter transporter)
+            {
+                var compLaunchableSRTS = transporter.parent.TryGetComp<CompLaunchableSRTS>();
+                if (compLaunchableSRTS != null)
+                {
+                    compLaunchableSRTS.lastLaunchTile = transporter.parent.Tile;
+                }
+            }
+        }
+        [HarmonyPatch(typeof(CaravanShuttleUtility), nameof(CaravanShuttleUtility.LaunchShuttle))]
+        internal static class CacheLastLaunchTile_Caravan_Patch
+        {
+            public static void Prefix(Caravan caravan)
+            {
+                var compLaunchableSRTS = caravan.Shuttle?.TryGetComp<CompLaunchableSRTS>();
+                if (compLaunchableSRTS != null)
+                {
+                    compLaunchableSRTS.lastLaunchTile = caravan.Tile;
+                }
+            }
+        }
         public CompProperties_LaunchableSRTS SRTSProps => (CompProperties_LaunchableSRTS)this.props;
 
 
@@ -156,11 +192,13 @@ namespace SRTS
             Scribe_References.Look(ref homeMap, nameof(homeMap));
             Scribe_Values.Look(ref homePoint, nameof(homePoint), IntVec3.Invalid);
             Scribe_Values.Look(ref homeRotation, nameof(homeRotation));
+            Scribe_Values.Look(ref lastLaunchTile, nameof(lastLaunchTile), PlanetTile.Invalid);
         }
 
         List<Thing> thingsInsideShip = new List<Thing>();
         private Map homeMap;
         private IntVec3 homePoint;
         private Rot4 homeRotation;
+        public PlanetTile lastLaunchTile;
     }
 }

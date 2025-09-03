@@ -120,6 +120,10 @@ namespace SRTS
                 {
                     goBackHomeActive = "TransportPodNotEnoughFuel".Translate();
                 }
+                else if (launchable.Props.fixedLaunchDistanceMax < Find.WorldGrid.TraversalDistanceBetween(SRTS.TryGetComp<CompLaunchableSRTS>().lastLaunchTile, map.Tile) + dist)
+                {
+                    goBackHomeActive = "SRTSHomeBeyondMaximumRange".Translate();
+                }
             }
             var goBackHomeText = "SRTSBombAndGoBackToHome".Translate();
             if (!goBackHomeActive)
