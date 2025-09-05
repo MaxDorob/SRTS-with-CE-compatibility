@@ -99,6 +99,7 @@ Internal power plant: 400w</description>
       </li>
       <li Class="CompProperties_Refuelable">
         <fuelCapacity>300</fuelCapacity>
+				<fuelConsumptionRate>50.0</fuelConsumptionRate>
         <targetFuelLevelConfigurable>true</targetFuelLevelConfigurable>
         <initialConfigurableTargetFuelLevel>300</initialConfigurableTargetFuelLevel>
         <fuelFilter>
@@ -106,7 +107,6 @@ Internal power plant: 400w</description>
             <li>Chemfuel</li>
           </thingDefs>
         </fuelFilter>
-        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
         <initialFuelPercent>0.25</initialFuelPercent>
         <autoRefuelPercent>1</autoRefuelPercent>
         <showFuelGizmo>true</showFuelGizmo>
@@ -207,6 +207,7 @@ Internal power plant: 650w</description> <!-- description of course... -->
 	  </li>
       <li Class="CompProperties_Refuelable"> <!-- comp for allowing to fuel the srts, don't remove -->
         <fuelCapacity>400</fuelCapacity>
+				<fuelConsumptionRate>70.0</fuelConsumptionRate>
         <targetFuelLevelConfigurable>true</targetFuelLevelConfigurable>
         <initialConfigurableTargetFuelLevel>400</initialConfigurableTargetFuelLevel>
         <fuelFilter>
@@ -214,7 +215,6 @@ Internal power plant: 650w</description> <!-- description of course... -->
             <li>Chemfuel</li>
           </thingDefs>
         </fuelFilter>
-        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
         <initialFuelPercent>0.25</initialFuelPercent>
         <autoRefuelPercent>1</autoRefuelPercent>
         <showFuelGizmo>true</showFuelGizmo>
@@ -302,6 +302,7 @@ Internal power plant: 1000w</description>
       </li>
       <li Class="CompProperties_Refuelable">
         <fuelCapacity>2000</fuelCapacity>
+				<fuelConsumptionRate>120.0</fuelConsumptionRate>
         <targetFuelLevelConfigurable>true</targetFuelLevelConfigurable>
         <initialConfigurableTargetFuelLevel>2000</initialConfigurableTargetFuelLevel>
         <fuelFilter>
@@ -309,7 +310,6 @@ Internal power plant: 1000w</description>
             <li>Chemfuel</li>
           </thingDefs>
         </fuelFilter>
-        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
         <initialFuelPercent>0.25</initialFuelPercent>
         <autoRefuelPercent>1</autoRefuelPercent>
         <showFuelGizmo>true</showFuelGizmo>
@@ -398,6 +398,7 @@ Internal power plant: 1,700w</description>
       </li>
       <li Class="CompProperties_Refuelable">
         <fuelCapacity>2600</fuelCapacity>
+				<fuelConsumptionRate>110.0</fuelConsumptionRate>
         <targetFuelLevelConfigurable>true</targetFuelLevelConfigurable>
         <initialConfigurableTargetFuelLevel>2600</initialConfigurableTargetFuelLevel>
         <fuelFilter>
@@ -405,7 +406,6 @@ Internal power plant: 1,700w</description>
             <li>Chemfuel</li>
           </thingDefs>
         </fuelFilter>
-        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
         <initialFuelPercent>0.25</initialFuelPercent>
         <autoRefuelPercent>1</autoRefuelPercent>
         <showFuelGizmo>true</showFuelGizmo>
@@ -508,6 +508,7 @@ Internal power plant: 1,700w</description>
       </li>
       <li Class="CompProperties_Refuelable">
         <fuelCapacity>1600</fuelCapacity>
+				<fuelConsumptionRate>200.0</fuelConsumptionRate>
         <targetFuelLevelConfigurable>true</targetFuelLevelConfigurable>
         <initialConfigurableTargetFuelLevel>1600</initialConfigurableTargetFuelLevel>
         <fuelFilter>
@@ -515,7 +516,6 @@ Internal power plant: 1,700w</description>
             <li>Chemfuel</li>
           </thingDefs>
         </fuelFilter>
-        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
         <initialFuelPercent>0.25</initialFuelPercent>
         <autoRefuelPercent>1</autoRefuelPercent>
         <showFuelGizmo>true</showFuelGizmo>
@@ -619,6 +619,7 @@ Internal power plant: 3,600w</description>
       </li>
       <li Class="CompProperties_Refuelable">
         <fuelCapacity>1200</fuelCapacity>
+				<fuelConsumptionRate>150.0</fuelConsumptionRate>
         <targetFuelLevelConfigurable>true</targetFuelLevelConfigurable>
         <initialConfigurableTargetFuelLevel>1200</initialConfigurableTargetFuelLevel>
         <fuelFilter>
@@ -626,7 +627,6 @@ Internal power plant: 3,600w</description>
             <li>Chemfuel</li>
           </thingDefs>
         </fuelFilter>
-        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
         <initialFuelPercent>0.25</initialFuelPercent>
         <autoRefuelPercent>1</autoRefuelPercent>
         <showFuelGizmo>true</showFuelGizmo>
@@ -717,6 +717,7 @@ Internal power plant: 2,800w</description>
       </li>
       <li Class="CompProperties_Refuelable">
         <fuelCapacity>1900</fuelCapacity>
+				<fuelConsumptionRate>80.0</fuelConsumptionRate>
         <targetFuelLevelConfigurable>true</targetFuelLevelConfigurable>
         <initialConfigurableTargetFuelLevel>1900</initialConfigurableTargetFuelLevel>
         <fuelFilter>
@@ -724,7 +725,6 @@ Internal power plant: 2,800w</description>
             <li>Chemfuel</li>
           </thingDefs>
         </fuelFilter>
-        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
         <initialFuelPercent>0.25</initialFuelPercent>
         <autoRefuelPercent>1</autoRefuelPercent>
         <showFuelGizmo>true</showFuelGizmo>
@@ -833,6 +833,7 @@ Internal power plant: 12,000w</description>
         <fuelLabel>Hyperspace Containment</fuelLabel>
         <fuelGizmoLabel>Hyperspace Containment</fuelGizmoLabel>
         <fuelCapacity>10000000</fuelCapacity>
+				<fuelConsumptionRate>100.0</fuelConsumptionRate>
         <fuelMultiplier>99999</fuelMultiplier>
         <initialConfigurableTargetFuelLevel>10000000</initialConfigurableTargetFuelLevel>
         <initialFuelPercent>1.0</initialFuelPercent>
@@ -841,7 +842,6 @@ Internal power plant: 12,000w</description>
             <li>Uranium</li>
           </thingDefs>
         </fuelFilter>
-        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
         <autoRefuelPercent>1</autoRefuelPercent>
         <showFuelGizmo>false</showFuelGizmo>
         <drawOutOfFuelOverlay>false</drawOutOfFuelOverlay>
