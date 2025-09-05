@@ -66,9 +66,9 @@ Internal power plant: 400w</description>
       <Beauty>15</Beauty>
     </statBases>
     <costList>
-      <Steel>700</Steel>
+      <Steel>400</Steel>
       <Gold>45</Gold>
-      <Silver>2000</Silver>
+      <Silver>1000</Silver>
       <ComponentIndustrial>12</ComponentIndustrial>
     </costList>
     <comps>
