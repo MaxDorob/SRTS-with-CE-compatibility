@@ -103,4 +103,8 @@
 	<SRTSBombAndFormCaravan>Drop bombs and land outside</SRTSBombAndFormCaravan>
 	<SRTSBombAndGoBackToHome>Drop bombs and go home</SRTSBombAndGoBackToHome>
 	<SRTSCannotFindHomePoint>No point to return</SRTSCannotFindHomePoint>
+	<SRTSHomeBeyondMaximumRange>Beyond maximum range</SRTSHomeBeyondMaximumRange>
+	<SRTSBombAndGoBackToHome>Drop bombs and land here</SRTSBombAndGoBackToHome>
+	<SRTSSendBombRun>Send bomb run</SRTSSendBombRun>
+	<Abort>Abort</Abort>
 </LanguageData>
