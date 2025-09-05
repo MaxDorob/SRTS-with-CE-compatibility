@@ -45,6 +45,13 @@ namespace SRTS
                     yield return $"{nameof(shipDef.leavingSkyfaller)}'s {shipDef.leavingSkyfaller.skyfaller.zPositionCurve} is null";
                 }
             }
+            if ((parentDef.GetCompProperties<CompProperties_Power>()?.PowerConsumption ?? 0.0f) < -0.00001f)
+            {
+                if (parentDef.GetCompProperties<CompProperties_Refuelable>().consumeFuelOnlyWhenUsed)
+                {
+                    yield return "consumeFuelOnlyWhenUsed is true and it generates power (infinite power source)";
+                }
+            }
 
         }
         public CompProperties_LaunchableSRTS()
