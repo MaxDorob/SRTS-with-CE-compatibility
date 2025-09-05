@@ -92,4 +92,18 @@
   <BombTarget>Бомбардировка</BombTarget>
   <BombTargetDesc>Выбрать цель для бомбардировки на другой карте.</BombTargetDesc>
 
+	<!--1.6 Odyssey update-->
+	<SRTSPawnsLimitExceeded>Лимит пассажиров исчерпан</SRTSPawnsLimitExceeded>
+	<SRTSSelectLandingSpot>Выбрать место посадки</SRTSSelectLandingSpot>
+	<SRTSLandHere>Сесть здесь</SRTSLandHere>
+	<SRTSCannotLandHere>Невозможно сесть здесь</SRTSCannotLandHere>
+	<SRTSBombRunTrajectoryIsNotValid>Траектория некорректна!</SRTSBombRunTrajectoryIsNotValid>
+	<SRTSChangeBombRunTrajectory>Изменить траекторию</SRTSChangeBombRunTrajectory>
+	<SRTSBombAndFormCaravan>Сбросить бомбы и сесть снаружи</SRTSBombAndFormCaravan>
+	<SRTSBombAndGoBackToHome>Сбросить бомбы и отправиться домой</SRTSBombAndGoBackToHome>
+	<SRTSCannotFindHomePoint>Не найдено точки возврата</SRTSCannotFindHomePoint>
+	<SRTSHomeBeyondMaximumRange>Слишком далеко</SRTSHomeBeyondMaximumRange>
+	<SRTSBombAndLandHere>Сбросить бомбы и приземлиться здесь</SRTSBombAndLandHere>
+	<SRTSSendBombRun>Отправить бомбордировку</SRTSSendBombRun>
+	<SRTSAbort>Отменить</SRTSAbort>
 </LanguageData>
