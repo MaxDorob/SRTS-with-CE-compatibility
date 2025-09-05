@@ -166,14 +166,14 @@ Internal power plant: 650w</description> <!-- description of course... -->
       <MaxHitPoints>350</MaxHitPoints> <!-- hitpoints of the building -->
       <WorkToBuild>7200</WorkToBuild> <!-- how much work it costs to build, which is more like a base type, as more properties affect it, resulting in a different final number for construction -->
       <Flammability>0.7</Flammability> <!-- how easy it is to catch on fire (duh) -->
-      <Mass>20</Mass> <!-- how much it weighs for a pawn to carry. My guess is they are light in this mod so pawns entering a map will throw it in their inventory rather than lose it, but i can check that later. -->
+      <Mass>100</Mass> <!-- how much it weighs for a pawn to carry. My guess is they are light in this mod so pawns entering a map will throw it in their inventory rather than lose it, but i can check that later. -->
       <Beauty>25</Beauty> <!-- beauty on overlap, and for pawns -->
     </statBases>
     <costList> <!-- Costs to build, the names are the defNames of items -->
-      <Steel>1200</Steel>
+      <Steel>700</Steel>
       <Gold>100</Gold>
-      <Silver>1800</Silver>
-      <ComponentIndustrial>12</ComponentIndustrial>
+      <Silver>1000</Silver>
+      <ComponentIndustrial>16</ComponentIndustrial>
     </costList>
     <comps> <!-- required for sending as drop pod -->
       <li Class="CompProperties_Transporter">
@@ -187,8 +187,7 @@ Internal power plant: 650w</description> <!-- description of course... -->
 				<minFuelCost>50</minFuelCost>
 				<skyfallerLeaving>SRTSSkip_Leaving</skyfallerLeaving>
 				<worldObjectDef>TravelingSRTS</worldObjectDef>
-				<cooldownTicks>3750</cooldownTicks>
-				<!-- 1.5 hours -->
+				<cooldownTicks>40000</cooldownTicks> <!-- 16 hours -->
 				<fixedLaunchDistanceMax>42</fixedLaunchDistanceMax>
 				<cooldownEndedMessage>{0} is ready to launch again.</cooldownEndedMessage>
 			</li>
@@ -198,8 +197,6 @@ Internal power plant: 650w</description> <!-- description of course... -->
         <fuelPerTile>2.25</fuelPerTile>
         <minPassengers>1</minPassengers>
         <maxPassengers>2</maxPassengers>
-      	<spaceFaring>false</spaceFaring>
-      	<shuttleBayLanding>true</shuttleBayLanding>
       </li>
       <li Class="SRTS.CompProperties_BombsAway"> <!-- include this comp if you want it to be able to carpet bomb, remove this comp if you dont. Be aware you must also add a bomber skydropper def set -->
         <numberBombs>4</numberBombs> <!-- num dropped per run -->
@@ -209,9 +206,9 @@ Internal power plant: 650w</description> <!-- description of course... -->
 		    <distanceBetweenDrops>3</distanceBetweenDrops> <!-- Distance in cells from when each bomb is dropped -->
 	  </li>
       <li Class="CompProperties_Refuelable"> <!-- comp for allowing to fuel the srts, don't remove -->
-        <fuelCapacity>500</fuelCapacity>
+        <fuelCapacity>400</fuelCapacity>
         <targetFuelLevelConfigurable>true</targetFuelLevelConfigurable>
-        <initialConfigurableTargetFuelLevel>500</initialConfigurableTargetFuelLevel>
+        <initialConfigurableTargetFuelLevel>400</initialConfigurableTargetFuelLevel>
         <fuelFilter>
           <thingDefs>
             <li>Chemfuel</li>
