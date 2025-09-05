@@ -106,4 +106,5 @@
 	<SRTSBombAndLandHere>Сбросить бомбы и приземлиться здесь</SRTSBombAndLandHere>
 	<SRTSSendBombRun>Отправить бомбордировку</SRTSSendBombRun>
 	<SRTSAbort>Отменить</SRTSAbort>
+	<SRTSNotAbleToLandInSpace>Не может приземлиться в космосе.</SRTSNotAbleToLandInSpace>
 </LanguageData>

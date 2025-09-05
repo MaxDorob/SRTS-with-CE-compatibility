@@ -107,4 +107,5 @@
 	<SRTSBombAndLandHere>Drop bombs and land here</SRTSBombAndLandHere>
 	<SRTSSendBombRun>Send bomb run</SRTSSendBombRun>
 	<SRTSAbort>Abort</SRTSAbort>
+	<SRTSNotAbleToLandInSpace>Not able to land in space.</SRTSNotAbleToLandInSpace>
 </LanguageData>
