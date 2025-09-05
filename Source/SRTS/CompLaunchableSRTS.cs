@@ -77,7 +77,7 @@ namespace SRTS
             }
         }
         [HarmonyPatch(typeof(CompLaunchable), nameof(CompLaunchable.TryLaunch))]
-        internal static class CacheLastLaunchTile_Patch
+        internal static class BeforeLaunch_Patch
         {
             public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator ILGenerator)
             {
@@ -88,16 +88,21 @@ namespace SRTS
                     if (ins.IsStloc() && ins.operand is LocalBuilder local && local.LocalType == typeof(CompTransporter))
                     {
                         yield return new CodeInstruction(OpCodes.Ldloc_S, ins.operand);
-                        yield return CodeInstruction.Call(typeof(CacheLastLaunchTile_Patch), nameof(CacheLastLaunchTile_Patch.SetLastLaunchTile));
+                        yield return CodeInstruction.Call(typeof(BeforeLaunch_Patch), nameof(BeforeLaunch_Patch.BeforeTransporterLaunch));
                     }
                 }
             }
-            public static void SetLastLaunchTile(CompTransporter transporter)
+            public static void BeforeTransporterLaunch(CompTransporter transporter)
             {
                 var compLaunchableSRTS = transporter.parent.TryGetComp<CompLaunchableSRTS>();
                 if (compLaunchableSRTS != null)
                 {
                     compLaunchableSRTS.lastLaunchTile = transporter.parent.Tile;
+                    var flickable = transporter.parent.TryGetComp<CompFlickable>();
+                    if (flickable != null)
+                    {
+                        compLaunchableSRTS.switchIsOn = flickable.SwitchIsOn;
+                    }
                 }
             }
         }
@@ -142,6 +147,12 @@ namespace SRTS
                     homeMap = parent.Map;
                     homePoint = parent.Position;
                     homeRotation = parent.Rotation;
+                }
+                var flickable = parent.TryGetComp<CompFlickable>();
+                if (flickable != null)
+                {
+                    flickable.SwitchIsOn = switchIsOn;
+                    flickable.wantSwitchOn = switchIsOn;
                 }
             }
         }
@@ -193,6 +204,7 @@ namespace SRTS
             Scribe_Values.Look(ref homePoint, nameof(homePoint), IntVec3.Invalid);
             Scribe_Values.Look(ref homeRotation, nameof(homeRotation));
             Scribe_Values.Look(ref lastLaunchTile, nameof(lastLaunchTile), PlanetTile.Invalid);
+            Scribe_Values.Look(ref switchIsOn, nameof(switchIsOn), true);
         }
 
         List<Thing> thingsInsideShip = new List<Thing>();
@@ -200,5 +212,6 @@ namespace SRTS
         private IntVec3 homePoint;
         private Rot4 homeRotation;
         public PlanetTile lastLaunchTile;
+        private bool switchIsOn = true;
     }
 }

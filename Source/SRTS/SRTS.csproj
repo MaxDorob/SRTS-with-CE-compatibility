@@ -67,6 +67,7 @@
 		<Publicize Include="Assembly-CSharp:RimWorld.Planet.TransportersArrivalAction_LandInSpecificCell.rotation" />
 		<Publicize Include="Assembly-CSharp:RimWorld.Planet.TransportersArrivalAction_LandInSpecificCell.landInShuttle" />
 		<Publicize Include="Assembly-CSharp:RimWorld.Planet.TravellingTransporters.Arrived" />
+		<Publicize Include="Assembly-CSharp:RimWorld.CompFlickable.wantSwitchOn" />
     <Publicize Include="CombatExtended" />
 	</ItemGroup>
 	<Choose>
