@@ -18,7 +18,7 @@ namespace SRTS
             {
                 if (__instance is TravelingSRTS srts)
                 {
-                    __result *= SRTSMod.GetStatFor<int>(srts.flyingThing.def.defName, StatName.flightSpeed) / 3; // 3 is default speed of shuttle and pods
+                    __result *= SRTSMod.GetStatFor<float>(srts.flyingThing.def.defName, StatName.flightSpeed) / 3f; // 3 is default speed of shuttle and pods
                 }
             }
         }
