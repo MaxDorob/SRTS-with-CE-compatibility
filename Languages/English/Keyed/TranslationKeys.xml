@@ -92,4 +92,15 @@
 	<!-- Gizmo -->
 	<BombTarget>Bomb Target</BombTarget>
 	<BombTargetDesc>Select a target on another map to drop bombs on.</BombTargetDesc>
+	
+	<!--1.6 Odyssey update-->
+	<SRTSPawnsLimitExceeded>Pawns limit exceeded</SRTSPawnsLimitExceeded>
+	<SRTSSelectLandingSpot>Select landing spot</SRTSSelectLandingSpot>
+	<SRTSLandHere>Land here</SRTSLandHere>
+	<SRTSCannotLandHere>Cannot land here</SRTSCannotLandHere>
+	<SRTSBombRunTrajectoryIsNotValid>Trajectory is not valid!</SRTSBombRunTrajectoryIsNotValid>
+	<SRTSChangeBombRunTrajectory>Change trajectory</SRTSChangeBombRunTrajectory>
+	<SRTSBombAndFormCaravan>Drop bombs and land outside</SRTSBombAndFormCaravan>
+	<SRTSBombAndGoBackToHome>Drop bombs and go home</SRTSBombAndGoBackToHome>
+	<SRTSCannotFindHomePoint>No point to return</SRTSCannotFindHomePoint>
 </LanguageData>

@@ -12,5 +12,6 @@
 	<v1.6>
 		<li>/</li>
 		<li>v1.6</li>
+		<li IfModNotActive="Ludeon.RimWorld.Odyssey">NoOdyssey/</li> 
 	</v1.6>
 </loadFolders>
