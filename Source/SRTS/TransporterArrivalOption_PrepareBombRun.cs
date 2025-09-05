@@ -46,7 +46,7 @@ namespace SRTS
 
         public static IEnumerable<FloatMenuOption> GetFloatMenuOptions(Action<PlanetTile, TransportersArrivalAction> launchAction, IEnumerable<IThingHolder> pods, MapParent site)
         {
-            foreach (var item in TransportersArrivalActionUtility.GetFloatMenuOptions(() => CanVisit(pods, site), () => new TransporterArrivalOption_PrepareBombRun(site), "Bomb".Translate(), launchAction, site.Tile))
+            foreach (var item in TransportersArrivalActionUtility.GetFloatMenuOptions(() => CanVisit(pods, site), () => new TransporterArrivalOption_PrepareBombRun(site), "SRTSSendBombRun".Translate(), launchAction, site.Tile))
             {
                 yield return item;
             }
