@@ -75,7 +75,7 @@ namespace SRTS
             Rect rect2 = new Rect(rect.xMin + margin, rect.yMin + margin, buttonWidth, rect.height - margin * 2);
             if (this.map != null)
             {
-                if (Widgets.ButtonText(rect2, "Abort".Translate(), true, true, true, null))
+                if (Widgets.ButtonText(rect2, "SRTSAbort".Translate(), true, true, true, null))
                 {
                     WaitingTransporter.arrivalAction = new TransportersArrivalAction_FormCaravan();
                     WaitingTransporter.destinationTile = WaitingTransporter.Tile;

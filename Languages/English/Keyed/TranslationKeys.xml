@@ -106,5 +106,5 @@
 	<SRTSHomeBeyondMaximumRange>Beyond maximum range</SRTSHomeBeyondMaximumRange>
 	<SRTSBombAndGoBackToHome>Drop bombs and land here</SRTSBombAndGoBackToHome>
 	<SRTSSendBombRun>Send bomb run</SRTSSendBombRun>
-	<Abort>Abort</Abort>
+	<SRTSAbort>Abort</SRTSAbort>
 </LanguageData>
