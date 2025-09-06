@@ -44,5 +44,29 @@
 			<ShuttleEngine MayRequire="Ludeon.RimWorld.Odyssey">2</ShuttleEngine>
 		</value>
 	</Operation>
-	
+
+	<!--SRTSMkIII Phoenix-->
+	<Operation Class="PatchOperationReplace">
+		<xpath>/Defs/ThingDef[defName="SRTSMkIII"]/costList</xpath>
+		<value>
+			<costList>
+				<Steel>1800</Steel>
+				<Plasteel>1100</Plasteel>
+				<Gold>350</Gold>
+				<Silver>3200</Silver>
+				<Neutroamine>100</Neutroamine>
+				<ComponentIndustrial>20</ComponentIndustrial>
+				<ComponentSpacer>8</ComponentSpacer>
+				<ShuttleEngine>4</ShuttleEngine>
+			</costList>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="SRTSMkIII"]/killedLeavings</xpath>
+		<value>
+			<ShuttleEngine MayRequire="Ludeon.RimWorld.Odyssey">3</ShuttleEngine>
+		</value>
+	</Operation>
+
 </Patch>
