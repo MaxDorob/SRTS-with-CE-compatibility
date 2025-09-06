@@ -62,7 +62,7 @@ Internal power plant: 400w</description>
       <MaxHitPoints>200</MaxHitPoints>
       <WorkToBuild>2400</WorkToBuild>
       <Flammability>0.4</Flammability>
-      <Mass>20</Mass>
+      <Mass>70</Mass>
       <Beauty>15</Beauty>
     </statBases>
     <costList>
