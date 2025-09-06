@@ -83,8 +83,7 @@ Internal power plant: 400w</description>
 				<minFuelCost>50</minFuelCost>
 				<skyfallerLeaving>SRTSSuperpod_Leaving</skyfallerLeaving>
 				<worldObjectDef>TravelingSRTS</worldObjectDef>
-				<cooldownTicks>3750</cooldownTicks>
-				<!-- 1.5 hours -->
+				<cooldownTicks>5000</cooldownTicks> <!-- 2 hours -->
 				<fixedLaunchDistanceMax>42</fixedLaunchDistanceMax>
 				<cooldownEndedMessage>{0} is ready to launch again.</cooldownEndedMessage>
 			</li>
