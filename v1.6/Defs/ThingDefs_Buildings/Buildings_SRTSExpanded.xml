@@ -675,7 +675,7 @@ Internal power plant: 2,800w</description>
       <MaxHitPoints>2000</MaxHitPoints>
       <WorkToBuild>32000</WorkToBuild>
       <Flammability>0.3</Flammability>
-      <Mass>20</Mass>
+      <Mass>400</Mass>
       <Beauty>75</Beauty>
     </statBases>
     <costList>
@@ -683,7 +683,7 @@ Internal power plant: 2,800w</description>
       <Plasteel>1300</Plasteel>
       <Gold>500</Gold>
       <Neutroamine>200</Neutroamine>
-      <Silver>10500</Silver>
+      <Silver>7500</Silver>
       <ComponentIndustrial>32</ComponentIndustrial>
       <ComponentSpacer>9</ComponentSpacer>
     </costList>

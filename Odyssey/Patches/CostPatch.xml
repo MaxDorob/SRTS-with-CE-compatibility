@@ -69,4 +69,28 @@
 		</value>
 	</Operation>
 
+	<!--SRTSMkIII Pelican-->
+	<Operation Class="PatchOperationReplace">
+		<xpath>/Defs/ThingDef[defName="SRTSMkIIIp"]/costList</xpath>
+		<value>
+			<costList>
+				<Steel>2000</Steel>
+				<Plasteel>1300</Plasteel>
+				<Gold>200</Gold>
+				<Neutroamine>200</Neutroamine>
+				<Silver>4500</Silver>
+				<ComponentIndustrial>18</ComponentIndustrial>
+				<ComponentSpacer>9</ComponentSpacer>
+				<ShuttleEngine>3</ShuttleEngine>
+			</costList>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="SRTSMkIIIp"]/killedLeavings</xpath>
+		<value>
+			<ShuttleEngine MayRequire="Ludeon.RimWorld.Odyssey">3</ShuttleEngine>
+		</value>
+	</Operation>
+	
 </Patch>
