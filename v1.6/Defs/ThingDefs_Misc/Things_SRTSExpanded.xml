@@ -5,6 +5,7 @@
 		<thingClass>SRTS.BomberSkyfaller</thingClass>
 		<useHitPoints>false</useHitPoints>
 		<drawOffscreen>true</drawOffscreen>
+		<seeThroughFog>true</seeThroughFog>
 		<tickerType>Normal</tickerType>
 		<altitudeLayer>Skyfaller</altitudeLayer>
 		<drawerType>RealtimeOnly</drawerType>
