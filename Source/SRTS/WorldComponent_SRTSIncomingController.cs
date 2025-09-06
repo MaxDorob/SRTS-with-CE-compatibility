@@ -138,6 +138,10 @@ namespace SRTS
             WaitingTransporter = transporter;
             var designator = Designator;
             Find.DesignatorManager.Select(designator);
+            Activated();
+        }
+        protected virtual void Activated()
+        {
         }
         public override void WorldComponentOnGUI()
         {

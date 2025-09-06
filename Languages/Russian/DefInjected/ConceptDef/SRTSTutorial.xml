@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+	<SRTSBombRun.label>Конфигурация бомбордировки</SRTSBombRun.label>
+	<SRTSBombRun.helpText>Протяните траекторию бомбордировки. Нажмите {Key:Designator_RotateLeft} или {Key:Designator_RotateRight} чтобы сменить тип бомбордировки. Выберите один из вариантов когда траектория задана.</SRTSBombRun.helpText>
+
+</LanguageData>

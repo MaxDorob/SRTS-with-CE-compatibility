@@ -13,5 +13,6 @@ namespace SRTS
     {
         public static DrawStyleCategoryDef SRTSBombing;
         public static ThingDef SRTSFallingBomb;
+        public static ConceptDef SRTSBombRun;
     }
 }

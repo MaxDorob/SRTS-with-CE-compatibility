@@ -50,7 +50,11 @@ namespace SRTS
 
         private void SendMessageNotValid() => Messages.Message("SRTSBombRunTrajectoryIsNotValid".Translate(), MessageTypeDefOf.RejectInput, true);
 
-
+        protected override void Activated()
+        {
+            base.Activated();
+            PlayerKnowledgeDatabase.KnowledgeDemonstrated(DefsOf.SRTSBombRun, KnowledgeAmount.SpecificInteraction);
+        }
         protected override Designator InitDesignator()
         {
             var designator = new BombRunDesignator(map, SRTS, Bombs);

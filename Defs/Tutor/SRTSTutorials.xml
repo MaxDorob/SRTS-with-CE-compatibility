@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ConceptDef>
+    <defName>SRTSBombRun</defName>
+    <label>Bomb run configuration</label>
+    <priority>100</priority>
+    <needsOpportunity>true</needsOpportunity>
+    <gameMode>Playing</gameMode>
+    <helpText>Drag out trajectory of bomb run. Press {Key:Designator_RotateLeft} or {Key:Designator_RotateRight} to change type of bomb run. Select one of options when trajectory is set.</helpText>
+  </ConceptDef>
+
+</Defs>
