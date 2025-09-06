@@ -90,7 +90,6 @@ Internal power plant: 400w</description>
       <li Class="SRTS.CompProperties_LaunchableSRTS">
 				<shipDef>SRTSSuperpod</shipDef>
         <travelSpeed>1</travelSpeed> <!-- Vanilla drop pod is 25 speed, min 1, max 100 -->
-        <fuelPerTile>3.5</fuelPerTile> <!-- Drop pod cost is 2.25 per tile. min 1, max 6. Why'd we cap it at 6? I can't remember. -->
         <minPassengers>1</minPassengers>
         <maxPassengers>1</maxPassengers>
         <spaceFaring>false</spaceFaring>  <!-- For save our ship 2 -->
@@ -193,7 +192,6 @@ Internal power plant: 650w</description> <!-- description of course... -->
       <li Class="SRTS.CompProperties_LaunchableSRTS"> <!-- required for SRTS like functionality (ie. space ship reusable drop pod -->
 				<shipDef>SRTSSkip</shipDef>
         <travelSpeed>3</travelSpeed>
-        <fuelPerTile>2.25</fuelPerTile>
         <minPassengers>1</minPassengers>
         <maxPassengers>2</maxPassengers>
       </li>
@@ -389,7 +387,6 @@ Internal power plant: 1,700w</description>
       <li Class="SRTS.CompProperties_LaunchableSRTS">
 				<shipDef>SRAFTek</shipDef>
         <travelSpeed>8</travelSpeed>
-        <fuelPerTile>2.25</fuelPerTile>
         <minPassengers>1</minPassengers>
         <maxPassengers>28</maxPassengers>
         <spaceFaring>true</spaceFaring>
@@ -491,7 +488,6 @@ Internal power plant: 1,700w</description>
       <li Class="SRTS.CompProperties_LaunchableSRTS">
 				<shipDef>SRTSMkII</shipDef>
         <travelSpeed>11</travelSpeed>
-        <fuelPerTile>2</fuelPerTile>
         <minPassengers>1</minPassengers>
         <maxPassengers>7</maxPassengers>
         <spaceFaring>true</spaceFaring>
@@ -601,7 +597,6 @@ Internal power plant: 3,600w</description>
       <li Class="SRTS.CompProperties_LaunchableSRTS">
 				<shipDef>SRTSMkIII</shipDef>
         <travelSpeed>20</travelSpeed>
-        <fuelPerTile>1</fuelPerTile>
         <minPassengers>1</minPassengers>
         <maxPassengers>17</maxPassengers>
 		    <spaceFaring>true</spaceFaring>
@@ -706,7 +701,6 @@ Internal power plant: 2,800w</description>
       <li Class="SRTS.CompProperties_LaunchableSRTS">
 				<shipDef>SRTSMkIIIp</shipDef>
         <travelSpeed>20</travelSpeed>
-        <fuelPerTile>1</fuelPerTile>
         <minPassengers>1</minPassengers>
         <maxPassengers>42</maxPassengers>
         <spaceFaring>true</spaceFaring>
@@ -813,7 +807,6 @@ Internal power plant: 12,000w</description>
       <li Class="SRTS.CompProperties_LaunchableSRTS">
 				<shipDef>SRTSMkIV</shipDef>
         <travelSpeed>80</travelSpeed>
-        <fuelPerTile>1</fuelPerTile>
         <minPassengers>1</minPassengers>
         <maxPassengers>9999</maxPassengers>
         <spaceFaring>true</spaceFaring>
