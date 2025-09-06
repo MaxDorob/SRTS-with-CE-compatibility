@@ -21,5 +21,28 @@
 			<ShuttleEngine MayRequire="Ludeon.RimWorld.Odyssey">1</ShuttleEngine>
 		</value>
 	</Operation>
+
+	<!--SRTSMkII Albatross-->
+	<Operation Class="PatchOperationReplace">
+		<xpath>/Defs/ThingDef[defName="SRTSMkII"]/costList</xpath>
+		<value>
+			<costList>
+				<Steel>2500</Steel>
+				<Plasteel>240</Plasteel>
+				<Gold>325</Gold>
+				<Silver>4000</Silver>
+				<ComponentIndustrial>10</ComponentIndustrial>
+				<ComponentSpacer>4</ComponentSpacer>
+				<ShuttleEngine>2</ShuttleEngine>
+			</costList>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="SRTSMkII"]/killedLeavings</xpath>
+		<value>
+			<ShuttleEngine MayRequire="Ludeon.RimWorld.Odyssey">2</ShuttleEngine>
+		</value>
+	</Operation>
 	
 </Patch>
