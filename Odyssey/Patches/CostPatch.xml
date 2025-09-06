@@ -92,5 +92,32 @@
 			<ShuttleEngine MayRequire="Ludeon.RimWorld.Odyssey">3</ShuttleEngine>
 		</value>
 	</Operation>
+
+	<!--SRTS Mk.IV: Genesis-->
+	<Operation Class="PatchOperationReplace">
+		<xpath>/Defs/ThingDef[defName="SRTSMkIV"]/costList</xpath>
+		<value>
+			<costList>
+				<Steel>5600</Steel>
+				<Plasteel>2400</Plasteel>
+				<Gold>5000</Gold>
+				<Silver>50000</Silver>
+				<Uranium>6000</Uranium>
+				<Hyperweave>300</Hyperweave>
+				<Neutroamine>400</Neutroamine>
+				<ComponentIndustrial>20</ComponentIndustrial>
+				<ComponentSpacer>64</ComponentSpacer>
+				<AIPersonaCore>2</AIPersonaCore>
+				<ShuttleEngine>12</ShuttleEngine>
+			</costList>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="SRTSMkIV"]/killedLeavings</xpath>
+		<value>
+			<ShuttleEngine MayRequire="Ludeon.RimWorld.Odyssey">8</ShuttleEngine>
+		</value>
+	</Operation>
 	
 </Patch>
