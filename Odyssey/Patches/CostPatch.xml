@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+	
+	<!--SRAF Canary-->
+	<Operation Class="PatchOperationReplace">
+		<xpath>/Defs/ThingDef[defName="SRAF"]/costList</xpath>
+		<value>
+			<costList>
+				<Steel>2700</Steel>
+				<Gold>225</Gold>
+				<Silver>1500</Silver>
+				<ComponentIndustrial>12</ComponentIndustrial>
+				<ShuttleEngine>1</ShuttleEngine>
+			</costList>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="SRAF"]/killedLeavings</xpath>
+		<value>
+			<ShuttleEngine MayRequire="Ludeon.RimWorld.Odyssey">1</ShuttleEngine>
+		</value>
+	</Operation>
+	
+</Patch>
