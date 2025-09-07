@@ -93,7 +93,6 @@ Internal power plant: 400w</description>
         <minPassengers>1</minPassengers>
         <maxPassengers>1</maxPassengers>
         <spaceFaring>false</spaceFaring>  <!-- For save our ship 2 -->
-        <shuttleBayLanding>false</shuttleBayLanding>
       </li>
       <li Class="CompProperties_Refuelable">
         <fuelCapacity>300</fuelCapacity>
@@ -295,7 +294,6 @@ Internal power plant: 1000w</description>
         <minPassengers>1</minPassengers>
         <maxPassengers>3</maxPassengers>
         <spaceFaring>false</spaceFaring>
-        <shuttleBayLanding>false</shuttleBayLanding>
       </li>
       <li Class="CompProperties_Refuelable">
         <fuelCapacity>2000</fuelCapacity>
@@ -390,7 +388,6 @@ Internal power plant: 1,700w</description>
         <minPassengers>1</minPassengers>
         <maxPassengers>28</maxPassengers>
         <spaceFaring>true</spaceFaring>
-        <shuttleBayLanding>false</shuttleBayLanding>
       </li>
       <li Class="CompProperties_Refuelable">
         <fuelCapacity>2600</fuelCapacity>
@@ -491,7 +488,6 @@ Internal power plant: 1,700w</description>
         <minPassengers>1</minPassengers>
         <maxPassengers>7</maxPassengers>
         <spaceFaring>true</spaceFaring>
-        <shuttleBayLanding>true</shuttleBayLanding>
       </li>
       <li Class="SRTS.CompProperties_BombsAway">
         <numberBombs>6</numberBombs>
@@ -600,7 +596,6 @@ Internal power plant: 3,600w</description>
         <minPassengers>1</minPassengers>
         <maxPassengers>17</maxPassengers>
 		    <spaceFaring>true</spaceFaring>
-		    <shuttleBayLanding>true</shuttleBayLanding>
       </li>
       <li Class="SRTS.CompProperties_BombsAway">
         <numberBombs>20</numberBombs>
@@ -704,7 +699,6 @@ Internal power plant: 2,800w</description>
         <minPassengers>1</minPassengers>
         <maxPassengers>42</maxPassengers>
         <spaceFaring>true</spaceFaring>
-        <shuttleBayLanding>false</shuttleBayLanding>
       </li>
       <li Class="CompProperties_Refuelable">
         <fuelCapacity>1900</fuelCapacity>
@@ -810,7 +804,6 @@ Internal power plant: 12,000w</description>
         <minPassengers>1</minPassengers>
         <maxPassengers>9999</maxPassengers>
         <spaceFaring>true</spaceFaring>
-        <shuttleBayLanding>false</shuttleBayLanding>
       </li>
       <li Class="SRTS.CompProperties_BombsAway">
         <numberBombs>32</numberBombs>
