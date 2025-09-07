@@ -50,7 +50,6 @@ namespace SRTS
                     {
                         yield return CodeInstruction.Call(typeof(LoadModVersion_Patch), nameof(LoadModVersion_Patch.LoadSRTSVersion));
                         patched = true;
-                        Log.Message(nameof(ScribeMetaHeaderUtility.LoadGameDataHeader) + " was patched");
                     }
                     yield return instruction;
                 }
@@ -60,7 +59,6 @@ namespace SRTS
                 try
                 {
                     Scribe_Values.Look(ref SRTSInSave, nameof(SRTSInSave));
-                    Log.Message("SRTS version in save: " + SRTSInSave);
                 }
                 catch (Exception ex)
                 {
