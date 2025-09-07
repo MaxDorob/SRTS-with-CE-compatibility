@@ -57,6 +57,7 @@
     <Publicize Include="Assembly-CSharp:RimWorld.Planet.GlobalTargetInfo.worldObjectInt" />
     <Publicize Include="Assembly-CSharp:RimWorld.Planet.GlobalTargetInfo.mapInt" />
 		<Publicize Include="Assembly-CSharp:Verse.Entity.Tick" />
+		<Publicize Include="Assembly-CSharp:Verse.BackCompatibility.conversionChain" />
 		<Publicize Include="Assembly-CSharp:RimWorld.Planet.Tile.biome" />
 		<Publicize Include="Assembly-CSharp:Verse.DesignationDragger.lastStart" />
 		<Publicize Include="Assembly-CSharp:Verse.DesignationDragger.lastEnd" />
