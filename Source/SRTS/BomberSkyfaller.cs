@@ -41,7 +41,6 @@ namespace SRTS
         {
             base.ExposeData();
             Scribe_Collections.Look<IntVec3>(ref bombCells, "bombCells", LookMode.Value);
-            Scribe_Defs.Look(ref sound, "sound");
         }
 
 
@@ -49,6 +48,8 @@ namespace SRTS
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
+
+            var sound = SRTS.TryGetComp<CompBombFlyer>()?.Props.soundFlyBy;
             if (sound != null)
                 sound.PlayOneShotOnCamera(this.Map);
             if (!respawningAfterLoad)
@@ -173,9 +174,6 @@ namespace SRTS
                     throw new NotImplementedException("BombingType");
             }
         }
-
-
-        public SoundDef sound;
 
 
         public List<IntVec3> bombCells = new List<IntVec3>();
