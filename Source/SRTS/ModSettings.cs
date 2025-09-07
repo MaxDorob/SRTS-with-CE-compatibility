@@ -522,7 +522,6 @@ namespace SRTS
             this.fuelPerTile = referencedDef.GetCompProperties<CompProperties_Launchable>().fuelPerTile;
 
             this.spaceFaring = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().spaceFaring;
-            this.shuttleBayLanding = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().shuttleBayLanding;
 
             if (this.requiredResearch is null)
                 this.requiredResearch = new List<ResearchProjectDef>();
@@ -674,7 +673,6 @@ namespace SRTS
             this.fuelPerTile = this.referencedDef.GetCompProperties<CompProperties_Launchable>().fuelPerTile;
 
             this.spaceFaring = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().spaceFaring;
-            this.shuttleBayLanding = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().shuttleBayLanding;
 
             int num = 0;
             foreach (ResearchProjectDef proj in this.referencedDef.researchPrerequisites)

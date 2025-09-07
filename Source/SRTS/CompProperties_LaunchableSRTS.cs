@@ -63,11 +63,6 @@ namespace SRTS
         public int minPassengers = 1;
         public int maxPassengers = 2;
 
-
-        /* SOS2 Compatibility */
         public bool spaceFaring;
-        [Obsolete]
-        public bool shuttleBayLanding;
-        /* ------------------ */
     }
 }
