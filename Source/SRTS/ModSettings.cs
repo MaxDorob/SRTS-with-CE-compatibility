@@ -472,7 +472,7 @@ namespace SRTS
                 case StatName.spaceFaring:
                     return (T)Convert.ChangeType(mod.settings.defProperties[defName].spaceFaring, typeof(T));
                 case StatName.shuttleBayLanding:
-                    return (T)Convert.ChangeType(mod.settings.defProperties[defName].shuttleBayLanding, typeof(T));
+                    return (T)Convert.ChangeType(false, typeof(T));
                 /* ------------------ */
 
                 case StatName.bombingSpeed:
@@ -581,11 +581,8 @@ namespace SRTS
 
         private List<string> customResearchDefNames;
 
-        /* SOS2 Compatibility */
         public bool spaceFaring;
         
-        public bool shuttleBayLanding;
-        /* ------------------ */
 
 
         public List<ResearchProjectDef> ResearchPrerequisites
@@ -738,7 +735,6 @@ namespace SRTS
             Scribe_Values.Look(ref this.fuelPerTile, "fuelPerTile");
 
             Scribe_Values.Look(ref this.spaceFaring, "spaceFaring");
-            Scribe_Values.Look(ref this.shuttleBayLanding, "shuttleBayLanding");
 
             //Scribe_Collections.Look<string>(ref customResearchDefNames, "customResearchDefNames", LookMode.Value, new object[0]); ;
 
