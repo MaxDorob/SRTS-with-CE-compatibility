@@ -246,7 +246,11 @@ namespace SRTS
                     listing_Standard.Settings_SliderLabeled("PreciseBombing".Translate(), string.Empty, ref props.precisionBombingNumBombs, 1, 10);
                     listing_Standard.Settings_SliderLabeled("CarpetBombing".Translate(), string.Empty, ref props.numberBombs, 1, 40);
                 }
-                listing_Standard.CheckboxLabeled("SpaceFaring".Translate(), ref props.spaceFaring);
+                if (ModsConfig.OdysseyActive)
+                {
+                    listing_Standard.CheckboxLabeled("SpaceFaring".Translate(), ref props.spaceFaring);
+                }
+
                 listing_Standard.End();
 
 
