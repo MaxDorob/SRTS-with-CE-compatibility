@@ -43,6 +43,9 @@
 		<Exec Command="if $(ConfigurationName) == Debugger call &quot;C:\Program Files (x86)\Mono\bin\pdb2mdb.bat&quot; $(TargetDir)$(TargetName)$(TargetExt)" />
 	</Target>
 	<ItemGroup>
+	  <Compile Remove="Gizmo_MapRefuelableFuelStatus.cs" />
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="Krafs.Publicizer" Version="2.2.1">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -54,7 +57,18 @@
     <Publicize Include="Assembly-CSharp:RimWorld.Planet.GlobalTargetInfo.worldObjectInt" />
     <Publicize Include="Assembly-CSharp:RimWorld.Planet.GlobalTargetInfo.mapInt" />
 		<Publicize Include="Assembly-CSharp:Verse.Entity.Tick" />
+		<Publicize Include="Assembly-CSharp:Verse.BackCompatibility.conversionChain" />
 		<Publicize Include="Assembly-CSharp:RimWorld.Planet.Tile.biome" />
+		<Publicize Include="Assembly-CSharp:Verse.DesignationDragger.lastStart" />
+		<Publicize Include="Assembly-CSharp:Verse.DesignationDragger.lastEnd" />
+		<Publicize Include="Assembly-CSharp:Verse.Projectile.ticksToImpact" />
+		<Publicize Include="Assembly-CSharp:RimWorld.CompExplosive.Detonate" />
+		<Publicize Include="Assembly-CSharp:RimWorld.Planet.TransportersArrivalAction_LandInSpecificCell.mapParent" />
+		<Publicize Include="Assembly-CSharp:RimWorld.Planet.TransportersArrivalAction_LandInSpecificCell.cell" />
+		<Publicize Include="Assembly-CSharp:RimWorld.Planet.TransportersArrivalAction_LandInSpecificCell.rotation" />
+		<Publicize Include="Assembly-CSharp:RimWorld.Planet.TransportersArrivalAction_LandInSpecificCell.landInShuttle" />
+		<Publicize Include="Assembly-CSharp:RimWorld.Planet.TravellingTransporters.Arrived" />
+		<Publicize Include="Assembly-CSharp:RimWorld.CompFlickable.wantSwitchOn" />
     <Publicize Include="CombatExtended" />
 	</ItemGroup>
 	<Choose>

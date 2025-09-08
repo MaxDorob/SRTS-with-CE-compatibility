@@ -11,6 +11,21 @@ namespace SRTS
 {
     public class TravelingSRTS : TravelingTransportPods
     {
+        [HarmonyLib.HarmonyPatch(typeof(TravellingTransporters), "TraveledPctStepPerTick", HarmonyLib.MethodType.Getter)]
+        internal static class TraveledPctStepPerTick_Patch
+        {
+            public static void Postfix(TravellingTransporters __instance, ref float __result)
+            {
+                if (__instance is TravelingSRTS srts)
+                {
+                    __result *= SRTSMod.GetStatFor<float>(srts.flyingThing.def.defName, StatName.flightSpeed) / 3f; // 3 is default speed of shuttle and pods
+                }
+            }
+        }
+        public override Texture2D ExpandingIcon => flyingThing?.def.uiIcon ?? base.ExpandingIcon;
+
+        public override Color ExpandingIconColor => Color.white;
+
         private Material SRTSMaterial
         {
             get
@@ -37,7 +52,6 @@ namespace SRTS
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_References.Look(ref flyingThing, "flyingThing");
         }
         public override void Draw()
         {
@@ -86,7 +100,7 @@ namespace SRTS
             directionFacing = (this.DrawPos - tileLocation).normalized;
         }
 
-        public Thing flyingThing;
+        public Thing flyingThing => ThingOwnerUtility.GetAllThingsRecursively(this).Single(x => x.HasComp<CompLaunchableSRTS>());
 
         private Material material;
 
@@ -94,7 +108,7 @@ namespace SRTS
 
         private const float TransitionTakeoff = 0.015f;
 
-        private float transitionSize = 0f;
+        private float transitionSize = 0.5f;
 
         Vector3 directionFacing;
     }

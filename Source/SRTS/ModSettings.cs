@@ -6,7 +6,6 @@ using Verse;
 using Verse.Sound;
 using RimWorld;
 using UnityEngine;
-using SPExtended;
 
 namespace SRTS
 {
@@ -247,20 +246,14 @@ namespace SRTS
                     listing_Standard.Settings_SliderLabeled("PreciseBombing".Translate(), string.Empty, ref props.precisionBombingNumBombs, 1, 10);
                     listing_Standard.Settings_SliderLabeled("CarpetBombing".Translate(), string.Empty, ref props.numberBombs, 1, 40);
                 }
+                if (ModsConfig.OdysseyActive)
+                {
+                    listing_Standard.CheckboxLabeled("SpaceFaring".Translate(), ref props.spaceFaring);
+                }
+
                 listing_Standard.End();
 
-                if(SRTSHelper.SOS2ModLoaded)
-                {
-                    Rect sos2Rect = new Rect(inRect.width - (inRect.width / 4), inRect.height - (inRect.height / 8), inRect.width / 4, inRect.height / 4);
 
-                    listing_Standard.Begin(sos2Rect);
-
-                    listing_Standard.Settings_Header("SOS2Compatibility".Translate(), DialogSettings.highlightColor, GameFont.Small, TextAnchor.MiddleLeft);
-                    listing_Standard.CheckboxLabeled("SpaceFaring".Translate(), ref props.spaceFaring);
-                    listing_Standard.CheckboxLabeled("ShuttleBayLanding".Translate(), ref props.shuttleBayLanding);
-
-                    listing_Standard.End();
-                }
             }
             else if (currentPage == SRTS.SettingsCategory.Research)
             {
@@ -317,9 +310,9 @@ namespace SRTS
 
                 listing_Standard.Begin(group2);
 
-                listing_Standard.CheckboxLabeled("PassengerLimit".Translate(), ref settings.passengerLimits, "PassengerLimitTooltip".Translate());
-                listing_Standard.CheckboxLabeled("DisplayHomeItems".Translate(), ref settings.displayHomeItems, "DisplayHomeItemsTooltip".Translate());
-                listing_Standard.CheckboxLabeled("DynamicWorldObjectSRTS".Translate(), ref settings.dynamicWorldDrawingSRTS, "DynamicWorldObjectSRTSTooltip".Translate());
+                //listing_Standard.CheckboxLabeled("PassengerLimit".Translate(), ref settings.passengerLimits, "PassengerLimitTooltip".Translate());
+                //listing_Standard.CheckboxLabeled("DisplayHomeItems".Translate(), ref settings.displayHomeItems, "DisplayHomeItemsTooltip".Translate());
+                //listing_Standard.CheckboxLabeled("DynamicWorldObjectSRTS".Translate(), ref settings.dynamicWorldDrawingSRTS, "DynamicWorldObjectSRTSTooltip".Translate());
 
                 listing_Standard.Gap(24f);
 
@@ -358,10 +351,12 @@ namespace SRTS
                 listing_Standard.Begin(transportGroupRect);
 
                 listing_Standard.Settings_Header("SRTSBoardingOptions".Translate(), DialogSettings.highlightColor, GameFont.Small);
+                listing_Standard.Label("None".Translate());
+                listing_Standard.Gap(12f * 2);
 
-                listing_Standard.CheckboxLabeled("AllowDownedSRTS".Translate(), ref settings.allowEvenIfDowned);
-                listing_Standard.CheckboxLabeled("AllowUnsecurePrisonerSRTS".Translate(), ref settings.allowEvenIfPrisonerUnsecured);
-                listing_Standard.CheckboxLabeled("AllowCapturablePawnSRTS".Translate(), ref settings.allowCapturablePawns);
+                //listing_Standard.CheckboxLabeled("AllowDownedSRTS".Translate(), ref settings.allowEvenIfDowned);
+                //listing_Standard.CheckboxLabeled("AllowUnsecurePrisonerSRTS".Translate(), ref settings.allowEvenIfPrisonerUnsecured);
+                //listing_Standard.CheckboxLabeled("AllowCapturablePawnSRTS".Translate(), ref settings.allowCapturablePawns);
 
                 listing_Standard.End();
             }
@@ -377,6 +372,7 @@ namespace SRTS
                 Rect pictureRect = new Rect(inRect.width / 2, inRect.height / 3, 300f, 300f);
                 GUI.DrawTexture(pictureRect, ContentFinder<Texture2D>.Get(texPath, true));
                 DialogSettings.Draw_Label(new Rect(pictureRect.x, inRect.height / 3 - 60f, 300f, 100f), props.referencedDef.label.Replace("SRTS ", ""), Color.clear, Color.white, GameFont.Medium, TextAnchor.MiddleCenter);
+                DialogSettings.Draw_Label(new Rect(pictureRect.x, inRect.height / 3 - 20f, 300f, 100f), props.referencedDef.defName, Color.clear, Color.white, GameFont.Medium, TextAnchor.MiddleCenter);
 
                 var valueFont = Text.Font;
                 var alignment = Text.Anchor;
@@ -467,7 +463,7 @@ namespace SRTS
                 mod.settings.defProperties.Add(defName, new SRTS_DefProperties(DefDatabase<ThingDef>.GetNamed(defName))); //Initialize
             }
 
-            switch(stat)
+            switch (stat)
             {
                 case StatName.massCapacity:
                     return (T)Convert.ChangeType(mod.settings.defProperties[defName].massCapacity, typeof(T));
@@ -482,10 +478,11 @@ namespace SRTS
                 case StatName.spaceFaring:
                     return (T)Convert.ChangeType(mod.settings.defProperties[defName].spaceFaring, typeof(T));
                 case StatName.shuttleBayLanding:
-                    return (T)Convert.ChangeType(mod.settings.defProperties[defName].shuttleBayLanding, typeof(T));
+                    return (T)Convert.ChangeType(false, typeof(T));
                 /* ------------------ */
 
                 case StatName.bombingSpeed:
+                    Log.Message($"Bombing speed of {defName} is {mod.settings.defProperties[defName].bombingSpeed}");
                     return (T)Convert.ChangeType(mod.settings.defProperties[defName].bombingSpeed, typeof(T));
                 case StatName.numberBombs:
                     return (T)Convert.ChangeType(mod.settings.defProperties[defName].numberBombs, typeof(T));
@@ -528,10 +525,9 @@ namespace SRTS
             this.minPassengers = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().minPassengers;
             this.maxPassengers = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().maxPassengers;
             this.flightSpeed = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().travelSpeed;
-            this.fuelPerTile = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().fuelPerTile;
+            this.fuelPerTile = referencedDef.GetCompProperties<CompProperties_Launchable>().fuelPerTile;
 
             this.spaceFaring = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().spaceFaring;
-            this.shuttleBayLanding = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().shuttleBayLanding;
 
             if (this.requiredResearch is null)
                 this.requiredResearch = new List<ResearchProjectDef>();
@@ -564,7 +560,7 @@ namespace SRTS
                 }
                 return flag && this.RequiredResearch[0].baseCost == this.researchPoints && !this.customResearchDefNames.Any() && this.massCapacity == referencedDef.GetCompProperties<CompProperties_Transporter>().massCapacity && this.minPassengers == referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().minPassengers
                     && this.maxPassengers == referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().maxPassengers && this.flightSpeed == referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().travelSpeed &&
-                    this.fuelPerTile == referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().fuelPerTile;
+                    this.fuelPerTile == referencedDef.GetCompProperties<CompProperties_Launchable>().fuelPerTile;
             }
         }
 
@@ -591,11 +587,8 @@ namespace SRTS
 
         private List<string> customResearchDefNames;
 
-        /* SOS2 Compatibility */
         public bool spaceFaring;
         
-        public bool shuttleBayLanding;
-        /* ------------------ */
 
 
         public List<ResearchProjectDef> ResearchPrerequisites
@@ -680,10 +673,9 @@ namespace SRTS
             this.minPassengers = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().minPassengers;
             this.maxPassengers = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().maxPassengers;
             this.flightSpeed = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().travelSpeed;
-            this.fuelPerTile = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().fuelPerTile;
+            this.fuelPerTile = this.referencedDef.GetCompProperties<CompProperties_Launchable>().fuelPerTile;
 
             this.spaceFaring = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().spaceFaring;
-            this.shuttleBayLanding = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().shuttleBayLanding;
 
             int num = 0;
             foreach (ResearchProjectDef proj in this.referencedDef.researchPrerequisites)
@@ -749,7 +741,6 @@ namespace SRTS
             Scribe_Values.Look(ref this.fuelPerTile, "fuelPerTile");
 
             Scribe_Values.Look(ref this.spaceFaring, "spaceFaring");
-            Scribe_Values.Look(ref this.shuttleBayLanding, "shuttleBayLanding");
 
             //Scribe_Collections.Look<string>(ref customResearchDefNames, "customResearchDefNames", LookMode.Value, new object[0]); ;
 

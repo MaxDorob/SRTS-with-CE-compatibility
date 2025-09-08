@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <DrawStyleDef>
+    <defName>SRTSCarpet</defName>
+    <label>carpet</label>
+    <uiIconPath>UI/BombRunTypes/Carpet</uiIconPath>
+    <drawStyleType>SRTS.DrawStyle_Carpet</drawStyleType>
+    <drawArea>false</drawArea>
+    <drawShortSideMeasurement>false</drawShortSideMeasurement>
+    <canSnap>true</canSnap>
+  </DrawStyleDef>
+  
+  <DrawStyleDef>
+    <defName>SRTSPrecise</defName>
+    <label>precise</label>
+    <uiIconPath>UI/BombRunTypes/Precise</uiIconPath>
+    <drawStyleType>SRTS.DrawStyle_Precise</drawStyleType>
+		<drawArea>false</drawArea>
+		<drawShortSideMeasurement>false</drawShortSideMeasurement>
+		<canSnap>true</canSnap>
+  </DrawStyleDef>
+  
+  
+</Defs>
