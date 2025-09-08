@@ -22,6 +22,29 @@
 		</value>
 	</Operation>
 
+	<!--SRAF: TEK-7-->
+	<Operation Class="PatchOperationReplace">
+		<xpath>/Defs/ThingDef[defName="SRAFTek"]/costList</xpath>
+		<value>
+			<costList>
+				<Steel>2800</Steel>
+				<Plasteel>340</Plasteel>
+				<Gold>280</Gold>
+				<Silver>4500</Silver>
+				<ComponentIndustrial>18</ComponentIndustrial>
+				<ComponentSpacer>3</ComponentSpacer>
+				<ShuttleEngine>2</ShuttleEngine>
+			</costList>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="SRAFTek"]/killedLeavings</xpath>
+		<value>
+			<ShuttleEngine MayRequire="Ludeon.RimWorld.Odyssey">2</ShuttleEngine>
+		</value>
+	</Operation>
+
 	<!--SRTSMkII Albatross-->
 	<Operation Class="PatchOperationReplace">
 		<xpath>/Defs/ThingDef[defName="SRTSMkII"]/costList</xpath>

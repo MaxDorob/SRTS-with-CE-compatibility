@@ -357,14 +357,16 @@ Internal power plant: 1,700w</description>
       <MaxHitPoints>1300</MaxHitPoints>
       <WorkToBuild>24000</WorkToBuild>
       <Flammability>0.3</Flammability>
-      <Mass>20</Mass>
+      <Mass>300</Mass>
       <Beauty>50</Beauty>
     </statBases>
     <costList>
-      <Steel>4500</Steel>
+      <Steel>3200</Steel>
+			<Plasteel>340</Plasteel>
       <Gold>350</Gold>
-      <Silver>6000</Silver>
-      <ComponentIndustrial>20</ComponentIndustrial>
+      <Silver>4500</Silver>
+      <ComponentIndustrial>28</ComponentIndustrial>
+			<ComponentSpacer>3</ComponentSpacer>
     </costList>
     <comps>
       <li Class="CompProperties_Transporter">
