@@ -163,7 +163,7 @@ namespace SRTS
         {
             base.ExposeData();
             Scribe_References.Look(ref map, nameof(map));
-            Scribe_References.Look(ref waitingTransporter, nameof(WaitingTransporter));
+            Scribe_Deep.Look(ref waitingTransporter, nameof(waitingTransporter));
             VerifyForceStop(true);
         }
 
