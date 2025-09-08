@@ -21,6 +21,7 @@ namespace SRTS
         {
             harmony = new Harmony("SRTS");
             harmony.PatchAll();
+            SRTSHelper.CEModLoaded = ModLister.HasActiveModWithName("Combat Extended");
         }
     }
 }
