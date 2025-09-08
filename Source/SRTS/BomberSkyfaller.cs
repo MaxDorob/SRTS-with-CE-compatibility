@@ -34,7 +34,7 @@ namespace SRTS
         }
         public IntVec3 enterPos;
         public Thing SRTS => ThingOwnerUtility.GetAllThingsRecursively(this).Single(x => x.HasComp<CompLaunchableSRTS>());
-        public float Speed => SRTSMod.GetStatFor<float>(SRTS.def.defName, StatName.bombingSpeed) * 10;
+        public float Speed => SRTSMod.GetStatFor<float>(SRTS.def.defName, StatName.bombingSpeed) * 30;
         public int Radius => SRTSMod.GetStatFor<int>(this.SRTS.def.defName, StatName.radiusDrop);
 
         public override void ExposeData()
