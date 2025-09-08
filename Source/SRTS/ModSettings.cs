@@ -310,9 +310,9 @@ namespace SRTS
 
                 listing_Standard.Begin(group2);
 
-                listing_Standard.CheckboxLabeled("PassengerLimit".Translate(), ref settings.passengerLimits, "PassengerLimitTooltip".Translate());
-                listing_Standard.CheckboxLabeled("DisplayHomeItems".Translate(), ref settings.displayHomeItems, "DisplayHomeItemsTooltip".Translate());
-                listing_Standard.CheckboxLabeled("DynamicWorldObjectSRTS".Translate(), ref settings.dynamicWorldDrawingSRTS, "DynamicWorldObjectSRTSTooltip".Translate());
+                //listing_Standard.CheckboxLabeled("PassengerLimit".Translate(), ref settings.passengerLimits, "PassengerLimitTooltip".Translate());
+                //listing_Standard.CheckboxLabeled("DisplayHomeItems".Translate(), ref settings.displayHomeItems, "DisplayHomeItemsTooltip".Translate());
+                //listing_Standard.CheckboxLabeled("DynamicWorldObjectSRTS".Translate(), ref settings.dynamicWorldDrawingSRTS, "DynamicWorldObjectSRTSTooltip".Translate());
 
                 listing_Standard.Gap(24f);
 
@@ -351,10 +351,12 @@ namespace SRTS
                 listing_Standard.Begin(transportGroupRect);
 
                 listing_Standard.Settings_Header("SRTSBoardingOptions".Translate(), DialogSettings.highlightColor, GameFont.Small);
+                listing_Standard.Label("None".Translate());
+                listing_Standard.Gap(12f * 2);
 
-                listing_Standard.CheckboxLabeled("AllowDownedSRTS".Translate(), ref settings.allowEvenIfDowned);
-                listing_Standard.CheckboxLabeled("AllowUnsecurePrisonerSRTS".Translate(), ref settings.allowEvenIfPrisonerUnsecured);
-                listing_Standard.CheckboxLabeled("AllowCapturablePawnSRTS".Translate(), ref settings.allowCapturablePawns);
+                //listing_Standard.CheckboxLabeled("AllowDownedSRTS".Translate(), ref settings.allowEvenIfDowned);
+                //listing_Standard.CheckboxLabeled("AllowUnsecurePrisonerSRTS".Translate(), ref settings.allowEvenIfPrisonerUnsecured);
+                //listing_Standard.CheckboxLabeled("AllowCapturablePawnSRTS".Translate(), ref settings.allowCapturablePawns);
 
                 listing_Standard.End();
             }
