@@ -11,7 +11,7 @@ namespace SRTS
 {
     internal enum SettingsCategory { Settings, Stats, Research }
     public enum StatName { massCapacity, minPassengers, maxPassengers, flightSpeed, numberBombs, radiusDrop, bombingSpeed, distanceBetweenDrops, researchPoints, fuelPerTile, precisionBombingNumBombs
-        , spaceFaring, shuttleBayLanding}
+        , spaceFaring, shuttleBayLanding, cooldownHours}
 
     public class SRTS_ModSettings : ModSettings
     {
@@ -74,6 +74,7 @@ namespace SRTS
                 {
                     if (SRTSMod.mod.settings.defProperties[kvp.Key].ResetReferencedDef(kvp.Key))
                     {
+                        SRTSMod.mod.settings.defProperties[kvp.Key].PostInited();
                         if (SRTSMod.mod.settings.defProperties[kvp.Key].defaultValues)
                         {
                             SRTSMod.mod.settings.defProperties[kvp.Key].ResetToDefaultValues();
@@ -246,6 +247,7 @@ namespace SRTS
                     listing_Standard.Settings_SliderLabeled("PreciseBombing".Translate(), string.Empty, ref props.precisionBombingNumBombs, 1, 10);
                     listing_Standard.Settings_SliderLabeled("CarpetBombing".Translate(), string.Empty, ref props.numberBombs, 1, 40);
                 }
+                listing_Standard.Settings_SliderLabeled("SRTSCooldown".Translate(), string.Empty, ref props.cooldownHours, 0f, 48f, decimalPlaces: 1, roundTo: 0.5f);
                 if (ModsConfig.OdysseyActive)
                 {
                     listing_Standard.CheckboxLabeled("SpaceFaring".Translate(), ref props.spaceFaring);
@@ -496,6 +498,8 @@ namespace SRTS
                     return (T)Convert.ChangeType(mod.settings.defProperties[defName].fuelPerTile, typeof(T));
                 case StatName.precisionBombingNumBombs:
                     return (T)Convert.ChangeType(mod.settings.defProperties[defName].precisionBombingNumBombs, typeof(T));
+                case StatName.cooldownHours:
+                    return (T)Convert.ChangeType(mod.settings.defProperties[defName].cooldownHours, typeof(T));
             }
             return default;
         }
@@ -529,6 +533,8 @@ namespace SRTS
 
             this.spaceFaring = referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().spaceFaring;
 
+            this.cooldownHours = referencedDef.GetCompProperties<CompProperties_Launchable>()?.cooldownTicks / (float)GenDate.TicksPerHour ?? 0;
+
             if (this.requiredResearch is null)
                 this.requiredResearch = new List<ResearchProjectDef>();
             this.requiredResearch.AddRange(referencedDef.researchPrerequisites);
@@ -560,7 +566,8 @@ namespace SRTS
                 }
                 return flag && this.RequiredResearch[0].baseCost == this.researchPoints && !this.customResearchDefNames.Any() && this.massCapacity == referencedDef.GetCompProperties<CompProperties_Transporter>().massCapacity && this.minPassengers == referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().minPassengers
                     && this.maxPassengers == referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().maxPassengers && this.flightSpeed == referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().travelSpeed &&
-                    this.fuelPerTile == referencedDef.GetCompProperties<CompProperties_Launchable>().fuelPerTile;
+                    this.fuelPerTile == referencedDef.GetCompProperties<CompProperties_Launchable>().fuelPerTile
+                    && this.cooldownHours == (referencedDef.GetCompProperties<CompProperties_Launchable>()?.cooldownTicks / (float)GenDate.TicksPerHour ?? 0);
             }
         }
 
@@ -580,6 +587,8 @@ namespace SRTS
         public float fuelPerTile = 2.25f;
 
         public float researchPoints = 1f;
+
+        public float cooldownHours = -1f;
 
         public List<ResearchProjectDef> requiredResearch;
 
@@ -676,6 +685,7 @@ namespace SRTS
             this.fuelPerTile = this.referencedDef.GetCompProperties<CompProperties_Launchable>().fuelPerTile;
 
             this.spaceFaring = this.referencedDef.GetCompProperties<CompProperties_LaunchableSRTS>().spaceFaring;
+            this.cooldownHours = referencedDef.GetCompProperties<CompProperties_Launchable>()?.cooldownTicks / (float)GenDate.TicksPerHour ?? 0;
 
             int num = 0;
             foreach (ResearchProjectDef proj in this.referencedDef.researchPrerequisites)
@@ -704,6 +714,14 @@ namespace SRTS
                 referencedDef = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
             }
             return referencedDef != null;
+        }
+        public void PostInited()
+        {
+            if (cooldownHours < 0)
+            {
+                cooldownHours = referencedDef.GetCompProperties<CompProperties_Launchable>()?.cooldownTicks / (float)GenDate.TicksPerHour ?? 0;
+                Log.Message($"Reinited cooldown hours for {referencedDef.defName}: {cooldownHours}");
+            }
         }
 
         /// <summary>
@@ -750,6 +768,8 @@ namespace SRTS
             Scribe_Values.Look(ref this.distanceBetweenDrops, "distanceBetweenDrops");
             Scribe_Values.Look(ref this.bombingSpeed, "bombingSpeed");
             Scribe_Values.Look(ref this.precisionBombingNumBombs, "precisionBombingNumBombs");
+            Scribe_Values.Look(ref this.cooldownHours, nameof(cooldownHours), -1f);
         }
+
     }
 }

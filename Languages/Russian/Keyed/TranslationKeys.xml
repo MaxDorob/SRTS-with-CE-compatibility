@@ -107,4 +107,5 @@
 	<SRTSSendBombRun>Отправить бомбордировку</SRTSSendBombRun>
 	<SRTSAbort>Отменить</SRTSAbort>
 	<SRTSNotAbleToLandInSpace>Не может приземлиться в космосе.</SRTSNotAbleToLandInSpace>
+	<SRTSCooldown>Остывание после запуска</SRTSCooldown>
 </LanguageData>

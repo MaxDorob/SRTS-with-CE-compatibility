@@ -108,4 +108,5 @@
 	<SRTSSendBombRun>Send bomb run</SRTSSendBombRun>
 	<SRTSAbort>Abort</SRTSAbort>
 	<SRTSNotAbleToLandInSpace>Not able to land in space.</SRTSNotAbleToLandInSpace>
+	<SRTSCooldown>Launch cooldown</SRTSCooldown>
 </LanguageData>
