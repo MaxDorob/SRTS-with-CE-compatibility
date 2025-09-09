@@ -25,11 +25,11 @@ namespace SRTS
                 }
             }
         }
-        public static bool Prefix(List<ActiveTransporterInfo> transporters, PlanetTile tile, ref PawnsArrivalModeDef ___arrivalMode)
+        public static bool Prefix(List<ActiveTransporterInfo> __0, PlanetTile tile, ref PawnsArrivalModeDef ___arrivalMode)
         {
-            if (transporters.SelectMany(t => ThingOwnerUtility.GetAllThingsRecursively(t)).Any(x => x.HasComp<CompLaunchableSRTS>()))
+            if (__0.SelectMany(t => ThingOwnerUtility.GetAllThingsRecursively(t)).Any(x => x.HasComp<CompLaunchableSRTS>()))
             {
-                Find.World.GetComponent<WorldComponent_SRTSLanding>().StartSelectingFor(tile, transporters);
+                Find.World.GetComponent<WorldComponent_SRTSLanding>().StartSelectingFor(tile, __0);
                 return false;
             }
             return true;
