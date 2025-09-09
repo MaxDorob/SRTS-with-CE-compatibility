@@ -108,4 +108,6 @@
 	<SRTSAbort>Отменить</SRTSAbort>
 	<SRTSNotAbleToLandInSpace>Не может приземлиться в космосе.</SRTSNotAbleToLandInSpace>
 	<SRTSCooldown>Остывание после запуска</SRTSCooldown>
+	<SRTSLegacyAutopatcher>Автопатчер устаревших аддонов (требует рестарта)</SRTSLegacyAutopatcher>
+	<SRTSLegacyAutopatcherTooltip>Включить автопатчер устаревших аддонов. Требует рестарта игры.</SRTSLegacyAutopatcherTooltip>
 </LanguageData>

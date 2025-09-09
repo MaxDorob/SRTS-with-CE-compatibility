@@ -109,4 +109,6 @@
 	<SRTSAbort>Abort</SRTSAbort>
 	<SRTSNotAbleToLandInSpace>Not able to land in space.</SRTSNotAbleToLandInSpace>
 	<SRTSCooldown>Launch cooldown</SRTSCooldown>
+	<SRTSLegacyAutopatcher>Legacy addons autopatcher (requires restart)</SRTSLegacyAutopatcher>
+	<SRTSLegacyAutopatcherTooltip>Enable autopatcher for legacy addons. Requires game restart.</SRTSLegacyAutopatcherTooltip>
 </LanguageData>
