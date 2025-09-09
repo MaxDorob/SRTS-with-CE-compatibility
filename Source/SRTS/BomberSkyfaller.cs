@@ -33,7 +33,7 @@ namespace SRTS
             }
         }
         public IntVec3 enterPos;
-        public Thing SRTS => ThingOwnerUtility.GetAllThingsRecursively(this).Single(x => x.HasComp<CompLaunchableSRTS>());
+        public Thing SRTS => SRTSHelper.GetSingleSRTS([this]);
         public float Speed => SRTSMod.GetStatFor<float>(SRTS.def.defName, StatName.bombingSpeed) * 30;
         public int Radius => SRTSMod.GetStatFor<int>(this.SRTS.def.defName, StatName.radiusDrop);
 

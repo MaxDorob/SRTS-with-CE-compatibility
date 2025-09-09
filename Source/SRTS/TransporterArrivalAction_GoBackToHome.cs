@@ -16,7 +16,7 @@ namespace SRTS
         {
             if (this.cell == default && mapParent == default)
             {
-                var srts = pods.SelectMany(x => x.GetDirectlyHeldThings()).Single(x => x.HasComp<CompLaunchableSRTS>());
+                var srts = SRTSHelper.GetSingleSRTS(pods);
                 if (srts.TryGetComp<CompLaunchableSRTS>().TryFindHomePoint(out var homeMap, out cell, out rotation))
                 {
                     mapParent = homeMap.Parent;
@@ -28,7 +28,7 @@ namespace SRTS
         public override void Arrived(List<ActiveDropPodInfo> transporters, RimWorld.Planet.PlanetTile tile)
         {
             Map map = GetOrGenerateMapUtility.GetOrGenerateMap(tile, null);
-            var srts = transporters.SelectMany(x => x.innerContainer).Single(x => x.HasComp<CompLaunchableSRTS>());
+            var srts = SRTSHelper.GetSingleSRTS(transporters);
             if (srts.TryGetComp<CompLaunchableSRTS>().TryFindHomePoint(out _, out cell, out rotation))
             {
                 this.mapParent = map.Parent;

@@ -11,7 +11,20 @@ namespace SRTS
 {
     public static class SRTSHelper
     {
-
+        public static Thing GetSingleSRTS(IEnumerable<IThingHolder> args)
+        {
+            var source = args.SelectMany(x => ThingOwnerUtility.GetAllThingsRecursively(x)).Where(x => x.HasComp<CompLaunchableSRTS>()).ToList();
+            if (!source.Any())
+            {
+                Log.Error($"There's no SRTS");
+                return null;
+            }
+            if (source.Count == 1)
+            {
+                return source[0];
+            }
+            return source.OrderByDescending(x => x.TryGetComp<CompTransporter>()?.Props.massCapacity ?? 1f).FirstOrDefault();
+        }
         public static void PopulateDictionary()
         {
             srtsDefProjects = new Dictionary<ThingDef, ResearchProjectDef>();

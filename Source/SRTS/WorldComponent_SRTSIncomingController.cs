@@ -81,10 +81,10 @@ namespace SRTS
 
         public bool Active => WaitingTransporter != null;
         protected Designator Designator => designator ??= InitDesignator();
-        public Thing SRTS => ThingOwnerUtility.GetAllThingsRecursively(WaitingTransporter).Single(x => x.HasComp<CompLaunchableSRTS>());
+        public Thing SRTS => SRTSHelper.GetSingleSRTS([WaitingTransporter]);
         public void StartSelectingFor(PlanetTile tile, List<ActiveTransporterInfo> transporters)
         {
-            var srts = transporters.SelectMany(x => x.innerContainer).Single(x => x.HasComp<CompLaunchableSRTS>());
+            var srts = SRTSHelper.GetSingleSRTS(transporters);
             TravellingTransporters travellingTransporters = (TravellingTransporters)WorldObjectMaker.MakeWorldObject(srts.TryGetComp<CompLaunchable>().Props.worldObjectDef ?? WorldObjectDefOf.TravellingTransporters);
             travellingTransporters.SetFaction(Faction.OfPlayer);
 
@@ -94,7 +94,7 @@ namespace SRTS
 
 
             var info = new ActiveTransporterInfo();
-            info.innerContainer.TryAddRangeOrTransfer(transporters.Single().innerContainer, destroyLeftover: true);
+            info.innerContainer.TryAddRangeOrTransfer(transporters.First().innerContainer, destroyLeftover: true);
             info.SetShuttle(srts);
             travellingTransporters.AddTransporter(info, false);
             StartSelectingFor(tile, travellingTransporters);

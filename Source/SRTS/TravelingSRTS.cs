@@ -100,7 +100,7 @@ namespace SRTS
             directionFacing = (this.DrawPos - tileLocation).normalized;
         }
 
-        public Thing flyingThing => ThingOwnerUtility.GetAllThingsRecursively(this).Single(x => x.HasComp<CompLaunchableSRTS>());
+        public Thing flyingThing => SRTSHelper.GetSingleSRTS([this]);
 
         private Material material;
 
