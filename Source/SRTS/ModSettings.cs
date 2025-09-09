@@ -32,6 +32,7 @@ namespace SRTS
         public List<string> disallowedBombs = new List<string>();
 
         internal bool CEPreviouslyInitialized;
+        public bool autopatcher;
 
         public override void ExposeData()
         {
@@ -50,6 +51,7 @@ namespace SRTS
             Scribe_Collections.Look<string>(ref disallowedBombs, "disallowedBombs", LookMode.Value);
 
             Scribe_Values.Look(ref CEPreviouslyInitialized, "CEPreviouslyInitialized");
+            Scribe_Values.Look(ref autopatcher, nameof(autopatcher), false);
         }
 
         public void CheckDictionarySavedValid()
@@ -311,7 +313,7 @@ namespace SRTS
                 }
 
                 listing_Standard.Begin(group2);
-
+                listing_Standard.CheckboxLabeled("SRTSLegacyAutopatcher".Translate(), ref settings.autopatcher, "SRTSLegacyAutopatcherTooltip".Translate());
                 //listing_Standard.CheckboxLabeled("PassengerLimit".Translate(), ref settings.passengerLimits, "PassengerLimitTooltip".Translate());
                 //listing_Standard.CheckboxLabeled("DisplayHomeItems".Translate(), ref settings.displayHomeItems, "DisplayHomeItemsTooltip".Translate());
                 //listing_Standard.CheckboxLabeled("DynamicWorldObjectSRTS".Translate(), ref settings.dynamicWorldDrawingSRTS, "DynamicWorldObjectSRTSTooltip".Translate());

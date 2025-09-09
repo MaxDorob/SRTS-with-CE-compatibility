@@ -13,6 +13,10 @@ namespace SRTS
             {
                 yield return error;
             }
+            if (SRTSMod.mod.settings.autopatcher && !LegacyAddonsAutopatcher.autoPatchProcessed)
+            {
+                yield break;
+            }
             if (parentDef.GetCompProperties<CompProperties_Launchable>() == null)
             {
                 yield return "There's no CompLaunchable";
@@ -62,6 +66,11 @@ namespace SRTS
         public float travelSpeed = 25f;
         public int minPassengers = 1;
         public int maxPassengers = 2;
+
+        [Obsolete]
+        public float? fuelPerTile;
+        [Obsolete]
+        public bool? shuttleBayLanding;
 
         public bool spaceFaring;
     }
