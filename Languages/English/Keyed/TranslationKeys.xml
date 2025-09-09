@@ -111,4 +111,5 @@
 	<SRTSCooldown>Launch cooldown</SRTSCooldown>
 	<SRTSLegacyAutopatcher>Legacy addons autopatcher (requires restart)</SRTSLegacyAutopatcher>
 	<SRTSLegacyAutopatcherTooltip>Enable autopatcher for legacy addons. Requires game restart.</SRTSLegacyAutopatcherTooltip>
+	<SRTSNoBombsLoaded>No bombs loaded</SRTSNoBombsLoaded>
 </LanguageData>

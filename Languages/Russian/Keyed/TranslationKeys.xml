@@ -110,4 +110,5 @@
 	<SRTSCooldown>Остывание после запуска</SRTSCooldown>
 	<SRTSLegacyAutopatcher>Автопатчер устаревших аддонов (требует рестарта)</SRTSLegacyAutopatcher>
 	<SRTSLegacyAutopatcherTooltip>Включить автопатчер устаревших аддонов. Требует рестарта игры.</SRTSLegacyAutopatcherTooltip>
+	<SRTSNoBombsLoaded>Не загружены бомбы</SRTSNoBombsLoaded>
 </LanguageData>

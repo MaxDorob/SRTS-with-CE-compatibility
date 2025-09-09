@@ -41,13 +41,24 @@ namespace SRTS
             {
                 return FloatMenuAcceptanceReport.WithFailMessage("MessageEnterCooldownBlocksEntering".Translate(site.EnterCooldownTicksLeft().ToStringTicksToPeriod(true, false, true, true, false)));
             }
+            if (!pods.SelectMany(p => ThingOwnerUtility.GetAllThingsRecursively(p)).Any(x => SRTSMod.mod.settings.allowedBombs.Contains(x.def.defName)))
+            {
+                return FloatMenuAcceptanceReport.WithFailMessage("SRTSNoBombsLoaded".Translate());
+            }
             return true;
         }
 
         public static IEnumerable<FloatMenuOption> GetFloatMenuOptions(Action<PlanetTile, TransportersArrivalAction> launchAction, IEnumerable<IThingHolder> pods, MapParent site)
         {
-            foreach (var item in TransportersArrivalActionUtility.GetFloatMenuOptions(() => CanVisit(pods, site), () => new TransporterArrivalOption_PrepareBombRun(site), "SRTSSendBombRun".Translate(), launchAction, site.Tile))
+            var bombsLoaded = pods.SelectMany(p => ThingOwnerUtility.GetAllThingsRecursively(p)).Any(x => SRTSMod.mod.settings.allowedBombs.Contains(x.def.defName));
+            var label = "SRTSSendBombRun".Translate();
+            if (!bombsLoaded)
             {
+                label += $" ({"SRTSNoBombsLoaded".Translate()})";
+            }
+            foreach (var item in TransportersArrivalActionUtility.GetFloatMenuOptions(() => CanVisit(pods, site), () => new TransporterArrivalOption_PrepareBombRun(site), label, launchAction, site.Tile))
+            {
+                item.Disabled = !bombsLoaded;
                 yield return item;
             }
         }
