@@ -58,7 +58,7 @@ namespace SRTS
                         }
                         else
                         {
-                            srtsComp.shipDef = TryFindOrCreateDef<BomberShipDef>(srts.defName, performedActions);
+                            srtsComp.shipDef = TryFindOrCreateDef<TransportShipDef>(srts.defName, performedActions);
                         }
                         srtsComp.shipDef.shipThing ??= srts;
                         shipDef = srtsComp.shipDef;
