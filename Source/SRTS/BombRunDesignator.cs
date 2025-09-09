@@ -73,6 +73,10 @@ namespace SRTS
         {
             base.DrawMouseAttachments();
             var bombs = Find.World.GetComponent<WorldComponent_BomberController>().Bombs.ToList();
+            if (bombs.Count == 0)
+            {
+                return;
+            }
             var index = (int)GenMath.PositiveMod(Time.realtimeSinceStartup / 2f, bombs.Count);
             GenUI.DrawMouseAttachment(bombs[index].def.uiIcon);
         }
