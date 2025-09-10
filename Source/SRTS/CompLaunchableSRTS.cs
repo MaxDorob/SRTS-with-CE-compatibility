@@ -81,7 +81,7 @@ namespace SRTS
         {
             public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator ILGenerator)
             {
-                
+
                 foreach (var ins in instructions)
                 {
                     yield return ins;
@@ -116,6 +116,29 @@ namespace SRTS
                 {
                     compLaunchableSRTS.lastLaunchTile = caravan.Tile;
                 }
+            }
+        }
+        [HarmonyPatch(typeof(CompRefuelable), nameof(CompRefuelable.ShouldAutoRefuelNowIgnoringFuelPct), MethodType.Getter)]
+        internal static class RefuelEvenFlickedOff_Patch
+        {
+            public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+            {
+                var list = instructions.ToList();
+                var targetField = AccessTools.Field(typeof(CompRefuelable), "flickComp");
+                var index = list.FirstIndexOf(x => x.LoadsField(targetField));
+                var label = (Label)list[index + 1].operand;
+
+                List<CodeInstruction> toInsert = [
+                    new CodeInstruction(OpCodes.Ldarg_0),
+                    CodeInstruction.Call(typeof(RefuelEvenFlickedOff_Patch), nameof(Ignore_compFlick)),
+                    new CodeInstruction(OpCodes.Brtrue_S, label),
+                    ];
+                list.InsertRange(index - 1, toInsert);
+                return list;
+            }
+            public static bool Ignore_compFlick(CompRefuelable instance)
+            {
+                return instance.parent.HasComp<CompLaunchableSRTS>();
             }
         }
         public CompProperties_LaunchableSRTS SRTSProps => (CompProperties_LaunchableSRTS)this.props;
