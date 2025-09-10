@@ -227,7 +227,7 @@ namespace SRTS
             Scribe_Values.Look(ref homePoint, nameof(homePoint), IntVec3.Invalid);
             Scribe_Values.Look(ref homeRotation, nameof(homeRotation));
             Scribe_Values.Look(ref lastLaunchTile, nameof(lastLaunchTile), PlanetTile.Invalid);
-            Scribe_Values.Look(ref switchIsOn, nameof(switchIsOn), true);
+            Scribe_Values.Look(ref switchIsOn, nameof(switchIsOn), false);
         }
 
         List<Thing> thingsInsideShip = new List<Thing>();
@@ -235,6 +235,6 @@ namespace SRTS
         private IntVec3 homePoint;
         private Rot4 homeRotation;
         public PlanetTile lastLaunchTile;
-        private bool switchIsOn = true;
+        private bool switchIsOn = false;
     }
 }
