@@ -17,9 +17,9 @@ namespace SRTS
         {
             public static void Postfix(ref bool __result)
             {
-                if (__result && ModVersion.ActualVersion != ModVersion.SRTSInSave)
+                if (__result && (SRTSMod.mod.settings.forceLegacyConverters || ModVersion.ActualVersion != ModVersion.SRTSInSave))
                 {
-                    Log.WarningOnce($"SRTS version mismatch:\nSave - {ModVersion.SRTSInSave}\nActual version - {ModVersion.ActualVersion}", 826317278);
+                    Log.WarningOnce($"SRTS version mismatch or forceLegacyConverters is active:\nSave - {ModVersion.SRTSInSave}\nActual version - {ModVersion.ActualVersion}", 826317278);
                     __result = false;
                 }
             }
@@ -30,7 +30,7 @@ namespace SRTS
         }
         public override bool AppliesToVersion(int majorVer, int minorVer)
         {
-            return ModVersion.ActualVersion != ModVersion.SRTSInSave;
+            return SRTSMod.mod.settings.forceLegacyConverters || ModVersion.ActualVersion != ModVersion.SRTSInSave;
         }
 
         public override string BackCompatibleDefName(Type defType, string defName, bool forDefInjections = false, XmlNode node = null)
@@ -40,6 +40,7 @@ namespace SRTS
 
         public override Type GetBackCompatibleType(Type baseType, string providedClassName, XmlNode node)
         {
+            Log.WarningOnce($"SRTS version mismatch or forceLegacyConverters is active:\nSave - {ModVersion.SRTSInSave}\nActual version - {ModVersion.ActualVersion}", 826317278);
             if (providedClassName == "Building")
             {
                 var def = DefDatabase<ThingDef>.GetNamed(node["def"].InnerText);

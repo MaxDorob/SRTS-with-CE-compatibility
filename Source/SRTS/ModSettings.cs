@@ -33,6 +33,7 @@ namespace SRTS
 
         internal bool CEPreviouslyInitialized;
         public bool autopatcher;
+        public bool forceLegacyConverters = false;
 
         public override void ExposeData()
         {
@@ -52,6 +53,7 @@ namespace SRTS
 
             Scribe_Values.Look(ref CEPreviouslyInitialized, "CEPreviouslyInitialized");
             Scribe_Values.Look(ref autopatcher, nameof(autopatcher), false);
+            Scribe_Values.Look(ref this.forceLegacyConverters, nameof(forceLegacyConverters), false);
         }
 
         public void CheckDictionarySavedValid()
@@ -314,6 +316,7 @@ namespace SRTS
 
                 listing_Standard.Begin(group2);
                 listing_Standard.CheckboxLabeled("SRTSLegacyAutopatcher".Translate(), ref settings.autopatcher, "SRTSLegacyAutopatcherTooltip".Translate());
+                listing_Standard.CheckboxLabeled("SRTSForceLegacyConverters".Translate(), ref settings.forceLegacyConverters, "SRTSForceLegacyConvertersTooltip".Translate());
                 //listing_Standard.CheckboxLabeled("PassengerLimit".Translate(), ref settings.passengerLimits, "PassengerLimitTooltip".Translate());
                 //listing_Standard.CheckboxLabeled("DisplayHomeItems".Translate(), ref settings.displayHomeItems, "DisplayHomeItemsTooltip".Translate());
                 //listing_Standard.CheckboxLabeled("DynamicWorldObjectSRTS".Translate(), ref settings.dynamicWorldDrawingSRTS, "DynamicWorldObjectSRTSTooltip".Translate());

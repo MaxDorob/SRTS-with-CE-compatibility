@@ -112,4 +112,6 @@
 	<SRTSLegacyAutopatcher>Legacy addons autopatcher (requires restart)</SRTSLegacyAutopatcher>
 	<SRTSLegacyAutopatcherTooltip>Enable autopatcher for legacy addons. Requires game restart.</SRTSLegacyAutopatcherTooltip>
 	<SRTSNoBombsLoaded>No bombs loaded</SRTSNoBombsLoaded>
+	<SRTSForceLegacyConverters>Force legacy-ship converter</SRTSForceLegacyConverters>
+	<SRTSForceLegacyConvertersTooltip>May help to fix bugged ships after SRTS and Odyssey, but will increase load time. Recommended to disable if there's no errors.</SRTSForceLegacyConvertersTooltip>
 </LanguageData>
