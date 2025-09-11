@@ -172,7 +172,7 @@ namespace SRTS
                     homeRotation = parent.Rotation;
                 }
                 var flickable = parent.TryGetComp<CompFlickable>();
-                if (flickable != null)
+                if (flickable != null && Scribe.mode == LoadSaveMode.Inactive)
                 {
                     flickable.SwitchIsOn = switchIsOn;
                     flickable.wantSwitchOn = switchIsOn;
