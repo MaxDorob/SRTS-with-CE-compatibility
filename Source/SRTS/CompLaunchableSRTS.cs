@@ -16,13 +16,6 @@ namespace SRTS
     [StaticConstructorOnStartup]
     public class CompLaunchableSRTS : CompShuttle
     {
-        static CompLaunchableSRTS()
-        {
-            if (!ModsConfig.OdysseyActive)
-            {
-                Building_PassengerShuttle.RefuelFromCargoIcon = new CachedTexture(ThingDefOf.Chemfuel.graphicData.texPath);
-            }
-        }
         [HarmonyPatch(typeof(CompShuttle), nameof(CompShuttle.CanLaunch), methodType: MethodType.Getter)]
         internal static class CompShuttle_CanLaunch_Patch
         {
@@ -34,35 +27,7 @@ namespace SRTS
                 }
             }
         }
-        [HarmonyPatch(typeof(CompShuttle), nameof(IsPlayerShuttle), MethodType.Getter)]
-        internal static class IsPlayerShuttle_Patch
-        {
-            public static bool Prefix(CompShuttle __instance, ref bool __result)
-            {
-                if (__instance is CompLaunchableSRTS)
-                {
-                    __result = true; //Only player buildable, isn't?
-                    return false;
-                }
-                return true;
-            }
-        }
-        [HarmonyPatch(typeof(CompShuttle), nameof(PostSpawnSetup))]
-        internal static class RemoveShuttleDLCLimitation
-        {
-            public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-            {
-                var list = instructions.ToList();
-                var targetMethod = AccessTools.Method(typeof(ModLister), nameof(ModLister.CheckAnyExpansion));
-                while (list.Any(x => x.Calls(targetMethod)))
-                {
-                    var index = list.FirstIndexOf(x => x.Calls(targetMethod));
-                    list[index] = new CodeInstruction(OpCodes.Ldc_I4_1);
-                    list.RemoveAt(index - 1);
-                }
-                return list;
-            }
-        }
+
         [HarmonyPatch(typeof(CompShuttle), nameof(CompShuttle.HasPilot), MethodType.Getter)]
         internal static class HasPilot_Patch
         {
@@ -165,6 +130,15 @@ namespace SRTS
             base.PostSpawnSetup(respawningAfterLoad);
             if (!respawningAfterLoad)
             {
+
+                if (Props.shipDef.playerShuttle)
+                {
+                    this.acceptColonists = true;
+                    this.acceptChildren = true;
+                    this.acceptColonyPrisoners = true;
+                    this.allowSlaves = true;
+                }
+                shipParent ??= TransportShipMaker.MakeTransportShip(this.Props.shipDef, null, this.parent);
                 if (parent.Map?.IsPlayerHome ?? false)
                 {
                     homeMap = parent.Map;
