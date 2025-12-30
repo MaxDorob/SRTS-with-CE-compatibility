@@ -23,7 +23,7 @@ namespace SRTS
             }
             var caravan = parent as Caravan;
             var shuttle = caravan.Shuttle;
-            if (shuttle != null)
+            if (shuttle != null && shuttle.HasComp<CompLaunchableSRTS>())
             {
                 var launch = new Command_Action();
                 launch.defaultLabel = "CommandLaunchGroup".Translate();
@@ -34,7 +34,7 @@ namespace SRTS
                     shuttle.LaunchableComp.StartChoosingDestination(delegate (PlanetTile tile, TransportersArrivalAction action)
                     {
                         CaravanShuttleUtility.LaunchShuttle(caravan, tile, action);
-                    }, null);
+                    });
                 };
                 AcceptanceReport report = CaravanShuttleUtility.CanLaunchCaravanShuttle(caravan);
                 if (!report.Accepted)
@@ -42,6 +42,7 @@ namespace SRTS
                     launch.Disable(report.Reason);
                 }
                 yield return launch;
+                //Maybe refuel?
             }
         }
     }
