@@ -106,6 +106,15 @@ namespace SRTS
                 return instance.parent.HasComp<CompLaunchableSRTS>();
             }
         }
+        [HarmonyPatch(typeof(CompShuttle), nameof(CompShuttle.ShowLoadingGizmos), MethodType.Getter)]
+        internal static class ShowLoadingGizmoForSRTS
+        {
+            public static void Postfix(CompShuttle __instance, ref bool __result)
+            {
+                __result = __result 
+                    || (__instance is CompLaunchableSRTS srts && srts.parent.Faction.IsPlayerSafe()); // SRTS of player must have loading gizmos. Although it can be done via ShipJobs, but I'm not sure about performance and etc.
+            }
+        }
         public CompProperties_LaunchableSRTS SRTSProps => (CompProperties_LaunchableSRTS)this.props;
 
 
