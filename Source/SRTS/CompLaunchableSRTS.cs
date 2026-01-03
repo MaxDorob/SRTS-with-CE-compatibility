@@ -16,6 +16,13 @@ namespace SRTS
     [StaticConstructorOnStartup]
     public class CompLaunchableSRTS : CompShuttle
     {
+        static CompLaunchableSRTS()
+        {
+            if (!ModsConfig.OdysseyActive)
+            {
+                Building_PassengerShuttle.RefuelFromCargoIcon = new CachedTexture(ThingDefOf.Chemfuel.graphicData.texPath);
+            }
+        }
         [HarmonyPatch(typeof(CompShuttle), nameof(CompShuttle.CanLaunch), methodType: MethodType.Getter)]
         internal static class CompShuttle_CanLaunch_Patch
         {
