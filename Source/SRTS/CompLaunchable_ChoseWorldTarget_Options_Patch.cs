@@ -36,7 +36,7 @@ namespace SRTS
 
         private static void ModifyList(List<FloatMenuOption> list, CompLaunchable instance, GlobalTargetInfo target, Action<PlanetTile, TransportPodsArrivalAction> launchAction)
         {
-            var compBomber = instance.parent.GetComp<CompBombFlyer>();
+            var compBomber = instance?.parent?.GetComp<CompBombFlyer>();
             if (compBomber != null)
             {
                 list.AddRange(compBomber.FloatMenuOptionsAt(target.Tile, launchAction));
